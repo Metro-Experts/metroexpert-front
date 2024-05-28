@@ -10,9 +10,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'OnTop',
+      title: 'MetroExperts',
       theme: ThemeData(
-        fontFamily: 'SF Pro Display',
+        fontFamily: 'Poppins',
         useMaterial3: true,
         listTileTheme: const ListTileThemeData(
           iconColor: Colors.white,
