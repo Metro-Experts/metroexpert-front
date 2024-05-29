@@ -12,31 +12,36 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: ListBody(
+      body: SizedBox(
+        child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
           children: [
-            /*
             Stack(
-              children: [
-                  Image.asset('assets/images/decoration.png',
-                    scale: 1.5,
-                    alignment: const Alignment(-3,1),
-                    color: const Color.fromRGBO(0xFE,0xC8,0x9F,1),
+              children: [         
+                Transform.translate(
+                  offset: const Offset(-150,-80),
+                  child: Image.asset(
+                    'assets/images/decoration.png',
+                    color: const Color.fromRGBO(0xF2,0xB0,0x80, 1),)
                   ),
-                  Image.asset('assets/images/decoration.png',
-                      scale: 1.5,
-                      alignment: const Alignment(0.5,3),
-                  ),
+                Transform.translate(
+                  offset: const Offset(-50,-130),
+                  child:
+                    Image.asset(
+                      'assets/images/decoration.png',
+                    ),
+                  ),            
               ],
             ),
-            */
-            const SizedBox(height: 120),
-            const Text(
-              '   LOG IN',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
+            const SizedBox(height: 10),
+            Container(
+              margin: const EdgeInsets.all(0),
+              child: const Text(
+                '   LOG IN',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 36,
+                ),
               ),
             ),
             const SizedBox(height: 30),
@@ -45,16 +50,14 @@ class _LogInPageState extends State<LogInPage> {
                 children: [
                   const SizedBox(height: 20),
                   const Padding(
-                    padding: EdgeInsets.fromLTRB(50,1,50,1),
+                    padding: EdgeInsets.fromLTRB(50,1,50,1),    
                     child: TextField(
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                      ),
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.person),
                         hintText: 'Full name',
                         hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       )
                     ),
@@ -68,25 +71,33 @@ class _LogInPageState extends State<LogInPage> {
                         prefixIcon: Icon(Icons.password),
                         hintText: 'Password',
                         hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       )
                     ),
+                    
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 10),
                   const Text(
                     'Or',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
-                  TextButton(
-                    child: const Text('Continue with Google', style: TextStyle(
-                      fontSize: 18
-                    ),),
-                    onPressed: () => {}
-                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () => {},
+                    style: const ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                    ),
+                    child: Image.asset(
+                      'assets/images/Vector.png',
+                      width: 200,
+                      height: 50,
+                    ),                
+                  ), 
                   const SizedBox(height: 45),
                   SizedBox(
                     width: 500,
@@ -102,50 +113,44 @@ class _LogInPageState extends State<LogInPage> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
-                            fontFamily: 'Poppins',
                           ),
                         ),
                       ),
-                    ),     
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('¿No tienes cuenta?', style: TextStyle(
+                  const Text('¿No tienes cuenta?',
+                    style: TextStyle(
                       fontSize: 18
                     ),
                   ),
                   TextButton(
-                      child: const Text('Regístrate aquí', style: TextStyle(
+                      child: const Text('Regístrate aquí',
+                        style: TextStyle(
                           fontSize: 18
-                      ),),
+                        ),
+                      ),
                       onPressed: () => {}
                   ),
-                  /*
-                  Stack(
-                    children: [
-                      SizedBox(
-                          child: Transform(
-                            transform: Matrix4.rotationZ(-1.57),
-                            child: Image.asset('assets/images/decoration.png',
-                              width: 225, height: 168,
-                              alignment: const Alignment(-3.5,6.5),
-                              color: const Color.fromRGBO(0xFE,0xC8,0x9F,1),
-                            ),
-                          )
-                      ),
-                      SizedBox(
-                          child: Transform(
-                            transform: Matrix4.rotationZ(-1.57),
-                            child: Image.asset('assets/images/decoration.png',
-                              width: 225, height: 168,
-                              alignment: const Alignment(-3.5,4),
-                            ),
-                          )
-                      ),
-                    ],
-                  )
-                  */
                 ],
               ),
+            ),
+            Stack(
+              children: [         
+                Transform.translate(
+                  offset: const Offset(170,40),
+                  child: Image.asset(
+                    'assets/images/decoration.png',
+                    color: const Color.fromRGBO(0xF2,0xB0,0x80, 1),)
+                  ),
+                Transform.translate(
+                  offset: const Offset(280,0),
+                  child:
+                    Image.asset(
+                      'assets/images/decoration.png',
+                    ),
+                  ),            
+              ],
             ),
           ],
         ),
