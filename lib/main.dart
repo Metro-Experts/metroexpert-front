@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_experts/pages/tutor_account.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // The property [home] defines the default route of the app
-      // home: const HomePage(),
+      home: const TutorAccount(),
       debugShowCheckedModeBanner: false,
     );
   }
