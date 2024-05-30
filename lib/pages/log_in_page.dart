@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:metro_experts/components/customTextField.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
 
@@ -19,86 +19,59 @@ class _LogInPageState extends State<LogInPage> {
             Stack(
               children: [         
                 Transform.translate(
-                  offset: const Offset(-150,-80),
-                  child: Image.asset(
-                    'assets/images/decoration.png',
-                    color: const Color.fromRGBO(0xF2,0xB0,0x80, 1),)
-                  ),
+                  offset: const Offset(-120,-80),
+                  child: SvgPicture.asset(
+                    'assets/images/decoration.svg',
+                    color: const Color.fromRGBO(0xF2,0xB0,0x80, 1)
+                  )
+                ),
                 Transform.translate(
-                  offset: const Offset(-50,-130),
+                  offset: const Offset(-30,-120),
                   child:
-                    Image.asset(
-                      'assets/images/decoration.png',
+                    SvgPicture.asset(
+                      'assets/images/decoration.svg',
                     ),
                   ),            
               ],
             ),
             const SizedBox(height: 10),
-            Container(
-              margin: const EdgeInsets.all(0),
-              child: const Text(
-                '   LOG IN',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 36,
-                ),
+            const Text(
+              '   LOG IN',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 36,
               ),
-            ),
+            ),     
             const SizedBox(height: 30),
             Center(
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(50,1,50,1),    
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: 'Full name',
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      )
-                    ),
-                  ),
                   const SizedBox(height: 25),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(50,1,50,1),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.password),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      )
-                    ),
-                    
-                  ),
-                  const SizedBox(height: 10),
+                  const CustomTextField(labelText: "Username", placeholder: "Jhon Doe", isPasswordTextField: false),
+                  const CustomTextField(labelText: "Password", placeholder: "********", isPasswordTextField: true),
                   const Text(
                     'Or',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 16,
                     ),
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () => {},
                     style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                      backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),                    
                     ),
-                    child: Image.asset(
-                      'assets/images/Vector.png',
+                    child: Container(
+                      margin: const EdgeInsets.all(6),
                       width: 200,
-                      height: 50,
-                    ),                
+                      height: 40,
+                      child: SvgPicture.asset(
+                        'assets/images/Vector.svg',
+                      ),
+                    ),             
                   ), 
-                  const SizedBox(height: 45),
+                  const SizedBox(height: 30),
                   SizedBox(
                     width: 500,
                     height: 50,
@@ -138,18 +111,18 @@ class _LogInPageState extends State<LogInPage> {
             Stack(
               children: [         
                 Transform.translate(
-                  offset: const Offset(170,40),
-                  child: Image.asset(
-                    'assets/images/decoration.png',
+                  offset: const Offset(170,30),
+                  child: SvgPicture.asset(
+                    'assets/images/decoration.svg',
                     color: const Color.fromRGBO(0xF2,0xB0,0x80, 1),)
                   ),
                 Transform.translate(
                   offset: const Offset(280,0),
                   child:
-                    Image.asset(
-                      'assets/images/decoration.png',
+                    SvgPicture.asset(
+                      'assets/images/decoration.svg',
                     ),
-                  ),            
+                ),
               ],
             ),
           ],

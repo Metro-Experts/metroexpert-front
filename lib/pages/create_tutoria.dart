@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:metro_experts/components/appBar.dart';
-import 'package:metro_experts/components/buildTextField.dart';
+import 'package:metro_experts/components/customTextField.dart';
 import 'package:metro_experts/components/multi_checkbox.dart';
 import 'package:metro_experts/components/dropDownMenu.dart';
 import 'package:metro_experts/components/time_picker.dart';
@@ -45,7 +45,7 @@ class _createTutoriaState extends State<createTutoria> {
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
               ], //solo números
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 contentPadding: EdgeInsets.only(bottom: 5),
                 labelText: "Precio por hora:",
                 floatingLabelBehavior: FloatingLabelBehavior.always,

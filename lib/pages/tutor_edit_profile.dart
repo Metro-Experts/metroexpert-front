@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/appBar.dart';
-import 'package:metro_experts/components/buildTextField.dart';
+import 'package:metro_experts/components/customTextField.dart';
 import 'package:metro_experts/components/multi_textfield.dart';
 
 class TutorEditProfile extends StatefulWidget {

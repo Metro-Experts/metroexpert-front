@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:metro_experts/components/appBar.dart';
-import 'package:metro_experts/components/buildTextField.dart'; //para uso de iconos svg
+import 'package:metro_experts/components/customTextField.dart'; //para uso de iconos svg
 
 class EditProfile extends StatelessWidget {
   
