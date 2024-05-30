@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final String text;
-  const CustomAppBar({super.key, required this.text});
+  final String titleText;
+  const CustomAppBar({super.key, required this.titleText});
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +11,12 @@ class CustomAppBar extends StatelessWidget {
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(2.0),
         child: Container(
-          color: Colors.transparent,
+          color: Colors.black,
           height: 0.5,
         ),
       ),
-      title: const Text(
-        'Edit Profile',
+      title: Text(
+        titleText,
         style: TextStyle(
           color: Colors.black,
           fontSize: 20,
