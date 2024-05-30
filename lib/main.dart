@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/pages/create_tutoria.dart';
 import 'package:metro_experts/pages/editProfile.dart';
+import 'package:metro_experts/pages/intro_page.dart';
 import 'package:metro_experts/pages/tutor_edit_profile.dart';
 
 void main() {
