@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/pages/editProfile.dart';
+import 'package:metro_experts/pages/tutor_edit_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // The property [home] defines the default route of the app
-      home:  EditProfile(),
+      //home:  EditProfile(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,14 +1,16 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:metro_experts/components/appBar.dart';
-import 'package:metro_experts/components/buildTextField.dart'; //para uso de iconos svg
+import 'package:metro_experts/components/buildTextField.dart';
+import 'package:metro_experts/components/multi_textfield.dart';
 
-class EditProfile extends StatelessWidget {
-  
-  bool isObscurePassword = true;
-  
+class TutorEditProfile extends StatefulWidget {
+  const TutorEditProfile({super.key});
+
+  @override
+  State<TutorEditProfile> createState() => _TutorEditProfileState();
+}
+
+class _TutorEditProfileState extends State<TutorEditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +52,7 @@ class EditProfile extends StatelessWidget {
             const CustomTextField(labelText: "Email", placeholder: "jhondoe@example.com",isPasswordTextField: false),
             const CustomTextField(labelText: "Password", placeholder: "********", isPasswordTextField: true),
             const CustomTextField(labelText: "Phone Number", placeholder: "+58 04241501278", isPasswordTextField: false),
+            MultiTextfield(),
             SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
