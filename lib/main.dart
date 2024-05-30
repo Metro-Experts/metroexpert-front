@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:metro_experts/pages/create_tutoria.dart';
+import 'package:metro_experts/pages/editProfile.dart';
+import 'package:metro_experts/pages/tutor_edit_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,16 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'OnTop',
+      title: 'MetroExperts',
       theme: ThemeData(
-        fontFamily: 'SF Pro Display',
+        fontFamily: 'Poppins',
         useMaterial3: true,
         listTileTheme: const ListTileThemeData(
           iconColor: Colors.white,
         ),
       ),
       // The property [home] defines the default route of the app
-      // home: const HomePage(),
+      //home:  EditProfile(),
       debugShowCheckedModeBanner: false,
     );
   }
