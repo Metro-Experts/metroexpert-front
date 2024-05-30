@@ -12,7 +12,7 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(preferredSize: Size.fromHeight(38.0), child: CustomAppBar(text: 'save')),
+      appBar: const PreferredSize(preferredSize: Size.fromHeight(38.0), child: CustomAppBar(titleText: 'Edit Profile')),
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
