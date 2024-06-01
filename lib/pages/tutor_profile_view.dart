@@ -131,9 +131,148 @@ class TutorProfileView extends StatelessWidget {
               ),
             ),
             const Positioned(
+              top: 490,
+              child: SizedBox(
+                width: 308,
                 child: Column(
-              children: [Text('Sobre el tutor')],
-            ))
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      textAlign: TextAlign.left,
+                      'Sobre el tutor',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      textAlign: TextAlign.justify,
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer imperdiet facilisis felis, vitae convallis elit pulvinar eget. Morbi sapien elit, pretium eu odio ac, venenatis gravida tellus.",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 610,
+              left: 60,
+              child: Text(
+                'Tutorias',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Positioned(
+              left: 60,
+              top: 650,
+              child: Row(
+                children: [
+                  Container(
+                    width: 110,
+                    height: 94,
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(254, 200, 159, 1),
+                        borderRadius: BorderRadius.circular(25)),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Matematica 5",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Tutor: ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: 'Pedro Perez',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              left: 60,
+              top: 760,
+              child: Row(
+                children: [
+                  Container(
+                    width: 110,
+                    height: 94,
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(254, 200, 159, 1),
+                        borderRadius: BorderRadius.circular(25)),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Matematica 5",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Tutor: ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: 'Pedro Perez',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

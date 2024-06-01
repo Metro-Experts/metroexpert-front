@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:metro_experts/components/appBar.dart';
-import 'package:metro_experts/components/buildTextField.dart';
 import 'package:metro_experts/components/multi_checkbox.dart';
 import 'package:metro_experts/components/dropDownMenu.dart';
-import 'package:metro_experts/components/time_picker.dart';
 
 class CreateTutoria extends StatefulWidget {
   const CreateTutoria({super.key});
