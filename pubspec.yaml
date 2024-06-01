@@ -2,7 +2,7 @@ name: metro_experts
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: ">=3.4.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,11 +31,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  flutter_svg: ^2.0.10+1
+
+  flutter_svg: ^2.0.10
+
+  responsive_framework: ^1.4.0
+
 
 dev_dependencies:
   flutter_test:
@@ -46,14 +49,15 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/images/man_teaching.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -78,31 +82,40 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-         - asset: assets/fonts/Poppins-BoldItalic.ttf
-           weight: 700
-         - asset: assets/fonts/Poppins-ExtraBold.ttf
-           weight: 800
-         - asset: assets/fonts/Poppins-BlackItalic.ttf
-           weight: 800
-         - asset: assets/fonts/Poppins-ExtraLight.ttf
-           weight: 200
-         - asset: assets/fonts/Poppins-ExtraLightItalic.ttf
-           weight: 200
-         - asset: assets/fonts/Poppins-Italic.ttf
-           weight: 400
-         - asset: assets/fonts/Poppins-Light.ttf
-           weight: 300
-         - asset: assets/fonts/Poppins-Medium.ttf
-           weight: 500
-         - asset: assets/fonts/Poppins-Regular.ttf
-           weight: 400
-         - asset: assets/fonts/Poppins-SemiBold.ttf
-           weight: 600
-         - asset: assets/fonts/Poppins-Thin.ttf
-           weight: 100
-       
-          
-         
+
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
+          weight: 100
+        - asset: assets/fonts/Poppins-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Poppins-BlackItalic.ttf
+          weight: 900
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+
+        - asset: assets/fonts/Poppins-BoldItalic.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins-BlackItalic.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
+          weight: 200
+
+        - asset: assets/fonts/Poppins-ExtraLightItalic.ttf
+          weight: 200
+        - asset: assets/fonts/Poppins-Italic.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Thin.ttf
+          weight: 100
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
