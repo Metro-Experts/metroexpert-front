@@ -15,39 +15,33 @@ class dropDownMenu extends StatefulWidget {
 }
 
 class _dropDownMenuState extends State<dropDownMenu> {
-
-    //Variable
+  //Variable
   String? selectedVal = "";
-  
-  _createTutoriaState(){
+
+  _createTutoriaState() {
     selectedVal = widget.menuList[0];
   }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
-              value: null,
-              items: widget.menuList.map(
-                (e) {
-                  return DropdownMenuItem(child: Text(e), value: e);
-                }
-              ).toList(), 
-              onChanged: (val) {
-                setState(() {
-                  selectedVal = val as String;
-                });
-              },
-              icon: const Icon(
-                Icons.arrow_drop_down_circle,
-                color: Colors.black
-              ),
-              dropdownColor: Colors.white,
-              decoration: InputDecoration(
-                labelText: widget.text,
-                labelStyle: TextStyle(
-                  fontSize: 15,
-                )
-              ),
-            );;
+      value: null,
+      items: widget.menuList.map((e) {
+        return DropdownMenuItem(child: Text(e), value: e);
+      }).toList(),
+      onChanged: (val) {
+        setState(() {
+          selectedVal = val as String;
+        });
+      },
+      icon: const Icon(Icons.arrow_drop_down_circle, color: Colors.black),
+      dropdownColor: Colors.white,
+      decoration: InputDecoration(
+          labelText: widget.text,
+          labelStyle: TextStyle(
+            fontSize: 15,
+          )),
+    );
+    ;
   }
 }
