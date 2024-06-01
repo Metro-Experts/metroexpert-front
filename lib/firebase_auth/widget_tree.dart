@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metro_experts/auth.dart';
+import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
 import 'package:metro_experts/pages/log_in_page.dart';
 

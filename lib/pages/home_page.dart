@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'course_page.dart';
-import 'package:metro_experts/auth.dart'; // Importa la nueva página
+import 'package:metro_experts/firebase_auth/auth.dart'; // Importa la nueva página
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

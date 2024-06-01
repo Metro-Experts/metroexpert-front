@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:metro_experts/auth.dart';
+import 'package:metro_experts/firebase_auth/auth.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -20,9 +22,21 @@ class _LogInPageState extends State<LogInPage> {
       await Auth().signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              e.message!,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      );
     }
   }
 
@@ -49,15 +63,16 @@ class _LogInPageState extends State<LogInPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
-                        controller: _emailController,
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                        ),
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: 'email',
-                          hintStyle: TextStyle(fontWeight: FontWeight.bold),
-                        )),
+                      controller: _emailController,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                      ),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'email',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 25),
                   Padding(
@@ -81,11 +96,12 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                   TextButton(
-                      child: const Text(
-                        'Continue with Google',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () => {}),
+                    child: const Text(
+                      'Continue with Google',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () => {},
+                  ),
                   const SizedBox(height: 45),
                   SizedBox(
                     width: 500,
@@ -93,7 +109,9 @@ class _LogInPageState extends State<LogInPage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                       child: ElevatedButton(
-                        onPressed: () => {signInWithEmailAndPassword()},
+                        onPressed: () => {
+                          signInWithEmailAndPassword(),
+                        },
                         style: const ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll<Color>(
                               Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
