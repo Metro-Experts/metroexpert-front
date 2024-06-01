@@ -1,24 +1,6 @@
 import 'package:flutter/material.dart';
-import 'course_page.dart'; // Importa la nueva página
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tutor Finder',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
-    );
-  }
-}
+import 'course_page.dart';
+import 'package:metro_experts/auth.dart'; // Importa la nueva página
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -64,9 +46,14 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('¡Hola, Daniel!', style: TextStyle(fontSize: 18)),
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/man_teaching.png'),
+            const Text('¡Hola, Daniel!', style: TextStyle(fontSize: 18)),
+            GestureDetector(
+              onTap: () {
+                Auth().signOut();
+              },
+              child: const CircleAvatar(
+                backgroundImage: AssetImage('assets/images/man_teaching.png'),
+              ),
             ),
           ],
         ),
@@ -76,7 +63,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Contacta a tu tutor fácilmente',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),

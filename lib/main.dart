@@ -1,10 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:metro_experts/pages/create_tutoria.dart';
-import 'package:metro_experts/pages/tutor_profile_view.dart';
-import 'package:metro_experts/pages/user_edit_profile.dart';
-import 'package:metro_experts/pages/tutor_edit_profile.dart';
-import './pages/log_in_page.dart';
+import 'package:metro_experts/widget_tree.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // The property [home] defines the default route of the app
-      home: const LogInPage(),
+      home: const WidgetTree(),
       debugShowCheckedModeBanner: false,
     );
   }
