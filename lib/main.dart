@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart'; // Importa la nueva página desde la carpeta pages
+import 'package:metro_experts/pages/create_tutoria.dart';
+import 'package:metro_experts/pages/tutor_profile_view.dart';
+import 'package:metro_experts/pages/user_edit_profile.dart';
+import 'package:metro_experts/pages/tutor_edit_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +22,8 @@ class MyApp extends StatelessWidget {
           iconColor: Colors.white,
         ),
       ),
-      home: HomePage(), // Usa la nueva página como página inicial
+      // The property [home] defines the default route of the app
+      home: const TutorProfileView(),
       debugShowCheckedModeBanner: false,
     );
   }
