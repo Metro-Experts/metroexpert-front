@@ -41,9 +41,9 @@ class UserEditProfile extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
             const CustomTextField(
-                labelText: "Username",
+                labelText: "Nombre de Usuario",
                 placeholder: "Jhon Doe",
                 isPasswordTextField: false),
             const CustomTextField(
@@ -55,42 +55,45 @@ class UserEditProfile extends StatelessWidget {
                 placeholder: "jhondoe@example.com",
                 isPasswordTextField: false),
             const CustomTextField(
-                labelText: "Password",
+                labelText: "Contraseña",
                 placeholder: "********",
                 isPasswordTextField: true),
             const CustomTextField(
-                labelText: "Phone Number",
+                labelText: "Teléfono",
                 placeholder: "+58 04241501278",
                 isPasswordTextField: false),
             SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                OutlinedButton(
-                  onPressed: () {},
-                  child: Text("    Cancel    ",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                      )),
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    backgroundColor: Color(0xfffFF0000),
+            Padding(
+              padding: const EdgeInsets.all(50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {}, 
+                    child: Text("Cancelar", style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    )),
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: Color(0xfffFF0000),
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Save Changes",
-                      style: TextStyle(fontSize: 15, color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
+                  ElevatedButton(
+                    onPressed: (){}, 
+                    child: Text("Guardar", style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white
+                    )),
+                    style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xfff060B26),
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                )
-              ],
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

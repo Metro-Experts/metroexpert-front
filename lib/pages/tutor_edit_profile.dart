@@ -46,42 +46,45 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
                 ],
               ),
             ),
-            SizedBox(height: 50),
-            const CustomTextField(labelText: "Username", placeholder: "Jhon Doe", isPasswordTextField: false),
+            SizedBox(height: 20),
+            const CustomTextField(labelText: "Nombre de Usuario", placeholder: "Jhon Doe", isPasswordTextField: false),
             const CustomTextField(labelText: "Carrera", placeholder: "Ingenieria de Sistemas", isPasswordTextField: false),
             const CustomTextField(labelText: "Email", placeholder: "jhondoe@example.com",isPasswordTextField: false),
-            const CustomTextField(labelText: "Password", placeholder: "********", isPasswordTextField: true),
-            const CustomTextField(labelText: "Phone Number", placeholder: "+58 04241501278", isPasswordTextField: false),
-            MultiTextfield(),
-            SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                OutlinedButton(
-                  onPressed: () {}, 
-                  child: Text("    Cancel    ", style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  )),
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    backgroundColor: Color(0xfffFF0000),
+            const CustomTextField(labelText: "Contraseña", placeholder: "********", isPasswordTextField: true),
+            const CustomTextField(labelText: "Telefóno", placeholder: "+58 04241501278", isPasswordTextField: false),
+            MultiTextfield(bottomPadding: 10, leftPadding: 50, rightPadding:50, labelText: 'Sobre mí:', placeholder: '...',),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {}, 
+                    child: Text("Cancelar", style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    )),
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: Color(0xfffFF0000),
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: (){}, 
-                  child: Text("Save Changes", style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white
-                  )),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xfff060B26),
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                  ),
-                )
-              ],
+                  ElevatedButton(
+                    onPressed: (){}, 
+                    child: Text("Guardar", style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white
+                    )),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xfff060B26),
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         )
