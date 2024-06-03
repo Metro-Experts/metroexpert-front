@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget {
       ),
       title: Text(
         titleText,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 20,
           fontWeight: FontWeight.w600,
@@ -31,9 +31,7 @@ class CustomAppBar extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10)
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: SvgPicture.asset(
             'assets/icons/Arrow - Left 2.svg',
             height: 30,
