@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/DropDownMenu.dart';
 import 'package:metro_experts/components/multi_textfield.dart';
-import 'package:metro_experts/pages/log_in_page.dart';
+import 'package:metro_experts/firebase_auth/auth.dart';
+import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpPage extends StatefulWidget {
@@ -45,7 +47,14 @@ class _SignUpPageState extends State<SignUpPage> {
         }),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 && Auth().authStateChanges != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             duration: Duration(seconds: 3),

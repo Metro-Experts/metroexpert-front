@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metro_experts/pages/log_in_page.dart';
+import 'package:metro_experts/pages/sign_in_page.dart';
 import 'course_page.dart';
 import 'package:metro_experts/firebase_auth/auth.dart'; // Importa la nueva página
 

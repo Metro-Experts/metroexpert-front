@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metro_experts/pages/log_in_page.dart';
+import 'package:metro_experts/pages/sign_in_page.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
