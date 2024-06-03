@@ -1,7 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:metro_experts/components/dropdownmenu.dart';
+import 'package:metro_experts/components/DropDownMenu.dart';
 import 'package:metro_experts/components/multi_textfield.dart';
+import 'package:metro_experts/pages/log_in_page.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -11,15 +16,76 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  String genderValue = '';
 
-   //Variables de ejemplos para poder trabajar en esto
+  Future<void> createUserWithEmailAndPassword() async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/');
+    const headers = {'Content-Type': 'application/json'};
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      String uid = userCredential.user!.uid;
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode({
+          "_id": uid,
+          "name": fullNameController.text.split(' ')[0],
+          "lastName": fullNameController.text.split(' ')[1],
+          "email": _emailController.text,
+          "userType": selectedOption,
+          "gender": genderValue.contains('Masculino') ? 'M' : 'F'
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'User successfuly created',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      } else {}
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              e.message!,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  //Variables de ejemplos para poder trabajar en esto
   bool showTutorSection = false;
   String selectedOption = "";
   bool? isChecked = false;
-  List<String> genderList = [
-    "Femenino",
-    "Masculino"
-  ];
+  List<String> genderList = ["Femenino", "Masculino"];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  const Padding(
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
                       style: const TextStyle(
@@ -52,13 +118,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: 'Nombre Completo',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      controller: fullNameController,
                     ),
                   ),
                   const SizedBox(height: 25),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(50, 1, 50, 1),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                       ),
                       decoration: const InputDecoration(
@@ -66,13 +133,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: 'Email',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      controller: _emailController,
                     ),
                   ),
                   const SizedBox(height: 25),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(50, 1, 50, 1),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
-                      //controller: _passwordController,
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.password),
@@ -84,13 +152,21 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
-                    child: dropDownMenu(text: "Género", menuList: genderList),
+                    child: DropDownMenu(
+                      text: "Género",
+                      menuList: genderList,
+                      onSelectionChanged: (selectedVal) {
+                        setState(() {
+                          genderValue = selectedVal!;
+                        });
+                      },
+                    ),
                   ),
                   const SizedBox(height: 25),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: Text(
-                      "Deseo ingresar como: ", 
+                      "Deseo ingresar como: ",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -102,14 +178,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Column(
                       children: [
                         SizedBox(
-                         width: 200,
+                          width: 200,
                           child: RadioMenuButton(
                             value: 'Tutor',
                             groupValue: selectedOption,
-                            onChanged: (selectedValue){
-                              setState(() =>
-                                selectedOption = selectedValue!);
-                                showTutorSection = true;
+                            onChanged: (selectedValue) {
+                              setState(() {
+                                selectedOption = selectedValue!;
+                              });
+                              showTutorSection = true;
                             },
                             child: const Text('Tutor'),
                           ),
@@ -117,42 +194,40 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           width: 200,
                           child: RadioMenuButton(
-                            value: 'Estudiante',
+                            value: 'student',
                             groupValue: selectedOption,
-                            onChanged: (selectedValue){
-                              setState(() =>
-                                selectedOption = selectedValue!);
-                                showTutorSection = false;
+                            onChanged: (selectedValue) {
+                              setState(() {
+                                selectedOption = selectedValue!;
+                              });
+                              showTutorSection = false;
                             },
                             child: const Text('Estudiante'),
                           ),
                         ),
                         Visibility(
-                          visible: showTutorSection,
-                          child: tutorSection()),
-                        SizedBox(height: 10),
+                            visible: showTutorSection,
+                            child: const TutorSection()),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Checkbox(
-                                value: isChecked, 
-                                activeColor: Colors.black,
-                                onChanged: (newBool){
-                                  setState(() {
-                                    isChecked = newBool;
-                                  });
-                                }
-                              ),
+                                  value: isChecked,
+                                  activeColor: Colors.black,
+                                  onChanged: (newBool) {
+                                    setState(() {
+                                      isChecked = newBool;
+                                    });
+                                  }),
                               const Text('Acepto los términos y condiciones'),
                             ],
                           ),
                         ),
-    
-
-                  ],
-                  ),      
+                      ],
+                    ),
                   ),
                   SizedBox(
                     width: 500,
@@ -161,7 +236,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                       child: ElevatedButton(
                         onPressed: () => {
-                          //signInWithEmailAndPassword(),
+                          createUserWithEmailAndPassword(),
                         },
                         style: const ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll<Color>(
@@ -184,13 +259,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: TextStyle(fontSize: 18),
                   ),
                   TextButton(
-                    child: const Text(
-                      'Ingresa aquí',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    onPressed: () => {},
-                  ),
-                  SizedBox(height: 50),
+                      child: const Text(
+                        'Ingresa aquí',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LogInPage(),
+                              ),
+                            ),
+                          }),
+                  const SizedBox(height: 50),
                 ],
               ),
             ),
@@ -201,14 +282,19 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
+class TutorSection extends StatelessWidget {
+  const TutorSection({super.key});
 
-class tutorSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 50, 0, 1),
-        child: MultiTextfield(bottomPadding: 0, leftPadding: 0, rightPadding: 0, labelText: 'Cuéntanos de ti:', placeholder: '...',)
-      
-    );
+    return const Padding(
+        padding: EdgeInsets.fromLTRB(0, 50, 0, 1),
+        child: MultiTextfield(
+          bottomPadding: 0,
+          leftPadding: 0,
+          rightPadding: 0,
+          labelText: 'Cuéntanos de ti:',
+          placeholder: '...',
+        ));
   }
 }

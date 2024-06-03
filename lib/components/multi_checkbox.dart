@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-class customMultiCheckBox extends StatefulWidget {
-  const customMultiCheckBox({super.key});
+class CustomMultiCheckBox extends StatefulWidget {
+  const CustomMultiCheckBox({super.key});
 
   @override
-  State<customMultiCheckBox> createState() => _customMultiCheckBoxState();
+  State<CustomMultiCheckBox> createState() => _CustomMultiCheckBoxState();
 }
 
-class _customMultiCheckBoxState extends State<customMultiCheckBox> {
-
+class _CustomMultiCheckBoxState extends State<CustomMultiCheckBox> {
   List<String> selectedItems = [];
 
   void _showMultiSelect() async {
-    final List <String> items = [
+    final List<String> items = [
       'Lunes',
       'Martes',
       'Miércoles',
@@ -22,16 +21,16 @@ class _customMultiCheckBoxState extends State<customMultiCheckBox> {
     ];
 
     final List<String>? results = await showDialog(
-      context: context, 
-      builder: (BuildContext context){
-        return MultiSelect(items: items);
-      });
-
-      //Update
-      if(results != null) {
-        setState(() {
-          selectedItems = results;
+        context: context,
+        builder: (BuildContext context) {
+          return MultiSelect(items: items);
         });
+
+    //Update
+    if (results != null) {
+      setState(() {
+        selectedItems = results;
+      });
     }
   }
 
@@ -46,29 +45,28 @@ class _customMultiCheckBoxState extends State<customMultiCheckBox> {
             onPressed: _showMultiSelect,
             child: const Text('Seleccione aquí los días'),
           ),
-
           Wrap(
-            children: selectedItems.map((e) => Chip(
-              label: Text(e),
-            )).toList(),
-          ) 
+            children: selectedItems
+                .map((e) => Chip(
+                      label: Text(e),
+                    ))
+                .toList(),
+          )
         ],
       ),
     );
   }
 }
 
-
 class MultiSelect extends StatefulWidget {
   final List<String> items;
-  const MultiSelect({Key? key, required this.items}) : super(key : key);
+  const MultiSelect({super.key, required this.items});
 
   @override
   State<MultiSelect> createState() => _MultiSelectState();
 }
 
 class _MultiSelectState extends State<MultiSelect> {
-
   //Para cargar los items seleccionados en pantalla
   final List<String> selectedItems = [];
 
@@ -79,15 +77,14 @@ class _MultiSelectState extends State<MultiSelect> {
       } else {
         selectedItems.remove(itemValue);
       }
-    }
-  );
+    });
   }
 
-  void cancel(){
+  void cancel() {
     Navigator.pop(context);
   }
 
-  void submit(){
+  void submit() {
     Navigator.pop(context, selectedItems);
   }
 
@@ -96,25 +93,23 @@ class _MultiSelectState extends State<MultiSelect> {
     return AlertDialog(
       title: const Text('Selecciona los días'),
       content: SingleChildScrollView(
-        child: ListBody(
-          children: widget.items.map((item) => CheckboxListTile(
-            value: selectedItems.contains(item), 
-            title: Text(item),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (isChecked) => itemChange(item, isChecked!),
-            )).toList(),
-            )
-          ),
-        actions: [
-          TextButton(
-            onPressed: cancel,
-            child: const Text('Cancelar'),
-          ),
-          ElevatedButton(
-            onPressed: submit, 
-            child: const Text('Guardar')
-          ),
-        ],
-        );
+          child: ListBody(
+        children: widget.items
+            .map((item) => CheckboxListTile(
+                  value: selectedItems.contains(item),
+                  title: Text(item),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: (isChecked) => itemChange(item, isChecked!),
+                ))
+            .toList(),
+      )),
+      actions: [
+        TextButton(
+          onPressed: cancel,
+          child: const Text('Cancelar'),
+        ),
+        ElevatedButton(onPressed: submit, child: const Text('Guardar')),
+      ],
+    );
   }
 }

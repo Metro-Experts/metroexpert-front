@@ -1,9 +1,13 @@
+// ignore_for_file: use_full_hex_values_for_flutter_colors
+
 import 'package:flutter/material.dart';
-import 'package:metro_experts/components/appBar.dart';
-import 'package:metro_experts/components/buildTextField.dart'; //para uso de iconos svg
+import 'package:metro_experts/components/app_bar.dart';
+import 'package:metro_experts/components/build_text_field.dart'; //para uso de iconos svg
 
 class UserEditProfile extends StatelessWidget {
-  bool isObscurePassword = true;
+  final bool isObscurePassword = true;
+
+  const UserEditProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,7 @@ class UserEditProfile extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             const CustomTextField(
                 labelText: "Nombre de Usuario",
                 placeholder: "Jhon Doe",
@@ -62,36 +66,34 @@ class UserEditProfile extends StatelessWidget {
                 labelText: "Teléfono",
                 placeholder: "+58 04241501278",
                 isPasswordTextField: false),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.all(50),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(
-                    onPressed: () {}, 
-                    child: Text("Cancelar", style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                    )),
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: Color(0xfffFF0000),
-                    ),
-                  ),
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        backgroundColor: const Color(0xfffFF0000),
+                      ),
+                      child: const Text("Cancelar",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ))),
                   ElevatedButton(
-                    onPressed: (){}, 
-                    child: Text("Guardar", style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white
-                    )),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xfff060B26),
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                    ),
-                  )
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xfff060b26),
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      child: const Text("Guardar",
+                          style: TextStyle(fontSize: 15, color: Colors.white)))
                 ],
               ),
             )

@@ -7,11 +7,11 @@ class CoursePage extends StatefulWidget {
   const CoursePage({
     required this.subject,
     required this.tutorName,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _CoursePageState createState() => _CoursePageState();
+  State<CoursePage> createState() => _CoursePageState();
 }
 
 class _CoursePageState extends State<CoursePage> {
@@ -33,13 +33,13 @@ class _CoursePageState extends State<CoursePage> {
               onPressed: () {
                 Navigator.of(context).pop(false); // No
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true); // Sí
               },
-              child: Text('Sí'),
+              child: const Text('Sí'),
             ),
           ],
         );
@@ -73,29 +73,29 @@ class _CoursePageState extends State<CoursePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.book, color: Colors.black54),
-                    SizedBox(width: 8),
+                    const Icon(Icons.book, color: Colors.black54),
+                    const SizedBox(width: 8),
                     Text(
                       widget.subject,
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.person, color: Colors.black54),
-                    SizedBox(width: 8),
+                    const Icon(Icons.person, color: Colors.black54),
+                    const SizedBox(width: 8),
                     Text(
                       'Tutor: ${widget.tutorName}',
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
-                Row(
+                const SizedBox(height: 8),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.calendar_today, color: Colors.black54),
@@ -106,8 +106,8 @@ class _CoursePageState extends State<CoursePage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
-                Row(
+                const SizedBox(height: 8),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.access_time, color: Colors.black54),
@@ -120,19 +120,20 @@ class _CoursePageState extends State<CoursePage> {
                 ),
               ],
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             GestureDetector(
               onTap: _showConfirmationDialog,
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 100),
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                duration: const Duration(milliseconds: 100),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 decoration: BoxDecoration(
                   color: isJoined ? Colors.red : Colors.orange,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   isJoined ? 'Salir de la clase' : 'Unirme',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),

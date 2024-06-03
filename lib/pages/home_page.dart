@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:metro_experts/pages/log_in_page.dart';
 import 'course_page.dart';
 import 'package:metro_experts/firebase_auth/auth.dart'; // Importa la nueva página
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -50,6 +51,10 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 Auth().signOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LogInPage()),
+                );
               },
               child: const CircleAvatar(
                 backgroundImage: AssetImage('assets/images/man_teaching.png'),
@@ -72,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               onChanged: updateSearchQuery,
               decoration: InputDecoration(
                 hintText: 'Buscar por asignatura o nombre del tutor',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,
@@ -92,12 +97,12 @@ class _HomePageState extends State<HomePage> {
                           tutorName: filteredTutors[index]['tutorName']!,
                           imagePath: filteredTutors[index]['imagePath']!,
                           color: index.isEven
-                              ? Color(0xFFFEC89F)
-                              : Color(0xFF9FA9FF),
+                              ? const Color(0xFFFEC89F)
+                              : const Color(0xFF9FA9FF),
                         );
                       },
                     )
-                  : Center(
+                  : const Center(
                       child: Text(
                         'No se encontraron resultados',
                         style: TextStyle(
@@ -125,8 +130,8 @@ class TutorCard extends StatelessWidget {
     required this.tutorName,
     required this.imagePath,
     required this.color,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +166,7 @@ class TutorCard extends StatelessWidget {
                     Center(
                       child: Text(
                         subject,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20, // Título más grande
                           fontWeight: FontWeight.bold,
                         ),
@@ -171,7 +176,7 @@ class TutorCard extends StatelessWidget {
                     Center(
                       child: Text(
                         tutorName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16, // Subtítulo
                         ),
                       ),
