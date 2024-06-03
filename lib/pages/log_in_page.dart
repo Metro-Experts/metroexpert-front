@@ -69,7 +69,7 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person),
-                        hintText: 'email',
+                        hintText: 'Email',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -82,7 +82,7 @@ class _LogInPageState extends State<LogInPage> {
                       obscureText: true,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.password),
-                        hintText: 'Password',
+                        hintText: 'Contraseña',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -97,7 +97,7 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                   TextButton(
                     child: const Text(
-                      'Continue with Google',
+                      'Continuar con Google',
                       style: TextStyle(fontSize: 18),
                     ),
                     onPressed: () => {},
@@ -117,7 +117,7 @@ class _LogInPageState extends State<LogInPage> {
                               Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
                         ),
                         child: const Text(
-                          'LOG IN',
+                          'Iniciar Sesión',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

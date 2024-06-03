@@ -52,7 +52,7 @@ class _IntroPageState extends State<IntroPage> {
                       backgroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                     ),
-                    child: const Text('Get Started', style: TextStyle(
+                    child: const Text('Comenzar', style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color:const Color(0xffEE8A6F), 
