@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
 import 'package:metro_experts/pages/sign_up_page.dart';
-
+import 'package:metro_experts/pages/user_edit_profile.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
 
@@ -20,12 +23,39 @@ class _LogInPageState extends State<LogInPage> {
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+        email: _emailController.text,
+        password: _passwordController.text
+      );
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        print('Currently signed with id: ${user.uid}');
+        final response = await http.get(
+          Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${user.uid}')
+        );
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+        // Si la solicitud fue exitosa
+          print("${response.body}");
+          Map<dynamic,dynamic> usuario = jsonDecode(response.body);
+          //final userProvider = Provider.of<UserProvider>(context, listen: false);
+          //userProvider.setUser(Usuario(name: usuario['name'], lastname: usuario['lastName'], email: usuario['email']));
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => UserProvider()),
+            ]
+          );
+        } else {
+          // Si la solicitud falló
+          print("Failed to load user data");
+        }
+      }
+      
       if (Auth().authStateChanges != null) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const HomePage(),
+            //builder: (context) => UserEditProfile(),
           ),
         );
       }
@@ -50,6 +80,7 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
+    //final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: ListBody(

@@ -1,16 +1,21 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
-
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/app_bar.dart';
 import 'package:metro_experts/components/build_text_field.dart'; //para uso de iconos svg
+import 'package:provider/provider.dart';
+
 
 class UserEditProfile extends StatelessWidget {
   final bool isObscurePassword = true;
+  UserEditProfile({super.key});
 
-  const UserEditProfile({super.key});
+  TextEditingController _nombreController = TextEditingController();
+  TextEditingController _apellidoController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(38.0),
@@ -45,28 +50,31 @@ class UserEditProfile extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            const CustomTextField(
+
+            TextField(
+              controller: _nombreController,
+              decoration: const InputDecoration(
                 labelText: "Nombre de Usuario",
-                placeholder: "Jhon Doe",
-                isPasswordTextField: false),
-            const CustomTextField(
+              )
+            ),
+            const SizedBox(height: 20),
+
+            TextField(
+              controller: _apellidoController,
+              decoration: const InputDecoration(
                 labelText: "Carrera",
-                placeholder: "Ingenieria de Sistemas",
-                isPasswordTextField: false),
-            const CustomTextField(
+              )
+            ),
+            const SizedBox(height: 20),
+
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
                 labelText: "Email",
-                placeholder: "jhondoe@example.com",
-                isPasswordTextField: false),
-            const CustomTextField(
-                labelText: "Contraseña",
-                placeholder: "********",
-                isPasswordTextField: true),
-            const CustomTextField(
-                labelText: "Teléfono",
-                placeholder: "+58 04241501278",
-                isPasswordTextField: false),
-            const SizedBox(height: 50),
+              )
+            ),
+            const SizedBox(height: 20),
+
             Padding(
               padding: const EdgeInsets.all(50),
               child: Row(
@@ -103,3 +111,29 @@ class UserEditProfile extends StatelessWidget {
     );
   }
 }
+
+
+class Usuario {
+  String name;
+  String lastname;
+  String email;
+
+  Usuario({required this.name, required this.lastname, required this.email});
+}
+
+class UserProvider with ChangeNotifier {
+  Usuario? _user;
+
+  Usuario? get user => _user;
+
+  void setUser(Usuario user) {
+    _user = user;
+    notifyListeners();
+  }
+
+  void clearUser() {
+    _user = null;
+    notifyListeners();
+  }
+}
+
