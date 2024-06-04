@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/man_teaching.png'),
+              backgroundImage: AssetImage('assets/images/User_01.png'),
             ),
           ],
         ),
