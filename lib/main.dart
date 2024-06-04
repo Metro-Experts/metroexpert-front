@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // The property [home] defines the default route of the app
-      home: const LogInPage(),
+      home: const IntroPage(),
       debugShowCheckedModeBanner: false,
     );
   }

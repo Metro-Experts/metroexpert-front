@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:metro_experts/firebase_auth/auth.dart';
@@ -154,7 +155,7 @@ class _CoursePageState extends State<CoursePage> {
                     Text(
                       widget.subject,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

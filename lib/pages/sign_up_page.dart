@@ -189,7 +189,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           width: 200,
                           child: RadioMenuButton(
-                            value: 'Tutor',
+                            value: 'tutor',
                             groupValue: selectedOption,
                             onChanged: (selectedValue) {
                               setState(() {
