@@ -109,6 +109,7 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
 
   @override
   void initState() {
+    print(Auth().currentUser!.uid);
     fetchUser();
     super.initState();
   }

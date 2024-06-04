@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: SvgPicture.asset(
-            'assets/icons/Arrow - Left 2.svg',
+            'assets/icons/arrow_left.svg',
             height: 30,
             width: 30,
           ),

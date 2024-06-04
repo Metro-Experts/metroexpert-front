@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/tutor_card.dart';
+import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:http/http.dart' as http;
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     fetchTutorings();
+    print(Auth().currentUser!.uid);
     super.initState();
   }
 
@@ -98,7 +100,22 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const TutorEditProfile()),
+                      builder: (context) => const UserEditProfile()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.assignment_add,
+                size: 32,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text('Create Class',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CreateClass()),
                 );
               },
             ),
