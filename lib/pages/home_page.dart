@@ -8,6 +8,33 @@ import 'package:http/http.dart' as http;
 import 'package:metro_experts/pages/tutor_edit_profile.dart';
 import 'package:metro_experts/pages/user_edit_profile.dart';
 
+class User {
+  final dynamic name;
+  final dynamic lastName;
+  final dynamic email;
+
+  User({
+    required this.name,
+    required this.lastName,
+    required this.email,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "lastName": lastName,
+    };
+  }
+}
+
 //marico el que lo lea
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +44,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  User userData = User(
+    name: '',
+    lastName: '',
+    email: '',
+  );
   List<TutorCard> _tutorCard = [];
   List<TutorCard> filteredTutors = [];
   String searchQuery = '';
@@ -39,6 +71,26 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> fetchUser() async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${Auth().currentUser!.uid}');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      Map responseData = json.decode(response.body);
+
+      setState(
+        () {
+          userData = User(
+              name: responseData['name'],
+              lastName: responseData['lastName'],
+              email: responseData['email']);
+        },
+      );
+    } else {
+      print('error fetching tutorings...');
+    }
+  }
+
   void updateSearchQuery(String query) {
     setState(() {
       searchQuery = query;
@@ -52,6 +104,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     fetchTutorings();
+    fetchUser();
     print(Auth().currentUser!.uid);
     super.initState();
   }
@@ -60,11 +113,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('¡Hola, Daniel!', style: TextStyle(fontSize: 18)),
-            CircleAvatar(
+            Text('Hola, ${userData.name} 👋🏻'.toUpperCase(),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const CircleAvatar(
               backgroundImage: AssetImage('assets/images/man_teaching.png'),
             ),
           ],

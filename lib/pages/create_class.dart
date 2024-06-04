@@ -53,7 +53,7 @@ class _CreateClassState extends State<CreateClass> {
   ];
 
   String categorySelection = '';
-  String subject = '';
+  String? subject;
   String modality = '';
   TextEditingController priceController = TextEditingController();
   TextEditingController dia1Controller = TextEditingController();
@@ -100,6 +100,7 @@ class _CreateClassState extends State<CreateClass> {
     lastName: '',
     email: '',
   );
+
   Future<void> fetchUser() async {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${Auth().currentUser!.uid}');
@@ -147,6 +148,39 @@ class _CreateClassState extends State<CreateClass> {
         },
       ),
     );
+    if (response.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Class created successfully',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Error Creating The Class',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    }
     print(response.body);
   }
 
@@ -225,11 +259,11 @@ class _CreateClassState extends State<CreateClass> {
               text: "Selecciona una categoría: ",
               menuList: categoryList,
               onSelectionChanged: (val) {
-                setState(() {
-                  categorySelection = val!;
-                  // Ensure subject list updates when category changes
-                  subject = '';
-                });
+                setState(
+                  () {
+                    categorySelection = val!;
+                  },
+                );
               },
             ),
             const SizedBox(height: 50),
@@ -241,7 +275,9 @@ class _CreateClassState extends State<CreateClass> {
                       ? programming
                       : categorySelection == categoryList[2]
                           ? physics
-                          : chemistry,
+                          : categorySelection == categoryList[3]
+                              ? chemistry
+                              : [],
               onSelectionChanged: (val) {
                 setState(() {
                   subject = val!;
@@ -303,11 +339,39 @@ class _CreateClassState extends State<CreateClass> {
               },
             ),
             const SizedBox(height: 80),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                ElevatedButton(
+                  onPressed: () {
+                    createClass();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xfff060B26),
+                    padding: const EdgeInsets.symmetric(horizontal: 64),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  child: const Text(
+                    "Crear",
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                    );
+                  },
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
@@ -321,21 +385,6 @@ class _CreateClassState extends State<CreateClass> {
                       fontSize: 15,
                       color: Colors.white,
                     ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    createClass();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xfff060B26),
-                    padding: const EdgeInsets.symmetric(horizontal: 60),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  child: const Text(
-                    "Crear",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
                   ),
                 ),
               ],
