@@ -1,9 +1,41 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
-
 import 'package:flutter/material.dart';
-import 'package:metro_experts/components/app_bar.dart';
-import 'package:metro_experts/components/build_text_field.dart';
+import 'package:metro_experts/components/custom_text_field.dart';
 import 'package:metro_experts/components/multi_textfield.dart';
+//para uso de iconos svg
+import 'dart:async';
+import 'dart:convert';
+import 'package:metro_experts/firebase_auth/auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/pages/sign_in_page.dart';
+
+class User {
+  final dynamic name;
+  final dynamic lastName;
+  final dynamic email;
+
+  User({
+    required this.name,
+    required this.lastName,
+    required this.email,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "lastName": lastName,
+    };
+  }
+}
 
 class TutorEditProfile extends StatefulWidget {
   const TutorEditProfile({super.key});
@@ -13,13 +45,127 @@ class TutorEditProfile extends StatefulWidget {
 }
 
 class _TutorEditProfileState extends State<TutorEditProfile> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  User userData = User(
+    name: '',
+    lastName: '',
+    email: '',
+  );
+  Future<void> fetchUser() async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${Auth().currentUser!.uid}');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      Map responseData = json.decode(response.body);
+
+      setState(
+        () {
+          userData = User(
+              name: responseData['name'],
+              lastName: responseData['lastName'],
+              email: responseData['email']);
+        },
+      );
+    } else {
+      print('error fetching tutorings...');
+    }
+  }
+
+  Future<void> saveUserInformation(User user) async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${Auth().currentUser!.uid}');
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(user.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Data Uploaded successfully',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      );
+    } else {
+      print('API request failed with status code: ${response.statusCode}');
+    }
+  }
+
+  @override
+  void initState() {
+    fetchUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(38.0),
-          child: CustomAppBar(titleText: 'Edit Profile')),
-      backgroundColor: Colors.white,
+      appBar: AppBar(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              leading: const Icon(
+                size: 32,
+                Icons.home,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text(
+                'Home',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.settings,
+                size: 32,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text('Account',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.logout,
+                size: 32,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text('Logout',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              onTap: () {
+                Auth().signOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LogInPage()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       body: Container(
         padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
         child: ListView(
@@ -50,26 +196,29 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
               ),
             ),
             const SizedBox(height: 20),
-            const CustomTextField(
+            CustomTextField(
                 labelText: "Nombre de Usuario",
-                placeholder: "Jhon Doe",
-                isPasswordTextField: false),
-            const CustomTextField(
-                labelText: "Carrera",
-                placeholder: "Ingenieria de Sistemas",
-                isPasswordTextField: false),
-            const CustomTextField(
-                labelText: "Email",
-                placeholder: "jhondoe@example.com",
-                isPasswordTextField: false),
-            const CustomTextField(
-                labelText: "Contraseña",
-                placeholder: "********",
-                isPasswordTextField: true),
-            const CustomTextField(
-                labelText: "Telefóno",
-                placeholder: "+58 04241501278",
-                isPasswordTextField: false),
+                placeholder: userData.name,
+                isPasswordTextField: false,
+                controller: nameController),
+            CustomTextField(
+              labelText: "Apellido Del Usuario",
+              placeholder: userData.lastName,
+              isPasswordTextField: false,
+              controller: lastNameController,
+            ),
+            CustomTextField(
+              labelText: "Email",
+              placeholder: userData.email,
+              isPasswordTextField: false,
+              controller: emailController,
+            ),
+            CustomTextField(
+              labelText: "Contraseña",
+              placeholder: "********",
+              isPasswordTextField: true,
+              controller: passwordController,
+            ),
             const MultiTextfield(
               bottomPadding: 10,
               leftPadding: 50,
@@ -100,7 +249,15 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      saveUserInformation(
+                        User(
+                          name: nameController.text,
+                          lastName: lastNameController.text,
+                          email: userData.email,
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xfff060B26),
                       padding: const EdgeInsets.symmetric(horizontal: 30),

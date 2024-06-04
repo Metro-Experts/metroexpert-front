@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:metro_experts/components/tutor_card.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
-import 'course_page.dart';
-import 'package:metro_experts/firebase_auth/auth.dart'; // Importa la nueva página
+import 'package:metro_experts/firebase_auth/auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:metro_experts/pages/tutor_edit_profile.dart';
+import 'package:metro_experts/pages/user_edit_profile.dart';
 
+//marico el que lo lea
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -11,44 +16,100 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, String>> tutors = List.generate(
-    7,
-    (index) => {
-      'subject': 'Modelación Estocástica ${index + 1}',
-      'tutorName': 'Tutor ${index + 1}',
-      'imagePath': 'assets/images/man_teaching.png',
-    },
-  );
-
-  List<Map<String, String>> filteredTutors = [];
+  List<TutorCard> _tutorCard = [];
+  List<TutorCard> filteredTutors = [];
   String searchQuery = '';
 
-  @override
-  void initState() {
-    super.initState();
-    filteredTutors = tutors;
+  Size size = const Size(0, 0);
+
+  Future<void> fetchTutorings() async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = json.decode(response.body);
+      setState(() {
+        _tutorCard =
+            responseData.map((data) => TutorCard.fromJson(data)).toList();
+        filteredTutors = _tutorCard;
+      });
+    } else {
+      print('error fetching tutorings...');
+    }
   }
 
   void updateSearchQuery(String query) {
     setState(() {
       searchQuery = query;
-      filteredTutors = tutors
-          .where((tutor) => tutor['subject']!
-              .toLowerCase()
-              .startsWith(searchQuery.toLowerCase()))
-          .toList();
+      filteredTutors = _tutorCard.where((tutor) {
+        return tutor.subject.toLowerCase().contains(query.toLowerCase()) ||
+            tutor.tutorName.toLowerCase().contains(query.toLowerCase());
+      }).toList();
     });
+  }
+
+  @override
+  void initState() {
+    fetchTutorings();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('¡Hola, Daniel!', style: TextStyle(fontSize: 18)),
-            GestureDetector(
+            Text('¡Hola, Daniel!', style: TextStyle(fontSize: 18)),
+            CircleAvatar(
+              backgroundImage: AssetImage('assets/images/man_teaching.png'),
+            ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              leading: const Icon(
+                size: 32,
+                Icons.home,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text(
+                'Home',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                // Navigate to home page
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.settings,
+                size: 32,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text('Account',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const TutorEditProfile()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.logout,
+                size: 32,
+                color: Color.fromRGBO(238, 138, 111, 1),
+              ),
+              title: const Text('Logout',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               onTap: () {
                 Auth().signOut();
                 Navigator.push(
@@ -56,9 +117,6 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const LogInPage()),
                 );
               },
-              child: const CircleAvatar(
-                backgroundImage: AssetImage('assets/images/man_teaching.png'),
-              ),
             ),
           ],
         ),
@@ -92,13 +150,13 @@ class _HomePageState extends State<HomePage> {
                   ? ListView.builder(
                       itemCount: filteredTutors.length,
                       itemBuilder: (context, index) {
+                        var tutoring = filteredTutors[index];
                         return TutorCard(
-                          subject: filteredTutors[index]['subject']!,
-                          tutorName: filteredTutors[index]['tutorName']!,
-                          imagePath: filteredTutors[index]['imagePath']!,
-                          color: index.isEven
-                              ? const Color(0xFFFEC89F)
-                              : const Color(0xFF9FA9FF),
+                          subject: tutoring.subject,
+                          tutorName: tutoring.tutorName,
+                          tutoringFee: tutoring.tutoringFee,
+                          tutoringId: tutoring.tutoringId,
+                          tutoringStudents: tutoring.tutoringStudents,
                         );
                       },
                     )
@@ -113,84 +171,6 @@ class _HomePageState extends State<HomePage> {
                     ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class TutorCard extends StatelessWidget {
-  final String subject;
-  final String tutorName;
-  final String imagePath;
-  final Color color;
-
-  const TutorCard({
-    required this.subject,
-    required this.tutorName,
-    required this.imagePath,
-    required this.color,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CoursePage(
-              subject: subject,
-              tutorName: tutorName,
-            ),
-          ),
-        );
-      },
-      child: Card(
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        margin: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0), // Ajuste del margen para menos ancho
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Text(
-                        subject,
-                        style: const TextStyle(
-                          fontSize: 20, // Título más grande
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Center(
-                      child: Text(
-                        tutorName,
-                        style: const TextStyle(
-                          fontSize: 16, // Subtítulo
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Image.asset(
-                imagePath,
-                width: 140,
-                height: 140,
-              ),
-            ],
-          ),
         ),
       ),
     );

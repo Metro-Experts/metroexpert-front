@@ -1,12 +1,21 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:metro_experts/firebase_auth/auth.dart';
 
 class CoursePage extends StatefulWidget {
   final String subject;
   final String tutorName;
+  final String tutoringFee;
+  final String tutoringId;
+  final List tutoringStudents;
 
   const CoursePage({
     required this.subject,
     required this.tutorName,
+    required this.tutoringFee,
+    required this.tutoringId,
+    required this.tutoringStudents,
     super.key,
   });
 
@@ -14,8 +23,67 @@ class CoursePage extends StatefulWidget {
   State<CoursePage> createState() => _CoursePageState();
 }
 
+bool isJoined = false;
+
 class _CoursePageState extends State<CoursePage> {
-  bool isJoined = false;
+  void isAStudent(List tutoringStudents, String uid) {
+    if (tutoringStudents.contains(uid)) {
+      setState(() {
+        isJoined = true;
+      });
+    } else {
+      setState(() {
+        isJoined = false;
+      });
+    }
+  }
+
+  Future<void> subscribeUser() async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/${widget.tutoringId}/add-student');
+    const headers = {'Content-Type': 'application/json'};
+
+    final response = await http.post(url,
+        headers: headers,
+        body: json.encode({"studentId": Auth().currentUser!.uid}));
+    try {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'successfuly created subscribe',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      } else {
+        print(response.body);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'error subscribing',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    }
+  }
 
   void _showConfirmationDialog() async {
     final action = await showDialog<bool>(
@@ -31,13 +99,14 @@ class _CoursePageState extends State<CoursePage> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(false); // No
+                Navigator.of(context).pop(false);
               },
               child: const Text('No'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(true); // Sí
+                Navigator.of(context).pop(true);
+                subscribeUser(); // Sí
               },
               child: const Text('Sí'),
             ),
@@ -51,6 +120,12 @@ class _CoursePageState extends State<CoursePage> {
         isJoined = !isJoined;
       });
     }
+  }
+
+  @override
+  void initState() {
+    isAStudent(widget.tutoringStudents, Auth().currentUser!.uid);
+    super.initState();
   }
 
   @override
@@ -118,6 +193,15 @@ class _CoursePageState extends State<CoursePage> {
                     ),
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Costo: ${widget.tutoringFee}',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
               ],
             ),
             const SizedBox(height: 32),
@@ -128,7 +212,7 @@ class _CoursePageState extends State<CoursePage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 decoration: BoxDecoration(
-                  color: isJoined ? Colors.red : Colors.orange,
+                  color: isJoined ? Colors.red : const Color(0xFF9FA9FF),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
