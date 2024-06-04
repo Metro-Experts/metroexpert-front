@@ -183,6 +183,8 @@ class _UserEditProfileState extends State<UserEditProfile> {
                     width: 130,
                     height: 130,
                     decoration: BoxDecoration(
+                      image: const DecorationImage(
+                          image: AssetImage('assets/images/User_01.png')),
                       border: Border.all(width: 4, color: Colors.white),
                       boxShadow: [
                         BoxShadow(
