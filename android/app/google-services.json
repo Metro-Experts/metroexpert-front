@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "884469550512",
+    "project_id": "metroexperts-d112f",
+    "storage_bucket": "metroexperts-d112f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884469550512:android:4a436df3a32a3bafe35a75",
+        "android_client_info": {
+          "package_name": "com.example.metro_experts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDOvRKquGIxgglqEgaiY_j4jFipOQXStk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

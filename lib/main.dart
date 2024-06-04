@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:metro_experts/pages/create_tutoria.dart';
-import 'package:metro_experts/pages/tutor_profile_view.dart';
-import 'package:metro_experts/pages/user_edit_profile.dart';
+import 'package:metro_experts/pages/create_class.dart';
+import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/pages/intro_page.dart';
+import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:metro_experts/pages/tutor_edit_profile.dart';
-import './pages/log_in_page.dart';
+import 'package:metro_experts/pages/user_edit_profile.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // The property [home] defines the default route of the app
-      home: const TutorProfileView(),
+      home: const LogInPage(),
       debugShowCheckedModeBanner: false,
     );
   }
