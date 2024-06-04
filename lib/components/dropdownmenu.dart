@@ -4,30 +4,33 @@ class DropDownMenu extends StatefulWidget {
   final String text;
   final List<String> menuList;
   final void Function(String?) onSelectionChanged;
+  final String? selectedValue;
 
   const DropDownMenu({
-    super.key,
+    Key? key,
     required this.text,
     required this.menuList,
     required this.onSelectionChanged,
-  });
+    this.selectedValue,
+  }) : super(key: key);
 
   @override
   State<DropDownMenu> createState() => _DropDownMenuState();
 }
 
 class _DropDownMenuState extends State<DropDownMenu> {
-  //Variable
-  String? selectedVal = "";
+  String? selectedVal;
 
-  // _createTutoriaState() {
-  //   selectedVal = widget.menuList[0];
-  // }
+  @override
+  void initState() {
+    super.initState();
+    selectedVal = widget.selectedValue;
+  }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
-      value: null,
+      value: selectedVal,
       items: widget.menuList.map(
         (e) {
           return DropdownMenuItem(
@@ -39,7 +42,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
       onChanged: (value) {
         setState(
           () {
-            selectedVal = value as String;
+            selectedVal = value as String?;
             widget.onSelectionChanged(selectedVal);
           },
         );
