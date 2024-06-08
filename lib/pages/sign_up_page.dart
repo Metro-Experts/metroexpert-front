@@ -20,7 +20,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   String genderValue = '';
 
   Future<void> createUserWithEmailAndPassword() async {
@@ -39,8 +40,8 @@ class _SignUpPageState extends State<SignUpPage> {
         headers: headers,
         body: jsonEncode({
           "_id": uid,
-          "name": fullNameController.text.split(' ')[0],
-          "lastName": fullNameController.text.split(' ')[1],
+          "name": _firstNameController.text.trim(),
+          "lastName": _lastNameController.text.trim(),
           "email": _emailController.text,
           "userType": selectedOption,
           "gender": genderValue.contains('Masculino') ? 'M' : 'F'
@@ -48,13 +49,6 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
       if (response.statusCode == 201 && Auth().authStateChanges != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             duration: Duration(seconds: 3),
@@ -64,13 +58,35 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 25,
               child: Text(
                 textAlign: TextAlign.justify,
-                'User successfuly created',
+                'Usuario creado exitosamente',
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
         );
-      } else {}
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'Error al crear usuario',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -78,7 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
           backgroundColor: Colors.black,
           behavior: SnackBarBehavior.floating,
           content: SizedBox(
-            height: 25,
+            height: 50,
             child: Text(
               textAlign: TextAlign.justify,
               e.message!,
@@ -90,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  //Variables de ejemplos para poder trabajar en esto
+  // Variables de ejemplo para poder trabajar en esto
   bool showTutorSection = false;
   String selectedOption = "";
   bool? isChecked = false;
@@ -124,10 +140,25 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person),
-                        hintText: 'Nombre Completo',
+                        hintText: 'Nombre',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      controller: fullNameController,
+                      controller: _firstNameController,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
+                    child: TextField(
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                      ),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Apellido',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      controller: _lastNameController,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -215,8 +246,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         Visibility(
-                            visible: showTutorSection,
-                            child: const TutorSection()),
+                          visible: showTutorSection,
+                          child: const TutorSection(),
+                        ),
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(12),
@@ -224,13 +256,14 @@ class _SignUpPageState extends State<SignUpPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Checkbox(
-                                  value: isChecked,
-                                  activeColor: Colors.black,
-                                  onChanged: (newBool) {
-                                    setState(() {
-                                      isChecked = newBool;
-                                    });
-                                  }),
+                                value: isChecked,
+                                activeColor: Colors.black,
+                                onChanged: (newBool) {
+                                  setState(() {
+                                    isChecked = newBool;
+                                  });
+                                },
+                              ),
                               const Text('Acepto los términos y condiciones'),
                             ],
                           ),
@@ -248,8 +281,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           createUserWithEmailAndPassword(),
                         },
                         style: const ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll<Color>(
-                              Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            Color.fromRGBO(0xF2, 0xB0, 0x80, 1),
+                          ),
                         ),
                         child: const Text(
                           'Crear una cuenta',
@@ -268,18 +302,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: TextStyle(fontSize: 18),
                   ),
                   TextButton(
-                      child: const Text(
-                        'Ingresa aquí',
-                        style: TextStyle(fontSize: 18),
+                    child: const Text(
+                      'Ingresa aquí',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LogInPage(),
+                        ),
                       ),
-                      onPressed: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LogInPage(),
-                              ),
-                            ),
-                          }),
+                    },
+                  ),
                   const SizedBox(height: 50),
                 ],
               ),

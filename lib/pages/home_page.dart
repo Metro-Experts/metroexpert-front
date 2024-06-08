@@ -5,7 +5,6 @@ import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:metro_experts/pages/tutor_edit_profile.dart';
 import 'package:metro_experts/pages/user_edit_profile.dart';
 
 class User {
@@ -35,7 +34,6 @@ class User {
   }
 }
 
-//marico el que lo lea
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -52,8 +50,6 @@ class _HomePageState extends State<HomePage> {
   List<TutorCard> _tutorCard = [];
   List<TutorCard> filteredTutors = [];
   String searchQuery = '';
-
-  Size size = const Size(0, 0);
 
   Future<void> fetchTutorings() async {
     var url = Uri.parse(
@@ -139,7 +135,6 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                // Navigate to home page
                 Navigator.pop(context);
               },
             ),
@@ -206,7 +201,7 @@ class _HomePageState extends State<HomePage> {
             TextField(
               onChanged: updateSearchQuery,
               decoration: InputDecoration(
-                hintText: 'Buscar por asignatura o nombre del tutor',
+                hintText: 'Buscar por asignatura',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -229,6 +224,9 @@ class _HomePageState extends State<HomePage> {
                           tutoringFee: tutoring.tutoringFee,
                           tutoringId: tutoring.tutoringId,
                           tutoringStudents: tutoring.tutoringStudents,
+                          color: index % 2 == 0
+                              ? const Color(0xFFFEC89F)
+                              : const Color(0xFF9FA9FF),
                         );
                       },
                     )

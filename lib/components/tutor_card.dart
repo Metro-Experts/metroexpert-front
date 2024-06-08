@@ -7,22 +7,56 @@ class TutorCard extends StatelessWidget {
   final int tutoringFee;
   final String tutoringId;
   final List tutoringStudents;
+  final Color color;
 
-  const TutorCard(
-      {super.key,
-      required this.subject,
-      required this.tutorName,
-      required this.tutoringFee,
-      required this.tutoringId,
-      required this.tutoringStudents});
+  const TutorCard({
+    super.key,
+    required this.subject,
+    required this.tutorName,
+    required this.tutoringFee,
+    required this.tutoringId,
+    required this.tutoringStudents,
+    required this.color,
+  });
 
   factory TutorCard.fromJson(Map<String, dynamic> json) {
     return TutorCard(
-        subject: json['name'],
-        tutorName: json['tutor']['name'],
-        tutoringFee: json['price'],
-        tutoringId: json['_id'],
-        tutoringStudents: json['students']);
+      subject: json['name'],
+      tutorName: json['tutor']['name'],
+      tutoringFee: json['price'],
+      tutoringId: json['_id'],
+      tutoringStudents: json['students'],
+      color: const Color(0xFF9FA9FF), // Default color
+    );
+  }
+
+  void _showMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.edit),
+              title: Text('Editar perfil'),
+              onTap: () {
+                Navigator.pop(context);
+                // Acción de editar perfil
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text('Cambiar imagen'),
+              onTap: () {
+                Navigator.pop(context);
+                // Acción de cambiar imagen
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -35,7 +69,7 @@ class TutorCard extends StatelessWidget {
             builder: (context) => CoursePage(
               subject: subject,
               tutorName: tutorName,
-              tutoringFee: "${tutoringFee}",
+              tutoringFee: "$tutoringFee",
               tutoringId: tutoringId,
               tutoringStudents: tutoringStudents,
             ),
@@ -43,13 +77,11 @@ class TutorCard extends StatelessWidget {
         );
       },
       child: Card(
-        color: const Color(0xFF9FA9FF),
+        color: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        margin: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0), // Ajuste del margen para menos ancho
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
@@ -58,31 +90,38 @@ class TutorCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
-                        subject,
-                        style: const TextStyle(
-                          fontSize: 20, // Título más grande
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      subject,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Center(
-                      child: Text(
-                        tutorName,
-                        style: const TextStyle(
-                          fontSize: 16, // Subtítulo
-                        ),
+                    Text(
+                      'Tutor: $tutorName',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Precio: $tutoringFee',
+                      style: const TextStyle(
+                        fontSize: 14,
                       ),
                     ),
                   ],
                 ),
               ),
-              Image.asset(
-                "assets/images/man_teaching.png",
-                width: 140,
-                height: 140,
+              InkWell(
+                onTap: () => _showMenu(context),
+                child: Image.asset(
+                  "assets/images/man_teaching.png",
+                  width: 140,
+                  height: 140,
+                ),
               ),
             ],
           ),

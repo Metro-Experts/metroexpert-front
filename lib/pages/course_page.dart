@@ -59,7 +59,68 @@ class _CoursePageState extends State<CoursePage> {
               height: 25,
               child: Text(
                 textAlign: TextAlign.justify,
-                'successfuly created subscribe',
+                'Suscripción creada con éxito',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'Suscripción creada con éxito',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Error al suscribirse',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> unsubscribeUser() async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/${widget.tutoringId}/remove-student');
+    const headers = {'Content-Type': 'application/json'};
+
+    final response = await http.post(url,
+        headers: headers,
+        body: json.encode({"studentId": Auth().currentUser!.uid}));
+    try {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'Suscripción eliminada con éxito',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -78,7 +139,7 @@ class _CoursePageState extends State<CoursePage> {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'error subscribing',
+              'Error al eliminar suscripción',
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -106,9 +167,13 @@ class _CoursePageState extends State<CoursePage> {
               child: const Text('No'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop(true);
-                subscribeUser(); // Sí
+                if (isJoined) {
+                  await unsubscribeUser();
+                } else {
+                  await subscribeUser();
+                }
               },
               child: const Text('Sí'),
             ),
@@ -152,10 +217,13 @@ class _CoursePageState extends State<CoursePage> {
                   children: [
                     const Icon(Icons.book, color: Colors.black54),
                     const SizedBox(width: 8),
-                    Text(
-                      widget.subject,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
+                    Flexible(
+                      child: Text(
+                        widget.subject,
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -195,9 +263,12 @@ class _CoursePageState extends State<CoursePage> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const Icon(Icons.attach_money, color: Colors.black54),
+                    const SizedBox(width: 8),
                     Text(
                       'Costo: ${widget.tutoringFee}',
                       style: const TextStyle(fontSize: 18),
