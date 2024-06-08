@@ -18,6 +18,25 @@ class _LogInPageState extends State<LogInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> signInWithEmailAndPassword() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Por favor complete ambos campos',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+
     try {
       await Auth().signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
@@ -35,13 +54,9 @@ class _LogInPageState extends State<LogInPage> {
           duration: const Duration(seconds: 3),
           backgroundColor: Colors.black,
           behavior: SnackBarBehavior.floating,
-          content: SizedBox(
-            height: 25,
-            child: Text(
-              textAlign: TextAlign.justify,
-              e.message!,
-              style: const TextStyle(color: Colors.white),
-            ),
+          content: Text(
+            e.message!,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       );
@@ -97,7 +112,7 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                   const SizedBox(height: 25),
                   const Text(
-                    'Or',
+                    'or',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 20,
@@ -117,15 +132,13 @@ class _LogInPageState extends State<LogInPage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                       child: ElevatedButton(
-                        onPressed: () => {
-                          signInWithEmailAndPassword(),
-                        },
-                        style: const ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll<Color>(
-                              Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
+                        onPressed: signInWithEmailAndPassword,
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
                         ),
                         child: const Text(
-                          'Iniciar Sesión',
+                          'Iniciar sesión',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

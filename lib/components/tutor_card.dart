@@ -30,35 +30,6 @@ class TutorCard extends StatelessWidget {
     );
   }
 
-  void _showMenu(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: Icon(Icons.edit),
-              title: Text('Editar perfil'),
-              onTap: () {
-                Navigator.pop(context);
-                // Acción de editar perfil
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.image),
-              title: Text('Cambiar imagen'),
-              onTap: () {
-                Navigator.pop(context);
-                // Acción de cambiar imagen
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -115,13 +86,10 @@ class TutorCard extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
-                onTap: () => _showMenu(context),
-                child: Image.asset(
-                  "assets/images/man_teaching.png",
-                  width: 140,
-                  height: 140,
-                ),
+              Image.asset(
+                "assets/images/man_teaching.png",
+                width: 140,
+                height: 140,
               ),
             ],
           ),

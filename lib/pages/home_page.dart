@@ -51,6 +51,8 @@ class _HomePageState extends State<HomePage> {
   List<TutorCard> filteredTutors = [];
   String searchQuery = '';
 
+  Size size = const Size(0, 0);
+
   Future<void> fetchTutorings() async {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses');
@@ -97,6 +99,35 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _showProfileMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.edit),
+              title: Text('Editar perfil'),
+              onTap: () {
+                Navigator.pop(context);
+                // Acción de editar perfil
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text('Cambiar imagen'),
+              onTap: () {
+                Navigator.pop(context);
+                // Acción de cambiar imagen
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     fetchTutorings();
@@ -115,8 +146,11 @@ class _HomePageState extends State<HomePage> {
             Text('Hola, ${userData.name} 👋🏻'.toUpperCase(),
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/User_01.png'),
+            GestureDetector(
+              onTap: () => _showProfileMenu(context),
+              child: const CircleAvatar(
+                backgroundImage: AssetImage('assets/images/User_01.png'),
+              ),
             ),
           ],
         ),
@@ -135,6 +169,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               onTap: () {
+                // Navigate to home page
                 Navigator.pop(context);
               },
             ),
