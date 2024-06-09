@@ -3,7 +3,9 @@ import 'package:flutter_svg/svg.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String titleText;
-  const CustomAppBar({super.key, required this.titleText});
+  final Function action;
+  const CustomAppBar(
+      {super.key, required this.titleText, required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,9 @@ class CustomAppBar extends StatelessWidget {
       elevation: 0.0,
       centerTitle: true,
       leading: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          action;
+        },
         child: Container(
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,

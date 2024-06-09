@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/pages/course_page.dart';
 
-class TutorCard extends StatelessWidget {
+class TutorCardRender extends StatelessWidget {
   final String subject;
   final String tutorName;
   final int tutoringFee;
   final String tutoringId;
   final List tutoringStudents;
+  final List dates;
 
-  const TutorCard(
+  const TutorCardRender(
       {super.key,
       required this.subject,
       required this.tutorName,
       required this.tutoringFee,
       required this.tutoringId,
-      required this.tutoringStudents});
+      required this.tutoringStudents,
+      required this.dates});
 
-  factory TutorCard.fromJson(Map<String, dynamic> json) {
-    return TutorCard(
+  factory TutorCardRender.fromJson(Map<String, dynamic> json) {
+    return TutorCardRender(
         subject: json['name'],
         tutorName: json['tutor']['name'],
         tutoringFee: json['price'],
         tutoringId: json['_id'],
-        tutoringStudents: json['students']);
+        tutoringStudents: json['students'],
+        dates: json['date']);
   }
 
   @override
@@ -35,9 +38,10 @@ class TutorCard extends StatelessWidget {
             builder: (context) => CoursePage(
               subject: subject,
               tutorName: tutorName,
-              tutoringFee: "${tutoringFee}",
+              tutoringFee: "$tutoringFee",
               tutoringId: tutoringId,
               tutoringStudents: tutoringStudents,
+              dates: dates,
             ),
           ),
         );

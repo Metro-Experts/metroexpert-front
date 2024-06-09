@@ -1,14 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
-import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:metro_experts/components/DropDownMenu.dart';
 import 'package:metro_experts/components/multi_textfield.dart';
-import 'package:metro_experts/firebase_auth/auth.dart';
-import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -18,86 +13,17 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
-  String genderValue = '';
-
-  Future<void> createUserWithEmailAndPassword() async {
-    var url = Uri.parse(
-        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/');
-    const headers = {'Content-Type': 'application/json'};
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      String uid = userCredential.user!.uid;
-      var response = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode({
-          "_id": uid,
-          "name": fullNameController.text.split(' ')[0],
-          "lastName": fullNameController.text.split(' ')[1],
-          "email": _emailController.text,
-          "userType": selectedOption,
-          "gender": genderValue.contains('Masculino') ? 'M' : 'F'
-        }),
-      );
-
-      if (response.statusCode == 201 && Auth().authStateChanges != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            duration: Duration(seconds: 3),
-            backgroundColor: Colors.black,
-            behavior: SnackBarBehavior.floating,
-            content: SizedBox(
-              height: 25,
-              child: Text(
-                textAlign: TextAlign.justify,
-                'User successfuly created',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        );
-      } else {}
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 3),
-          backgroundColor: Colors.black,
-          behavior: SnackBarBehavior.floating,
-          content: SizedBox(
-            height: 25,
-            child: Text(
-              textAlign: TextAlign.justify,
-              e.message!,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
-  //Variables de ejemplos para poder trabajar en esto
-  bool showTutorSection = false;
-  String selectedOption = "";
-  bool? isChecked = false;
   List<String> genderList = ["Femenino", "Masculino"];
+  @override
+  void initState() {
+    Provider.of<SignUpPageController>(context, listen: false).reset();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final signUpPageController =
+        Provider.of<SignUpPageController>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: ListBody(
@@ -111,11 +37,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 fontSize: 40,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 25),
             Center(
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
@@ -127,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: 'Nombre Completo',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      controller: fullNameController,
+                      controller: signUpPageController.fullNameController,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -142,14 +68,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: 'Email',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      controller: _emailController,
+                      controller: signUpPageController.emailController,
                     ),
                   ),
                   const SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
-                      controller: _passwordController,
+                      controller: signUpPageController.passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.password),
@@ -161,14 +87,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
-                    child: DropDownMenu(
-                      text: "Género",
-                      menuList: genderList,
-                      onSelectionChanged: (selectedVal) {
-                        setState(() {
-                          genderValue = selectedVal!;
-                        });
-                      },
+                    child: TextField(
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                      ),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.phone),
+                        hintText: '04241499654',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      controller: signUpPageController.cellPhoneController,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -190,12 +118,13 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: 200,
                           child: RadioMenuButton(
                             value: 'tutor',
-                            groupValue: selectedOption,
+                            groupValue: signUpPageController.selectedOption,
                             onChanged: (selectedValue) {
                               setState(() {
-                                selectedOption = selectedValue!;
+                                signUpPageController.selectedOption =
+                                    selectedValue!;
                               });
-                              showTutorSection = true;
+                              signUpPageController.showTutorSection = true;
                             },
                             child: const Text('Tutor'),
                           ),
@@ -204,18 +133,19 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: 200,
                           child: RadioMenuButton(
                             value: 'student',
-                            groupValue: selectedOption,
+                            groupValue: signUpPageController.selectedOption,
                             onChanged: (selectedValue) {
                               setState(() {
-                                selectedOption = selectedValue!;
+                                signUpPageController.selectedOption =
+                                    selectedValue!;
                               });
-                              showTutorSection = false;
+                              signUpPageController.showTutorSection = false;
                             },
                             child: const Text('Estudiante'),
                           ),
                         ),
                         Visibility(
-                            visible: showTutorSection,
+                            visible: signUpPageController.showTutorSection,
                             child: const TutorSection()),
                         const SizedBox(height: 10),
                         Padding(
@@ -224,11 +154,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Checkbox(
-                                  value: isChecked,
+                                  value: signUpPageController.isChecked,
                                   activeColor: Colors.black,
                                   onChanged: (newBool) {
                                     setState(() {
-                                      isChecked = newBool;
+                                      signUpPageController.isChecked = newBool;
                                     });
                                   }),
                               const Text('Acepto los términos y condiciones'),
@@ -245,7 +175,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                       child: ElevatedButton(
                         onPressed: () => {
-                          createUserWithEmailAndPassword(),
+                          signUpPageController
+                              .createUserWithEmailAndPassword(context),
                         },
                         style: const ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll<Color>(

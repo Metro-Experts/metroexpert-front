@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:metro_experts/pages/create_class.dart';
-import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/controllers/course_page_controller.dart';
+import 'package:metro_experts/controllers/create_class_page_controller.dart';
+import 'package:metro_experts/controllers/homepage_controller.dart';
+import 'package:metro_experts/controllers/sign_in_page_controller.dart';
+import 'package:metro_experts/controllers/sign_up_page_controller.dart';
+import 'package:metro_experts/controllers/tutor_edit_profile_page_controller.dart';
+import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
+import 'package:metro_experts/model/user_model.dart';
+import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
-import 'package:metro_experts/pages/sign_in_page.dart';
-import 'package:metro_experts/pages/tutor_edit_profile.dart';
-import 'package:metro_experts/pages/user_edit_profile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,18 +22,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MetroExperts',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        useMaterial3: true,
-        listTileTheme: const ListTileThemeData(
-          iconColor: Colors.white,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SignInPageController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => SignUpPageController(),
+        ),
+        ChangeNotifierProvider(
+            create: (context) => TutorEditProfilePageController()),
+        ChangeNotifierProvider(
+            create: (context) => UserEditProfilePageController()),
+        ChangeNotifierProvider(
+          create: (context) => HomePageController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserOnSession(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CoursePageController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateClassPageController(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'MetroExperts',
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+          useMaterial3: true,
+          listTileTheme: const ListTileThemeData(
+            iconColor: Colors.white,
+          ),
+        ),
+        // The property [home] defines the default route of the app
+        home: const IntroPage(),
+        debugShowCheckedModeBanner: false,
       ),
-      // The property [home] defines the default route of the app
-      home: const IntroPage(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
