@@ -10,14 +10,16 @@ class SignUpPageController extends ChangeNotifier {
   void reset() {
     emailController.clear();
     passwordController.clear();
-    fullNameController.clear();
+    firstNameController.clear();
+    lastNameController.clear();
     cellPhoneController.clear();
     notifyListeners();
   }
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController cellPhoneController = TextEditingController();
   String genderValue = '';
   String selectedOption = "";
@@ -42,8 +44,8 @@ class SignUpPageController extends ChangeNotifier {
         headers: headers,
         body: jsonEncode({
           "_id": uid,
-          "name": fullNameController.text.split(' ')[0],
-          "lastName": fullNameController.text.split(' ')[1],
+          "name": firstNameController.text,
+          "lastName": lastNameController.text,
           "email": emailController.text,
           "userType": selectedOption,
           "cellphone": cellPhoneController.text,
@@ -74,13 +76,6 @@ class SignUpPageController extends ChangeNotifier {
             ),
           ),
         );
-      } else {
-        print('--- Error ---');
-        print("${response.body}");
-        print(" Gender $genderValue");
-        print("SelectedOption --- $selectedOption");
-        print("Is check --- ${isChecked}");
-        print("cellphone --- ${cellPhoneController}");
       }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

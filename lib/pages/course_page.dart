@@ -88,10 +88,13 @@ class _CoursePageState extends State<CoursePage> {
                       children: [
                         const Icon(Icons.book, color: Colors.black54),
                         const SizedBox(width: 8),
-                        Text(
-                          widget.subject,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                        Flexible(
+                          child: Text(
+                            widget.subject,
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
@@ -145,10 +148,17 @@ class _CoursePageState extends State<CoursePage> {
                 const SizedBox(height: 32),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
+                    if (coursePageControllerConsumer.isJoined != true) {
+                      setState(
+                        () {
+                          coursePageControllerConsumer.isJoined = true;
+                          coursePageControllerConsumer.subscribeUser(context);
+                        },
+                      );
+                    } else {
                       coursePageControllerConsumer.isJoined = true;
-                      coursePageControllerConsumer.subscribeUser(context);
-                    });
+                      coursePageControllerConsumer.unsubscribeUser(context);
+                    }
                   },
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 100),
@@ -167,6 +177,30 @@ class _CoursePageState extends State<CoursePage> {
                       style: const TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
+                ),
+                const SizedBox(height: 8),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.access_time, color: Colors.black54),
+                    SizedBox(width: 8),
+                    Text(
+                      'Horario: 3:00 p.m. - 4:00 p.m.',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.attach_money, color: Colors.black54),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Costo: ${widget.tutoringFee}',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ],
                 ),
               ],
             ),

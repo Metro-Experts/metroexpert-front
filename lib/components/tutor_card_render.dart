@@ -8,6 +8,7 @@ class TutorCardRender extends StatelessWidget {
   final String tutoringId;
   final List tutoringStudents;
   final List dates;
+  final Color color;
 
   const TutorCardRender(
       {super.key,
@@ -16,7 +17,8 @@ class TutorCardRender extends StatelessWidget {
       required this.tutoringFee,
       required this.tutoringId,
       required this.tutoringStudents,
-      required this.dates});
+      required this.dates,
+      required this.color});
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
     return TutorCardRender(
@@ -25,9 +27,9 @@ class TutorCardRender extends StatelessWidget {
         tutoringFee: json['price'],
         tutoringId: json['_id'],
         tutoringStudents: json['students'],
-        dates: json['date']);
+        dates: json['date'],
+        color: const Color(0xFF9FA9FF));
   }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -47,13 +49,11 @@ class TutorCardRender extends StatelessWidget {
         );
       },
       child: Card(
-        color: const Color(0xFF9FA9FF),
+        color: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        margin: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0), // Ajuste del margen para menos ancho
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
@@ -62,22 +62,26 @@ class TutorCardRender extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
-                        subject,
-                        style: const TextStyle(
-                          fontSize: 20, // Título más grande
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      subject,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Center(
-                      child: Text(
-                        tutorName,
-                        style: const TextStyle(
-                          fontSize: 16, // Subtítulo
-                        ),
+                    Text(
+                      'Tutor: $tutorName',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Precio: $tutoringFee',
+                      style: const TextStyle(
+                        fontSize: 14,
                       ),
                     ),
                   ],
