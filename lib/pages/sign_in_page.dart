@@ -69,7 +69,7 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                   const SizedBox(height: 25),
                   const Text(
-                    'Or',
+                    'or',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 20,
@@ -98,7 +98,7 @@ class _LogInPageState extends State<LogInPage> {
                               Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
                         ),
                         child: const Text(
-                          'Iniciar Sesión',
+                          'Iniciar sesión',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

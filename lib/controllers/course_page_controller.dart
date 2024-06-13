@@ -69,6 +69,53 @@ class CoursePageController extends ChangeNotifier {
     }
   }
 
+  Future<void> unsubscribeUser(BuildContext context) async {
+    var url = Uri.parse(
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/${tutoringId}/remove-student');
+    const headers = {'Content-Type': 'application/json'};
+
+    final response = await http.post(url,
+        headers: headers,
+        body: json.encode({"studentId": Auth().currentUser!.uid}));
+    try {
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'Suscripción eliminada con éxito',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      } else {
+        print(response.body);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Error al eliminar suscripción',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
   showConfirmationDialog(BuildContext context) async {
     final action = await showDialog<bool>(
       context: context,

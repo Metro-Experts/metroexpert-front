@@ -5,6 +5,7 @@ import 'package:metro_experts/model/user_model.dart';
 import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:metro_experts/pages/user_edit_profile.dart';
 import 'package:provider/provider.dart';
 
@@ -156,6 +157,7 @@ class _HomePageState extends State<HomePage> {
                               tutoringId: tutoring.tutoringId,
                               tutoringStudents: tutoring.tutoringStudents,
                               dates: tutoring.dates,
+                              color: const Color(0xFF9FA9FF),
                             );
                           },
                         )

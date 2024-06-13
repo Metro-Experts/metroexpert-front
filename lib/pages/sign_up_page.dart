@@ -50,10 +50,25 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person),
-                        hintText: 'Nombre Completo',
+                        hintText: 'Nombre',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      controller: signUpPageController.fullNameController,
+                      controller: signUpPageController.firstNameController,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
+                    child: TextField(
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                      ),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Apellido',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      controller: signUpPageController.lastNameController,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -179,8 +194,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               .createUserWithEmailAndPassword(context),
                         },
                         style: const ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll<Color>(
-                              Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            Color.fromRGBO(0xF2, 0xB0, 0x80, 1),
+                          ),
                         ),
                         child: const Text(
                           'Crear una cuenta',
@@ -199,18 +215,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: TextStyle(fontSize: 18),
                   ),
                   TextButton(
-                      child: const Text(
-                        'Ingresa aquí',
-                        style: TextStyle(fontSize: 18),
+                    child: const Text(
+                      'Ingresa aquí',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LogInPage(),
+                        ),
                       ),
-                      onPressed: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LogInPage(),
-                              ),
-                            ),
-                          }),
+                    },
+                  ),
                   const SizedBox(height: 50),
                 ],
               ),
