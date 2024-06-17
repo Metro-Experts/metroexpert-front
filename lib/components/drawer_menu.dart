@@ -2,8 +2,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:metro_experts/controllers/sign_in_page_controller.dart';
+import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/model/user_model.dart';
+import 'package:metro_experts/pages/calendar_page.dart';
 import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/home_page.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
@@ -137,6 +140,29 @@ class _DrawerMenuState extends State<DrawerMenu> {
               padding: const EdgeInsets.only(left: 8.0),
               child: ListTile(
                 leading: const Icon(
+                  Icons.calendar_month,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Calendar',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CalendarPage()),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
                   Icons.logout,
                   size: 32,
                   color: Color.fromRGBO(238, 138, 111, 1),
@@ -148,7 +174,38 @@ class _DrawerMenuState extends State<DrawerMenu> {
                           fontSize: 24, fontWeight: FontWeight.normal)),
                 ),
                 onTap: () {
+                  Provider.of<SignInPageController>(context, listen: false)
+                      .emailController
+                      .clear();
+                  Provider.of<SignInPageController>(context, listen: false)
+                      .passwordController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .emailController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .passwordController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .cellPhoneController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .firstNameController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .lastNameController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .selectedOption = '';
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .isChecked = false;
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .genderValue = '';
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .showTutorSection = false;
+
                   Auth().signOut();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const LogInPage()),

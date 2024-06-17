@@ -12,6 +12,19 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  late TextEditingController? emailController;
+  late TextEditingController? passwordController;
+
+  @override
+  void initState() {
+    emailController = Provider.of<SignInPageController>(context, listen: false)
+        .emailController;
+    passwordController =
+        Provider.of<SignInPageController>(context, listen: false)
+            .passwordController;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final signInPageController =
@@ -37,7 +50,7 @@ class _LogInPageState extends State<LogInPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
-                      controller: signInPageController.emailController,
+                      controller: emailController,
                       style: const TextStyle(
                         fontFamily: 'Poppins',
                       ),
@@ -52,7 +65,7 @@ class _LogInPageState extends State<LogInPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
-                      controller: signInPageController.passwordController,
+                      controller: passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.password),
