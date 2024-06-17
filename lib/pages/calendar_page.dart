@@ -18,7 +18,7 @@ class _CalendarPageState extends State<CalendarPage> {
       drawer: const DrawerMenu(),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
-        child: Container(
+        child: SizedBox(
           child: TableCalendar(
             focusedDay: today,
             firstDay: DateTime.utc(2020, 8, 16),

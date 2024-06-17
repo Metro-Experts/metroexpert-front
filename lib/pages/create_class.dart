@@ -57,8 +57,6 @@ class _CreateClassState extends State<CreateClass> {
                   onSelectionChanged: (val) {
                     setState(
                       () {
-                        print(createClassPageControllerConsumer
-                            .categoryChildList);
                         createClassPageControllerConsumer.subject = val;
                       },
                     );

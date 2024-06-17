@@ -11,10 +11,8 @@ class CoursePageController extends ChangeNotifier {
 
   void isAStudent(List tutoringStudents, String uid) {
     if (tutoringStudents.contains(uid)) {
-      print(isJoined);
       isJoined = true;
     } else {
-      print(isJoined);
       isJoined = false;
     }
     notifyListeners();
@@ -22,7 +20,7 @@ class CoursePageController extends ChangeNotifier {
 
   Future<void> subscribeUser(BuildContext context) async {
     var url = Uri.parse(
-        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/${tutoringId}/add-student');
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/$tutoringId/add-student');
     const headers = {'Content-Type': 'application/json'};
 
     final response = await http.post(url,
@@ -70,7 +68,7 @@ class CoursePageController extends ChangeNotifier {
 
   Future<void> unsubscribeUser(BuildContext context) async {
     var url = Uri.parse(
-        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/${tutoringId}/remove-student');
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/$tutoringId/remove-student');
     const headers = {'Content-Type': 'application/json'};
 
     final response = await http.post(url,
@@ -93,9 +91,7 @@ class CoursePageController extends ChangeNotifier {
             ),
           ),
         );
-      } else {
-        print(response.body);
-      }
+      } else {}
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

@@ -46,7 +46,6 @@ class TutorEditProfilePageController extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           duration: Duration(seconds: 3),

@@ -147,6 +147,5 @@ class CreateClassPageController extends ChangeNotifier {
         ),
       );
     }
-    print(response.body);
   }
 }

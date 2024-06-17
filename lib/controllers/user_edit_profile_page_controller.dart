@@ -19,7 +19,6 @@ class UserEditProfilePageController extends ChangeNotifier {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);
-      print(responseData);
 
       Provider.of<UserOnSession>(context, listen: false)
           .updateUserData(responseData);
@@ -40,8 +39,6 @@ class UserEditProfilePageController extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      print("usuario controller ${user.name}");
-      print(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           duration: Duration(seconds: 3),

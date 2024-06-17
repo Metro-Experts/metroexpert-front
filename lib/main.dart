@@ -8,7 +8,6 @@ import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/controllers/tutor_edit_profile_page_controller.dart';
 import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
-import 'package:metro_experts/pages/calendar_page.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
 

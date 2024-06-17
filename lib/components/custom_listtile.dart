@@ -5,7 +5,8 @@ class Customlisttile extends StatefulWidget {
   final String classTitle;
   final String studentName;
 
-  const Customlisttile({super.key, required this.classTitle, required this.studentName});
+  const Customlisttile(
+      {super.key, required this.classTitle, required this.studentName});
 
   @override
   State<Customlisttile> createState() => _Customlisttiletate();
@@ -14,7 +15,7 @@ class Customlisttile extends StatefulWidget {
 class _Customlisttiletate extends State<Customlisttile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: ListTile(
         onTap: () {},
         shape: RoundedRectangleBorder(
@@ -22,10 +23,16 @@ class _Customlisttiletate extends State<Customlisttile> {
         ),
         tileColor: const Color(0xFFEE8A6F),
         contentPadding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-        title: Text(widget.classTitle, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: 18)),
-        subtitle: Text(widget.studentName, style: const TextStyle(color: Colors.white)),
-        leading: const Icon(Icons.menu_book_outlined, color: Colors.white, size: 35),
-        trailing: Container(
+        title: Text(widget.classTitle,
+            style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                fontSize: 18)),
+        subtitle: Text(widget.studentName,
+            style: const TextStyle(color: Colors.white)),
+        leading:
+            const Icon(Icons.menu_book_outlined, color: Colors.white, size: 35),
+        trailing: SizedBox(
           height: 50,
           width: 50,
           child: IconButton(
