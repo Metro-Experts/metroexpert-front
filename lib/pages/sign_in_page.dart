@@ -13,12 +13,6 @@ class LogInPage extends StatefulWidget {
 
 class _LogInPageState extends State<LogInPage> {
   @override
-  void initState() {
-    Provider.of<SignInPageController>(context, listen: false).reset();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final signInPageController =
         Provider.of<SignInPageController>(context, listen: false);

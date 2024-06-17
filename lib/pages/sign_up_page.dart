@@ -14,11 +14,6 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   List<String> genderList = ["Femenino", "Masculino"];
-  @override
-  void initState() {
-    Provider.of<SignUpPageController>(context, listen: false).reset();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +133,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               setState(() {
                                 signUpPageController.selectedOption =
                                     selectedValue!;
+
+                                signUpPageController.showTutorSection = true;
                               });
-                              signUpPageController.showTutorSection = true;
                             },
                             child: const Text('Tutor'),
                           ),
@@ -153,8 +149,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               setState(() {
                                 signUpPageController.selectedOption =
                                     selectedValue!;
+                                signUpPageController.showTutorSection = false;
                               });
-                              signUpPageController.showTutorSection = false;
                             },
                             child: const Text('Estudiante'),
                           ),

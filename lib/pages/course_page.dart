@@ -156,8 +156,10 @@ class _CoursePageState extends State<CoursePage> {
                         },
                       );
                     } else {
-                      coursePageControllerConsumer.isJoined = true;
-                      coursePageControllerConsumer.unsubscribeUser(context);
+                      setState(() {
+                        coursePageControllerConsumer.isJoined = false;
+                        coursePageControllerConsumer.unsubscribeUser(context);
+                      });
                     }
                   },
                   child: AnimatedContainer(

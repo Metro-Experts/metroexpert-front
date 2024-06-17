@@ -16,6 +16,7 @@ class HomePageController extends ChangeNotifier {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses');
     final response = await http.get(url);
+
     if (response.statusCode == 200 && Auth().currentUser != null) {
       List<dynamic> responseData = json.decode(response.body);
       print(responseData);

@@ -7,15 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SignUpPageController extends ChangeNotifier {
-  void reset() {
-    emailController.clear();
-    passwordController.clear();
-    firstNameController.clear();
-    lastNameController.clear();
-    cellPhoneController.clear();
-    notifyListeners();
-  }
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
@@ -33,11 +24,22 @@ class SignUpPageController extends ChangeNotifier {
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/');
     const headers = {'Content-Type': 'application/json'};
     try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color.fromRGBO(238, 138, 111, 1),
+            ),
+          );
+        },
+      );
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+      Navigator.of(context).pop();
       String uid = userCredential.user!.uid;
       var response = await http.post(
         url,
@@ -78,6 +80,7 @@ class SignUpPageController extends ChangeNotifier {
         );
       }
     } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(seconds: 3),
