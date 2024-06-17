@@ -9,8 +9,8 @@ class CoursePageController extends ChangeNotifier {
   bool isJoined = false;
   late String tutoringId;
 
-  void isAStudent(List tutoringStudents, String uid) {
-    if (tutoringStudents.contains(uid)) {
+  Future isAStudent(List tutoringStudents, String uid) async {
+    if (await tutoringStudents.contains(uid)) {
       isJoined = true;
     } else {
       isJoined = false;
@@ -38,7 +38,7 @@ class CoursePageController extends ChangeNotifier {
               child: Text(
                 textAlign: TextAlign.justify,
                 'successfuly created subscribe',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.green),
               ),
             ),
           ),
@@ -85,8 +85,8 @@ class CoursePageController extends ChangeNotifier {
               height: 25,
               child: Text(
                 textAlign: TextAlign.justify,
-                'Suscripción eliminada con éxito',
-                style: TextStyle(color: Colors.white),
+                'Subscription deleted',
+                style: TextStyle(color: Colors.green),
               ),
             ),
           ),
@@ -102,7 +102,7 @@ class CoursePageController extends ChangeNotifier {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'Error al eliminar suscripción',
+              'Error deleting the subscription',
               style: TextStyle(color: Colors.red),
             ),
           ),

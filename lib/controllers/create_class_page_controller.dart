@@ -125,7 +125,7 @@ class CreateClassPageController extends ChangeNotifier {
             child: Text(
               textAlign: TextAlign.justify,
               'Class created successfully',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.green),
             ),
           ),
         ),

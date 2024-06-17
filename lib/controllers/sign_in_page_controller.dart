@@ -54,7 +54,7 @@ class SignInPageController extends ChangeNotifier {
             child: Text(
               textAlign: TextAlign.justify,
               e.message!,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.red),
             ),
           ),
         ),

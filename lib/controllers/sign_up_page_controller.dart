@@ -73,7 +73,7 @@ class SignUpPageController extends ChangeNotifier {
               child: Text(
                 textAlign: TextAlign.justify,
                 'User successfuly created',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.green),
               ),
             ),
           ),

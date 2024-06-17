@@ -31,10 +31,10 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   @override
   void initState() {
-    Provider.of<CoursePageController>(context, listen: false)
-        .isAStudent(widget.tutoringStudents, Auth().currentUser!.uid);
     Provider.of<CoursePageController>(context, listen: false).tutoringId =
         widget.tutoringId;
+    Provider.of<CoursePageController>(context, listen: false)
+        .isAStudent(widget.tutoringStudents, Auth().currentUser!.uid);
     super.initState();
   }
 
@@ -156,10 +156,12 @@ class _CoursePageState extends State<CoursePage> {
                         },
                       );
                     } else {
-                      setState(() {
-                        coursePageControllerConsumer.isJoined = false;
-                        coursePageControllerConsumer.unsubscribeUser(context);
-                      });
+                      setState(
+                        () {
+                          coursePageControllerConsumer.isJoined = false;
+                          coursePageControllerConsumer.unsubscribeUser(context);
+                        },
+                      );
                     }
                   },
                   child: AnimatedContainer(
