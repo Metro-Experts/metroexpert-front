@@ -19,7 +19,6 @@ class _UserEditProfileState extends State<UserEditProfile> {
   void initState() {
     Provider.of<UserEditProfilePageController>(context, listen: false)
         .fetchUser(context);
-    Provider.of<UserEditProfilePageController>(context, listen: false).reset();
     super.initState();
   }
 

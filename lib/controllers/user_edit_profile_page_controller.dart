@@ -7,14 +7,6 @@ import 'package:metro_experts/model/user_model.dart';
 import 'package:provider/provider.dart';
 
 class UserEditProfilePageController extends ChangeNotifier {
-  void reset() {
-    emailController.clear();
-    passwordController.clear();
-    nameController.clear();
-    lastNameController.clear();
-    notifyListeners();
-  }
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
