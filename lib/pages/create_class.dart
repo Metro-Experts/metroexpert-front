@@ -20,7 +20,6 @@ class _CreateClassState extends State<CreateClass> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CreateClassPageController>(context, listen: false).reset();
   }
 
   @override

@@ -8,15 +8,6 @@ import 'package:metro_experts/model/user_model.dart';
 import 'package:provider/provider.dart';
 
 class CreateClassPageController extends ChangeNotifier {
-  void reset() {
-    priceController.clear();
-    dia1Controller.clear();
-    hora1Controller.clear();
-    dia2Controller.clear();
-    hora2Controller.clear();
-    notifyListeners();
-  }
-
   List<String> categoryList = [
     "Matemática",
     "Programación",

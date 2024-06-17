@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // The property [home] defines the default route of the app
-        home: const CalendarPage(),
+        home: const IntroPage(),
         debugShowCheckedModeBanner: false,
       ),
     );
