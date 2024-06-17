@@ -138,7 +138,7 @@ class _CoursePageState extends State<CoursePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Costo: ${widget.tutoringFee}',
+                          '\$ Costo: ${widget.tutoringFee}',
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
@@ -179,30 +179,6 @@ class _CoursePageState extends State<CoursePage> {
                       style: const TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.access_time, color: Colors.black54),
-                    SizedBox(width: 8),
-                    Text(
-                      'Horario: 3:00 p.m. - 4:00 p.m.',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.attach_money, color: Colors.black54),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Costo: ${widget.tutoringFee}',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ],
                 ),
               ],
             ),

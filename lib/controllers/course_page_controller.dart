@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
-import 'package:metro_experts/pages/course_page.dart';
 
 class CoursePageController extends ChangeNotifier {
   bool isJoined = false;

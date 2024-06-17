@@ -1,18 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print, use_full_hex_values_for_flutter_colors
-
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:metro_experts/components/custom_text_field.dart';
+import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/components/dropDownMenu.dart';
 import 'package:metro_experts/controllers/create_class_page_controller.dart';
-import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/model/user_model.dart';
 import 'package:metro_experts/pages/home_page.dart';
-import 'package:metro_experts/pages/sign_in_page.dart';
-import 'package:metro_experts/pages/user_edit_profile.dart';
 import 'package:provider/provider.dart';
 
 class CreateClass extends StatefulWidget {
@@ -36,64 +30,7 @@ class _CreateClassState extends State<CreateClass> {
           createClassPageControllerConsumer, _) {
         return Scaffold(
           appBar: AppBar(),
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    size: 32,
-                    Icons.home,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Text(
-                    'Home',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.settings,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Text('Account',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const UserEditProfile()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.logout,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Text('Logout',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  onTap: () {
-                    Auth().signOut();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LogInPage()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+          drawer: const DrawerMenu(),
           backgroundColor: Colors.white,
           body: Container(
             padding: const EdgeInsets.all(40),

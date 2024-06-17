@@ -23,6 +23,7 @@ class UserEditProfilePageController extends ChangeNotifier {
   Future<void> fetchUser(BuildContext context) async {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${Auth().currentUser!.uid}');
+
     final response = await http.get(url);
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);

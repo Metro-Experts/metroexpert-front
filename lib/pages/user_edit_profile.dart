@@ -1,12 +1,10 @@
 //para uso de iconos svg
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/custom_text_field.dart';
+import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
-import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/model/user_model.dart';
-import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/home_page.dart';
-import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:provider/provider.dart';
 
 class UserEditProfile extends StatefulWidget {
@@ -34,64 +32,7 @@ class _UserEditProfileState extends State<UserEditProfile> {
       builder: (context, accountPageModel, _) {
         return Scaffold(
           appBar: AppBar(),
-          drawer: Drawer(
-            child: ListView(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    size: 32,
-                    Icons.home,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Text(
-                    'Home',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.settings,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Text('Create Class',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreateClass()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.logout,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Text('Logout',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  onTap: () {
-                    Auth().signOut();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LogInPage()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+          drawer: const DrawerMenu(),
           backgroundColor: Colors.white,
           body: Container(
             padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
@@ -186,6 +127,12 @@ class _UserEditProfileState extends State<UserEditProfile> {
                                 email: accountPageModel.userData.email,
                               ),
                               context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff060b26),

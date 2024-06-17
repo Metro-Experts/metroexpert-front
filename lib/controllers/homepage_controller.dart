@@ -19,12 +19,9 @@ class HomePageController extends ChangeNotifier {
 
     if (response.statusCode == 200 && Auth().currentUser != null) {
       List<dynamic> responseData = json.decode(response.body);
-      print(responseData);
       _tutorCard =
           responseData.map((data) => TutorCardRender.fromJson(data)).toList();
       filteredTutors = _tutorCard;
-      print(" tutorCard -- $_tutorCard");
-      print("filteredTutor -- $filteredTutors");
     } else {
       print('error fetching tutorings...');
     }
@@ -40,7 +37,7 @@ class HomePageController extends ChangeNotifier {
       Provider.of<UserOnSession>(context, listen: false)
           .updateUserData(responseData);
     } else {
-      print('error fetching tutorings...');
+      print('error fetching user...');
     }
   }
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class UserModel {
   final dynamic name;
   final dynamic lastName;
