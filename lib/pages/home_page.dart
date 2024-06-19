@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                 TextField(
                   onChanged: homePageControllerConsumer.updateSearchQuery,
                   decoration: InputDecoration(
-                    hintText: 'Buscar por asignatura o nombre del tutor',
+                    hintText: 'Buscar por asignatura',
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(24),
@@ -71,6 +71,9 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (context, index) {
                             var tutoring = homePageControllerConsumer
                                 .filteredTutors[index];
+                            Color cardColor = index % 2 == 0
+                                ? const Color(0xFF9FA9FF)
+                                : const Color(0xFFFEC89F);
                             return TutorCardRender(
                               subject: tutoring.subject,
                               tutorName: tutoring.tutorName,
@@ -78,7 +81,8 @@ class _HomePageState extends State<HomePage> {
                               tutoringId: tutoring.tutoringId,
                               tutoringStudents: tutoring.tutoringStudents,
                               dates: tutoring.dates,
-                              color: const Color(0xFF9FA9FF),
+                              modality: tutoring.modality,
+                              color: cardColor,
                             );
                           },
                         )

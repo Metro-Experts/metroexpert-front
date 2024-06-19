@@ -37,7 +37,7 @@ class CoursePageController extends ChangeNotifier {
               height: 25,
               child: Text(
                 textAlign: TextAlign.justify,
-                'successfuly created subscribe',
+                'Subscripción exitosa',
                 style: TextStyle(color: Colors.green),
               ),
             ),
@@ -57,7 +57,7 @@ class CoursePageController extends ChangeNotifier {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'error subscribing',
+              'Error al suscribirse',
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -85,7 +85,7 @@ class CoursePageController extends ChangeNotifier {
               height: 25,
               child: Text(
                 textAlign: TextAlign.justify,
-                'Subscription deleted',
+                'Subscripción eliminada',
                 style: TextStyle(color: Colors.green),
               ),
             ),
@@ -102,7 +102,7 @@ class CoursePageController extends ChangeNotifier {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'Error deleting the subscription',
+              'Error al eliminar la subscripción',
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -111,7 +111,7 @@ class CoursePageController extends ChangeNotifier {
     }
   }
 
-  showConfirmationDialog(BuildContext context) async {
+  Future<void> showConfirmationDialog(BuildContext context) async {
     final action = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -130,9 +130,13 @@ class CoursePageController extends ChangeNotifier {
               child: const Text('No'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop(true);
-                subscribeUser(context); // Sí
+                if (isJoined) {
+                  await unsubscribeUser(context);
+                } else {
+                  await subscribeUser(context);
+                }
               },
               child: const Text('Sí'),
             ),
@@ -143,6 +147,7 @@ class CoursePageController extends ChangeNotifier {
 
     if (action == true) {
       isJoined = !isJoined;
+      notifyListeners();
     }
   }
 }

@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:metro_experts/controllers/sign_in_page_controller.dart';
 import 'package:metro_experts/pages/sign_up_page.dart';
@@ -12,8 +11,8 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
-  late TextEditingController? emailController;
-  late TextEditingController? passwordController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
 
   @override
   void initState() {
@@ -51,9 +50,7 @@ class _LogInPageState extends State<LogInPage> {
                     padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: TextField(
                       controller: emailController,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                      ),
+                      style: const TextStyle(fontFamily: 'Poppins'),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person),
                         hintText: 'Email',
@@ -77,10 +74,7 @@ class _LogInPageState extends State<LogInPage> {
                   const SizedBox(height: 25),
                   const Text(
                     'or',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 20,
-                    ),
+                    style: TextStyle(fontFamily: 'Poppins', fontSize: 20),
                   ),
                   TextButton(
                     child: const Text(
@@ -96,21 +90,19 @@ class _LogInPageState extends State<LogInPage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
                       child: ElevatedButton(
-                        onPressed: () => {
-                          signInPageController
-                              .signInWithEmailAndPassword(context),
-                        },
-                        style: const ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll<Color>(
-                              Color.fromRGBO(0xF2, 0xB0, 0x80, 1)),
+                        onPressed: () => signInPageController
+                            .signInWithEmailAndPassword(context),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color.fromRGBO(242, 176, 128, 1),
+                          ),
                         ),
                         child: const Text(
                           'Iniciar sesión',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'Poppins',
-                          ),
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontFamily: 'Poppins'),
                         ),
                       ),
                     ),
@@ -125,12 +117,11 @@ class _LogInPageState extends State<LogInPage> {
                       'Regístrate aquí',
                       style: TextStyle(fontSize: 18),
                     ),
-                    onPressed: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpPage()))
-                    },
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpPage()),
+                    ),
                   ),
                 ],
               ),

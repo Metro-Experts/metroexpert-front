@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
@@ -20,6 +19,11 @@ class SignUpPageController extends ChangeNotifier {
   Future<void> createUserWithEmailAndPassword(
     BuildContext context,
   ) async {
+    // Validate inputs
+    if (!validateInputs(context)) {
+      return;
+    }
+
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/');
     const headers = {'Content-Type': 'application/json'};
@@ -39,7 +43,8 @@ class SignUpPageController extends ChangeNotifier {
         email: emailController.text,
         password: passwordController.text,
       );
-      Navigator.of(context).pop();
+      Navigator.of(context)
+          .pop(); // Close the loading dialog immediately after account creation
       String uid = userCredential.user!.uid;
       var response = await http.post(
         url,
@@ -68,34 +73,103 @@ class SignUpPageController extends ChangeNotifier {
             duration: Duration(seconds: 3),
             backgroundColor: Colors.black,
             behavior: SnackBarBehavior.floating,
-            content: SizedBox(
-              height: 25,
-              child: Text(
-                textAlign: TextAlign.justify,
-                'User successfuly created',
-                style: TextStyle(color: Colors.green),
-              ),
+            content: Text(
+              'Usuario creado exitosamente',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
             ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error al registrar el usuario.'),
           ),
         );
       }
     } on FirebaseAuthException catch (e) {
-      Navigator.of(context).pop();
+      Navigator.of(context)
+          .pop(); // Close the loading dialog in case of an error
+      String message = '';
+      if (e.code == 'weak-password') {
+        message = 'La contraseña es muy débil.';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'El correo electrónico ya está en uso.';
+      } else {
+        message = 'Error al registrar el usuario: ${e.message}';
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          duration: const Duration(seconds: 3),
-          backgroundColor: Colors.black,
-          behavior: SnackBarBehavior.floating,
-          content: SizedBox(
-            height: 25,
-            child: Text(
-              textAlign: TextAlign.justify,
-              e.message!,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
+          content: Text(message),
         ),
       );
     }
+  }
+
+  bool validateInputs(BuildContext context) {
+    if (firstNameController.text.isEmpty) {
+      showSnackBarMessage(context, 'Por favor, complete el nombre.');
+      return false;
+    }
+
+    if (lastNameController.text.isEmpty) {
+      showSnackBarMessage(context, 'Por favor, complete el apellido.');
+      return false;
+    }
+
+    if (emailController.text.isEmpty) {
+      showSnackBarMessage(
+          context, 'Por favor, complete el correo electrónico.');
+      return false;
+    }
+
+    if (!emailController.text.endsWith('@correo.unimet.edu.ve')) {
+      showSnackBarMessage(context,
+          'El correo electrónico debe pertenecer al dominio @correo.unimet.edu.ve.');
+      return false;
+    }
+
+    if (passwordController.text.isEmpty) {
+      showSnackBarMessage(context, 'Por favor, complete la contraseña.');
+      return false;
+    }
+
+    if (cellPhoneController.text.isEmpty) {
+      showSnackBarMessage(
+          context, 'Por favor, complete el número de teléfono.');
+      return false;
+    }
+
+    // Validate cellphone number
+    if (!RegExp(r'^\d+$').hasMatch(cellPhoneController.text)) {
+      showSnackBarMessage(context, 'El teléfono solo puede contener dígitos.');
+      return false;
+    }
+
+    if (genderValue.isEmpty) {
+      showSnackBarMessage(context, 'Por favor, seleccione el género.');
+      return false;
+    }
+
+    if (selectedOption.isEmpty) {
+      showSnackBarMessage(context, 'Por favor, seleccione el tipo de usuario.');
+      return false;
+    }
+
+    if (isChecked != true) {
+      showSnackBarMessage(
+          context, 'Por favor, acepte los términos y condiciones.');
+      return false;
+    }
+
+    return true;
+  }
+
+  void showSnackBarMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 }
