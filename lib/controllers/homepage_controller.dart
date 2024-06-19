@@ -11,6 +11,7 @@ class HomePageController extends ChangeNotifier {
   List<TutorCardRender> _tutorCard = [];
   List<TutorCardRender> filteredTutors = [];
   String searchQuery = '';
+  List ids = [];
 
   Future<void> fetchTutorings(BuildContext context) async {
     var url = Uri.parse(
@@ -32,8 +33,11 @@ class HomePageController extends ChangeNotifier {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${Auth().currentUser!.uid}');
     final response = await http.get(url);
+
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);
+      ids = responseData['courses_student'];
+
       Provider.of<UserOnSession>(context, listen: false)
           .updateUserData(responseData);
     } else {
