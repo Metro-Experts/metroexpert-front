@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:metro_experts/components/custom_floating_action_button.dart';
 import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/controllers/calendar_page_controller.dart';
-import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/model/event_model.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -17,57 +16,65 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  @override
-  void initState() {
-    // getEventsFromBack(context);
-    // Provider.of<CalendarPageController>(context, listen: false)
-    //     .fetchCalenderDates(context);
-    _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForToday(_selectedDay!));
-    super.initState();
-  }
-
-//variable that allowes the user to select a day
   DateTime? _selectedDay;
-//
+
   DateTime _focusedDay = DateTime.now();
-//here we store the day and the events related to that day
 
   Map<DateTime, List<Event>> events = {};
-//event controller
+
   final TextEditingController _eventController = TextEditingController();
-//events list
+
   late final ValueNotifier<List<Event>> _selectedEvents;
-//function that allows to show events by day
+
   List<Event> _getEventsForToday(DateTime day) {
+    print(events[day]);
     return events[day] ?? [];
   }
 
   Future<void> getEventsFromBack(BuildContext context) async {
-    List eventsFromBack =
-        await Provider.of<CalendarPageController>(context, listen: false).dates;
+    List clasesAndDates =
+        await Provider.of<CalendarPageController>(context, listen: false)
+            .clasesAndDates;
 
-    for (var i = 0; i < eventsFromBack.length; i++) {
-      DateTime date = DateTime.parse(eventsFromBack[i]);
-      events.addAll({
-        date: [Event('felipe homosexual')],
-      });
+    for (var i = 0; i < clasesAndDates.length; i++) {
+      List dates = clasesAndDates[i]['calendario'];
+
+      for (var j = 0; j < dates.length; j++) {
+        List date = dates[j].split('-');
+
+        DateTime formattedDate =
+            DateTime.parse('${date[0]}-${date[1]}-${date[2]} '
+                '${0}${0}:${0}${0}:${0}${0}.'
+                '${0}${0}${0}Z');
+        events.addAll(
+          {
+            formattedDate: [
+              Event('${clasesAndDates[i]['name']}'),
+            ],
+          },
+        );
+      }
     }
   }
 
-//this function allows the user to select a day and also render the events related to that date
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    print(selectedDay);
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(
         () {
           _selectedDay = selectedDay;
           _focusedDay = focusedDay;
-          //asigns the events related to that day to render it later
           _selectedEvents.value = _getEventsForToday(selectedDay);
         },
       );
     }
+  }
+
+  @override
+  void initState() {
+    getEventsFromBack(context);
+    _selectedDay = _focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForToday(_selectedDay!));
+    super.initState();
   }
 
   @override
@@ -114,9 +121,21 @@ class _CalendarPageState extends State<CalendarPage> {
                           decoration: BoxDecoration(
                             border: Border.all(),
                             borderRadius: BorderRadius.circular(12),
+                            color: index % 2 == 0
+                                ? const Color.fromRGBO(0xF2, 0xB0, 0x80, 1)
+                                : const Color(0xFF9FA9FF),
                           ),
                           child: ListTile(
-                            title: Text('${value[index].title}'),
+                            minTileHeight: 64,
+                            trailing: const Icon(
+                              Icons.book,
+                              color: Colors.black,
+                            ),
+                            title: Text(
+                              '${value[index].title}'.toUpperCase(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         );
                       },

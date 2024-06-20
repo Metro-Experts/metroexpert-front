@@ -1,17 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:metro_experts/model/event_model.dart';
 import 'package:provider/provider.dart';
 
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
 class CalendarPageController extends ChangeNotifier {
-  List dates = [];
+  late final ValueNotifier<List<Event>> selectedEvents;
+  late List dates = [];
+  List<Map<String, dynamic>> clasesAndDates = [];
   Future<void> fetchCalenderDates(BuildContext context) async {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/get-by-ids');
@@ -25,10 +22,19 @@ class CalendarPageController extends ChangeNotifier {
 
     List responseList = jsonDecode(response.body);
 
-    Map responseData = responseList[0];
+    final responseDataObject = responseList[0];
 
     if (response.statusCode == 200) {
-      dates = responseData['calendario'];
+      dates = responseDataObject['calendario'];
+      clasesAndDates = responseList.map((entry) {
+        String name = entry['name'];
+        List<String> calendario = List<String>.from(entry['calendario']);
+        return {
+          'name': name,
+          'calendario': calendario,
+        };
+      }).toList();
+
       print('Calendars fetch has been successful');
     } else {
       print('Error');

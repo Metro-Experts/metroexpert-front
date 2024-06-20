@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/model/event_model.dart';
+import 'package:metro_experts/pages/calendar_page.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CustomFloatingActionButton extends StatefulWidget {
   final TextEditingController eventController;
@@ -27,13 +29,19 @@ class _CustomFloatingActionButtonState
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: const Color(0xFF9FA9FF),
       onPressed: () {
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
               scrollable: true,
-              title: const Text('Event Name'),
+              title: const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Text(
+                  'Please Add An Event',
+                ),
+              ),
               content: Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
@@ -42,10 +50,16 @@ class _CustomFloatingActionButtonState
               ),
               actions: [
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(0xF2, 0xB0, 0x80, 1),
+                  ),
                   onPressed: () {
                     _addEvent();
                   },
-                  child: const Text('Ok'),
+                  child: const Text(
+                    'Create Event',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             );
@@ -68,14 +82,11 @@ class _CustomFloatingActionButtonState
         ];
       }
 
-      widget.eventController.text = ''; // Clear text field
-      Navigator.of(context).pop(); // Close dialog
+      widget.selectedEvents.value =
+          widget.getEventsForDay!(widget.selectedDay!);
 
-      if (widget.getEventsForDay != null) {
-        // Update selected events using the provided function
-        widget.selectedEvents.value =
-            widget.getEventsForDay!(widget.selectedDay!);
-      }
+      widget.eventController.clear(); // Clear text field
+      Navigator.of(context).pop();
     }
   }
 }
