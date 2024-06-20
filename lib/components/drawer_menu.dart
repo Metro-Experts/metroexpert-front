@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:metro_experts/controllers/calendar_page_controller.dart';
 import 'package:metro_experts/controllers/sign_in_page_controller.dart';
 import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
@@ -44,6 +45,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
         ),
       );
     }
+  }
+
+  @override
+  void initState() {
+    Provider.of<CalendarPageController>(context, listen: false)
+        .fetchCalenderDates(context);
+    super.initState();
   }
 
   @override
