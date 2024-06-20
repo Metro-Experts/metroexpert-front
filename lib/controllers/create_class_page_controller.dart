@@ -51,6 +51,21 @@ class CreateClassPageController extends ChangeNotifier {
 
   List<String> scheduleList = ["8:00AM", "9:00AM", "10:00AM", "3:00PM"];
 
+  List<String> months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ];
+
   String? selectedVal = "";
 
   String categorySelection = '';
@@ -58,6 +73,10 @@ class CreateClassPageController extends ChangeNotifier {
   String? subject;
 
   String modality = '';
+
+  String classStartMonth = '';
+
+  String classEndMonth = '';
 
   List<String> categoryChildList = [];
 
@@ -102,6 +121,11 @@ class CreateClassPageController extends ChangeNotifier {
                 .lastName,
             "rating": 5,
             "id": Auth().currentUser!.uid,
+            "bankaccount": {
+              "cedula": "26573457",
+              "numcell": "04129704419",
+              "bank": "Mercantil"
+            },
           },
           "name": subject,
           "description": "Aprende fácil",
@@ -111,6 +135,9 @@ class CreateClassPageController extends ChangeNotifier {
           ],
           "price": priceController.text,
           "modality": modality,
+          "category": categorySelection,
+          "inicio": "Enero",
+          "final": "Marzo"
         },
       ),
     );
