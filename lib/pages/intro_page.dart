@@ -23,7 +23,7 @@ class _IntroPageState extends State<IntroPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset("assets/images/teacher_and_student.PNG"),
-                  const SizedBox(height: 70),
+                  const SizedBox(height: 50),
                   RichText(
                     text: const TextSpan(
                       text: "Recibe tus clases con, ",
@@ -34,7 +34,7 @@ class _IntroPageState extends State<IntroPage> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'MetroExperts',
+                          text: 'UniExperts',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             fontWeight: FontWeight.bold,
