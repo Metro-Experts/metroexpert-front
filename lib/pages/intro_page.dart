@@ -24,12 +24,25 @@ class _IntroPageState extends State<IntroPage> {
                 children: [
                   Image.asset("assets/images/teacher_and_student.PNG"),
                   const SizedBox(height: 70),
-                  const Text(
-                    "Recibe tus clases, fácil y rápido",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 35,
+                  RichText(
+                    text: const TextSpan(
+                      text: "Recibe tus clases con, ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 35,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'MetroExperts',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 35,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(height: 25),

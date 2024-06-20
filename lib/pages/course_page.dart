@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:metro_experts/controllers/course_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
@@ -9,9 +10,9 @@ class CoursePage extends StatefulWidget {
   final String tutorName;
   final String tutoringFee;
   final String tutoringId;
+  final String modality;
   final List tutoringStudents;
   final List dates;
-  final String modality;
 
   const CoursePage({
     required this.subject,
@@ -28,6 +29,8 @@ class CoursePage extends StatefulWidget {
   State<CoursePage> createState() => _CoursePageState();
 }
 
+// bool isJoined = false;
+
 class _CoursePageState extends State<CoursePage> {
   @override
   void initState() {
@@ -43,8 +46,54 @@ class _CoursePageState extends State<CoursePage> {
     return Consumer<CoursePageController>(
       builder: (context, coursePageControllerConsumer, _) {
         return Scaffold(
+          floatingActionButton: Container(
+            width: 400,
+            height: 64,
+            child: FloatingActionButton(
+              backgroundColor: Colors.transparent,
+              onPressed: () {
+                if (coursePageControllerConsumer.isJoined != true) {
+                  setState(
+                    () {
+                      coursePageControllerConsumer.isJoined = true;
+                      coursePageControllerConsumer.subscribeUser(context);
+                    },
+                  );
+                } else {
+                  setState(
+                    () {
+                      coursePageControllerConsumer.isJoined = false;
+                      coursePageControllerConsumer.unsubscribeUser(context);
+                    },
+                  );
+                }
+              },
+              child: AnimatedContainer(
+                width: 400,
+                height: double.maxFinite,
+                duration: const Duration(milliseconds: 100),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                decoration: BoxDecoration(
+                  color: coursePageControllerConsumer.isJoined
+                      ? Colors.red
+                      : const Color.fromARGB(152, 76, 175, 79),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    coursePageControllerConsumer.isJoined
+                        ? 'Salir de la clase'
+                        : 'Unirme',
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Text(widget.subject),
+            backgroundColor: const Color.fromRGBO(208, 213, 254, 1),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
@@ -72,108 +121,219 @@ class _CoursePageState extends State<CoursePage> {
               },
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+          body: Container(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(208, 213, 254, 1),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                const Positioned(
+                  top: 24,
+                  child: SizedBox(
+                    width: 350,
+                    height: 350,
+                    child: Image(
+                      image:
+                          AssetImage('assets/images/teacher_and_student.PNG'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 320,
+                  left: 16,
+                  child: Text(
+                    '${widget.subject}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 24),
+                  ),
+                ),
+                Positioned(
+                  top: 370,
+                  left: 16,
+                  child: SizedBox(
+                    width: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(Icons.book, color: Colors.black54),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            widget.subject,
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                            overflow: TextOverflow.ellipsis,
+                        Text(
+                          'Dictado por'.toUpperCase(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                              color: Colors.black),
+                        ),
+                        Container(
+                          height: 36,
+                          width: 128,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: const Color(0xFFFEC89F),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${widget.tutorName}'.toUpperCase(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 16),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.person, color: Colors.black54),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Tutor: ${widget.tutorName}',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.calendar_today, color: Colors.black54),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Fecha: ${widget.dates[0]['day']} -- Horario: ${widget.dates[0]['hour']}',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.calendar_today, color: Colors.black54),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Fecha: ${widget.dates[1]['day']} -- Horario: ${widget.dates[1]['hour']}',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '\$ Costo: ${widget.tutoringFee}',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Modalidad: ${widget.modality}',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 32),
-                GestureDetector(
-                  onTap: () {
-                    coursePageControllerConsumer
-                        .showConfirmationDialog(context);
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 100),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 16),
+                Positioned(
+                  top: 420,
+                  child: Text(
+                    'Horarios'.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.normal),
+                  ),
+                ),
+                Positioned(
+                  top: 470,
+                  child: Container(
+                    width: 400,
+                    height: 64,
                     decoration: BoxDecoration(
-                      color: coursePageControllerConsumer.isJoined
-                          ? Colors.red
-                          : const Color(0xFF9FA9FF),
-                      borderRadius: BorderRadius.circular(8),
+                      color: const Color(0xFFFEC89F),
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Text(
-                      coursePageControllerConsumer.isJoined
-                          ? 'Salir de la clase'
-                          : 'Unirme',
-                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24.0),
+                          child: Text(
+                            '${widget.dates[0]['day']}'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 24.0),
+                          child: Text(
+                            '${widget.dates[0]['hour']}'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 550,
+                  child: Container(
+                    width: 400,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFEC89F),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24.0),
+                          child: Text(
+                            '${widget.dates[1]['day']}'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 24.0),
+                          child: Text(
+                            '${widget.dates[1]['hour']}'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 630,
+                  child: SizedBox(
+                    width: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Modalidad'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 18,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Container(
+                          height: 64,
+                          width: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: const Color(0xFFFEC89F),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${widget.modality}'.toUpperCase(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 710,
+                  child: SizedBox(
+                    width: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Costo'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 18,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Container(
+                          height: 64,
+                          width: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: const Color(0xFFFEC89F),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '\$${widget.tutoringFee}'.toUpperCase(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

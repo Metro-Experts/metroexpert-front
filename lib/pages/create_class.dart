@@ -116,6 +116,26 @@ class _CreateClassState extends State<CreateClass> {
                     });
                   },
                 ),
+                const SizedBox(height: 50),
+                DropDownMenu(
+                  text: "Selecciona el mes de inicio: ",
+                  menuList: createClassPageControllerConsumer.months,
+                  onSelectionChanged: (val) {
+                    setState(() {
+                      createClassPageControllerConsumer.classStartMonth = val!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 50),
+                DropDownMenu(
+                  text: "Selecciona el mes de fin: ",
+                  menuList: createClassPageControllerConsumer.months,
+                  onSelectionChanged: (val) {
+                    setState(() {
+                      createClassPageControllerConsumer.classEndMonth = val!;
+                    });
+                  },
+                ),
                 const SizedBox(height: 80),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
