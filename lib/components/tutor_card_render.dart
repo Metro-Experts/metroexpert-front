@@ -8,28 +8,34 @@ class TutorCardRender extends StatelessWidget {
   final String tutoringId;
   final List tutoringStudents;
   final List dates;
+  final String modality;
   final Color color;
 
-  const TutorCardRender(
-      {super.key,
-      required this.subject,
-      required this.tutorName,
-      required this.tutoringFee,
-      required this.tutoringId,
-      required this.tutoringStudents,
-      required this.dates,
-      required this.color});
+  const TutorCardRender({
+    super.key,
+    required this.subject,
+    required this.tutorName,
+    required this.tutoringFee,
+    required this.tutoringId,
+    required this.tutoringStudents,
+    required this.dates,
+    required this.modality,
+    required this.color,
+  });
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
     return TutorCardRender(
-        subject: json['name'],
-        tutorName: json['tutor']['name'],
-        tutoringFee: json['price'],
-        tutoringId: json['_id'],
-        tutoringStudents: json['students'],
-        dates: json['date'],
-        color: const Color(0xFF9FA9FF));
+      subject: json['name'],
+      tutorName: json['tutor']['name'],
+      tutoringFee: json['price'],
+      tutoringId: json['_id'],
+      tutoringStudents: json['students'],
+      dates: json['date'],
+      modality: json['modality'],
+      color: const Color(0xFF9FA9FF),
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -44,6 +50,7 @@ class TutorCardRender extends StatelessWidget {
               tutoringId: tutoringId,
               tutoringStudents: tutoringStudents,
               dates: dates,
+              modality: modality,
             ),
           ),
         );
@@ -70,18 +77,72 @@ class TutorCardRender extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      'Tutor: $tutorName',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: 'Tutor: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: tutorName,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      'Precio: $tutoringFee',
-                      style: const TextStyle(
-                        fontSize: 14,
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: 'Precio: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '$tutoringFee',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: 'Modalidad: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: modality,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/multi_textfield.dart';
 import 'package:metro_experts/controllers/sign_up_page_controller.dart';
@@ -107,6 +106,31 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       controller: signUpPageController.cellPhoneController,
+                      keyboardType: TextInputType.phone,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
+                    child: DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        hintText: 'Seleccione su género:',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      items: genderList
+                          .map((gender) => DropdownMenuItem<String>(
+                                value: gender,
+                                child: Text(gender),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          signUpPageController.genderValue = value!;
+                        });
+                      },
+                      value: signUpPageController.genderValue.isNotEmpty
+                          ? signUpPageController.genderValue
+                          : null,
                     ),
                   ),
                   const SizedBox(height: 25),

@@ -11,6 +11,7 @@ class CoursePage extends StatefulWidget {
   final String tutoringId;
   final List tutoringStudents;
   final List dates;
+  final String modality;
 
   const CoursePage({
     required this.subject,
@@ -19,14 +20,13 @@ class CoursePage extends StatefulWidget {
     required this.tutoringId,
     required this.tutoringStudents,
     required this.dates,
+    required this.modality,
     super.key,
   });
 
   @override
   State<CoursePage> createState() => _CoursePageState();
 }
-
-// bool isJoined = false;
 
 class _CoursePageState extends State<CoursePage> {
   @override
@@ -75,10 +75,8 @@ class _CoursePageState extends State<CoursePage> {
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Centra el contenido verticalmente
-              crossAxisAlignment: CrossAxisAlignment
-                  .center, // Centra el contenido horizontalmente
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,26 +141,23 @@ class _CoursePageState extends State<CoursePage> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Modalidad: ${widget.modality}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(height: 32),
                 GestureDetector(
                   onTap: () {
-                    if (coursePageControllerConsumer.isJoined != true) {
-                      setState(
-                        () {
-                          coursePageControllerConsumer.isJoined = true;
-                          coursePageControllerConsumer.subscribeUser(context);
-                        },
-                      );
-                    } else {
-                      setState(
-                        () {
-                          coursePageControllerConsumer.isJoined = false;
-                          coursePageControllerConsumer.unsubscribeUser(context);
-                        },
-                      );
-                    }
+                    coursePageControllerConsumer
+                        .showConfirmationDialog(context);
                   },
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 100),
