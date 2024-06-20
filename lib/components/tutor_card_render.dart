@@ -10,6 +10,7 @@ class TutorCardRender extends StatelessWidget {
   final List dates;
   final String modality;
   final Color color;
+  final String category;
 
   const TutorCardRender({
     super.key,
@@ -21,18 +22,22 @@ class TutorCardRender extends StatelessWidget {
     required this.dates,
     required this.modality,
     required this.color,
+    required this.category,
   });
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
     return TutorCardRender(
-      subject: json['name'],
-      tutorName: json['tutor']['name'],
-      tutoringFee: json['price'],
-      tutoringId: json['_id'],
-      tutoringStudents: json['students'],
-      dates: json['date'],
-      modality: json['modality'],
+      subject: json['name'] ?? 'Sin asignatura',
+      tutorName: json['tutor'] != null
+          ? json['tutor']['name'] ?? 'Sin tutor'
+          : 'Sin tutor',
+      tutoringFee: json['price'] ?? 0,
+      tutoringId: json['_id'] ?? '',
+      tutoringStudents: json['students'] ?? [],
+      dates: json['date'] ?? [],
+      modality: json['modality'] ?? 'Sin modalidad',
       color: const Color(0xFF9FA9FF),
+      category: json['category'] ?? 'Sin categoría',
     );
   }
 

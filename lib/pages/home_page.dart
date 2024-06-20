@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/components/tutor_card_render.dart';
 import 'package:metro_experts/controllers/calendar_page_controller.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,10 +32,11 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    'Hola, ${userOnSessionConsumer.userData.name} 👋🏻'
-                        .toUpperCase(),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
+                  'Hola, ${userOnSessionConsumer.userData.name} 👋🏻'
+                      .toUpperCase(),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
@@ -64,6 +65,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                Center(
+                  child: FilterButton(
+                      homePageControllerConsumer: homePageControllerConsumer),
+                ),
+                const SizedBox(height: 16),
                 Expanded(
                   child: homePageControllerConsumer.filteredTutors.isNotEmpty
                       ? ListView.builder(
@@ -84,6 +90,7 @@ class _HomePageState extends State<HomePage> {
                               dates: tutoring.dates,
                               modality: tutoring.modality,
                               color: cardColor,
+                              category: tutoring.category,
                             );
                           },
                         )
@@ -101,6 +108,40 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         );
+      },
+    );
+  }
+}
+
+class FilterButton extends StatelessWidget {
+  const FilterButton({
+    Key? key,
+    required this.homePageControllerConsumer,
+  }) : super(key: key);
+
+  final HomePageController homePageControllerConsumer;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      hint: Text('Selecciona una categoría'),
+      value: homePageControllerConsumer.selectedCategory.isEmpty
+          ? 'Todos los cursos'
+          : homePageControllerConsumer.selectedCategory,
+      items: <String>[
+        'Todos los cursos',
+        'Matemática',
+        'programacion',
+        'Física',
+        'Química'
+      ].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (newValue) {
+        homePageControllerConsumer.updateCategoryFilter(newValue!);
       },
     );
   }
