@@ -104,6 +104,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   return isSameDay(_selectedDay, day);
                 },
                 onDaySelected: _onDaySelected,
+                eventLoader: _getEventsForToday,
               ),
               const SizedBox(
                 height: 8,
