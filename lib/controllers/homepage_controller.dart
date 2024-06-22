@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:metro_experts/components/tutor_card_render.dart';
-import 'package:metro_experts/model/user_model.dart';
 import 'package:provider/provider.dart';
+import 'package:metro_experts/model/user_model.dart';
 
 class HomePageController extends ChangeNotifier {
   List<TutorCardRender> _tutorCard = [];
   List<TutorCardRender> filteredTutors = [];
   String searchQuery = '';
   String selectedCategory = 'Todos los cursos';
+  String selectedModality = 'Todas las modalidades';
   List ids = [];
 
   Future<void> fetchTutorings(BuildContext context) async {
@@ -55,6 +56,11 @@ class HomePageController extends ChangeNotifier {
     filterTutors();
   }
 
+  void updateModalityFilter(String modality) {
+    selectedModality = modality;
+    filterTutors();
+  }
+
   void filterTutors() {
     filteredTutors = _tutorCard.where((tutor) {
       bool matchesQuery =
@@ -62,7 +68,9 @@ class HomePageController extends ChangeNotifier {
               tutor.tutorName.toLowerCase().contains(searchQuery.toLowerCase());
       bool matchesCategory = selectedCategory == 'Todos los cursos' ||
           tutor.category == selectedCategory;
-      return matchesQuery && matchesCategory;
+      bool matchesModality = selectedModality == 'Todas las modalidades' ||
+          tutor.modality == selectedModality;
+      return matchesQuery && matchesCategory && matchesModality;
     }).toList();
     notifyListeners();
   }

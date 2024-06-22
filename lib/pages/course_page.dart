@@ -2,25 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:metro_experts/controllers/course_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/pages/tutor_profile_view.dart';
+import 'package:metro_experts/controllers/tutor_profile_view_controller.dart';
 import 'package:provider/provider.dart';
 
 class CoursePage extends StatefulWidget {
   final String subject;
   final String tutorName;
+  final String tutorLastName;
   final String tutoringFee;
   final String tutoringId;
   final List tutoringStudents;
   final List dates;
   final String modality;
+  final Map<String, String> bankAccount;
 
   const CoursePage({
     required this.subject,
     required this.tutorName,
+    required this.tutorLastName,
     required this.tutoringFee,
     required this.tutoringId,
     required this.tutoringStudents,
     required this.dates,
     required this.modality,
+    required this.bankAccount,
     super.key,
   });
 
@@ -31,11 +37,12 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   @override
   void initState() {
-    Provider.of<CoursePageController>(context, listen: false).tutoringId =
-        widget.tutoringId;
-    Provider.of<CoursePageController>(context, listen: false)
-        .isAStudent(widget.tutoringStudents, Auth().currentUser!.uid);
     super.initState();
+    final coursePageController =
+        Provider.of<CoursePageController>(context, listen: false);
+    coursePageController.tutoringId = widget.tutoringId;
+    coursePageController.isAStudent(
+        widget.tutoringStudents, Auth().currentUser!.uid);
   }
 
   @override
@@ -97,16 +104,46 @@ class _CoursePageState extends State<CoursePage> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.person, color: Colors.black54),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Tutor: ${widget.tutorName}',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TutorProfileViewController(
+                              tutorName: widget.tutorName,
+                              tutorLastName: widget.tutorLastName,
+                              tutorEmail:
+                                  'tutoremail@example.com', // Cambia esto por el email del tutor
+                              tutorSubjects: [
+                                'Math',
+                                'Physics'
+                              ], // Cambia esto por las materias del tutor
+                              bankAccount: widget.bankAccount,
+                              subject: widget.subject,
+                              tutoringFee: widget.tutoringFee,
+                              tutoringId: widget.tutoringId,
+                              tutoringStudents: widget.tutoringStudents,
+                              dates: widget.dates,
+                              modality: widget.modality,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.person, color: Colors.black54),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Tutor: ${widget.tutorName} ${widget.tutorLastName}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              decoration: TextDecoration.underline,
+                              color: Colors.blue, // Color para destacar
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Row(

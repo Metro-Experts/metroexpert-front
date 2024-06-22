@@ -4,6 +4,7 @@ import 'package:metro_experts/pages/course_page.dart';
 class TutorCardRender extends StatelessWidget {
   final String subject;
   final String tutorName;
+  final String tutorLastName;
   final int tutoringFee;
   final String tutoringId;
   final List tutoringStudents;
@@ -11,11 +12,13 @@ class TutorCardRender extends StatelessWidget {
   final String modality;
   final Color color;
   final String category;
+  final Map<String, String> bankAccount;
 
   const TutorCardRender({
     super.key,
     required this.subject,
     required this.tutorName,
+    required this.tutorLastName,
     required this.tutoringFee,
     required this.tutoringId,
     required this.tutoringStudents,
@@ -23,6 +26,7 @@ class TutorCardRender extends StatelessWidget {
     required this.modality,
     required this.color,
     required this.category,
+    required this.bankAccount,
   });
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
@@ -31,6 +35,9 @@ class TutorCardRender extends StatelessWidget {
       tutorName: json['tutor'] != null
           ? json['tutor']['name'] ?? 'Sin tutor'
           : 'Sin tutor',
+      tutorLastName: json['tutor'] != null
+          ? json['tutor']['lastName'] ?? 'Sin tutor'
+          : 'Sin tutor',
       tutoringFee: json['price'] ?? 0,
       tutoringId: json['_id'] ?? '',
       tutoringStudents: json['students'] ?? [],
@@ -38,6 +45,11 @@ class TutorCardRender extends StatelessWidget {
       modality: json['modality'] ?? 'Sin modalidad',
       color: const Color(0xFF9FA9FF),
       category: json['category'] ?? 'Sin categoría',
+      bankAccount: {
+        'bank': json['tutor']?['bankaccount']?['bank'] ?? 'Sin banco',
+        'cedula': json['tutor']?['bankaccount']?['cedula'] ?? 'Sin cédula',
+        'numcell': json['tutor']?['bankaccount']?['numcell'] ?? 'Sin cuenta',
+      },
     );
   }
 
@@ -51,11 +63,13 @@ class TutorCardRender extends StatelessWidget {
             builder: (context) => CoursePage(
               subject: subject,
               tutorName: tutorName,
+              tutorLastName: tutorLastName,
               tutoringFee: "$tutoringFee",
               tutoringId: tutoringId,
               tutoringStudents: tutoringStudents,
               dates: dates,
               modality: modality,
+              bankAccount: bankAccount,
             ),
           ),
         );
@@ -94,7 +108,7 @@ class TutorCardRender extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: tutorName,
+                            text: tutorName + ' ' + tutorLastName,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,

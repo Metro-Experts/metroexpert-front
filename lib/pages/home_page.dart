@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/components/tutor_card_render.dart';
-import 'package:metro_experts/controllers/calendar_page_controller.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
 
@@ -65,9 +64,42 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Center(
-                  child: FilterButton(
-                      homePageControllerConsumer: homePageControllerConsumer),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomDropdownButton(
+                        hint: 'Categoría',
+                        value: homePageControllerConsumer.selectedCategory,
+                        items: const [
+                          'Todos los cursos',
+                          'Matemática',
+                          'Programación',
+                          'Física',
+                          'Química'
+                        ],
+                        onChanged: (value) {
+                          homePageControllerConsumer
+                              .updateCategoryFilter(value!);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: CustomDropdownButton(
+                        hint: 'Modalidad',
+                        value: homePageControllerConsumer.selectedModality,
+                        items: const [
+                          'Todas las modalidades',
+                          'Presencial',
+                          'Virtual'
+                        ],
+                        onChanged: (value) {
+                          homePageControllerConsumer
+                              .updateModalityFilter(value!);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
                 Expanded(
@@ -84,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                             return TutorCardRender(
                               subject: tutoring.subject,
                               tutorName: tutoring.tutorName,
+                              tutorLastName: tutoring.tutorLastName,
                               tutoringFee: tutoring.tutoringFee,
                               tutoringId: tutoring.tutoringId,
                               tutoringStudents: tutoring.tutoringStudents,
@@ -91,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                               modality: tutoring.modality,
                               color: cardColor,
                               category: tutoring.category,
+                              bankAccount: tutoring.bankAccount,
                             );
                           },
                         )
@@ -113,36 +147,42 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class FilterButton extends StatelessWidget {
-  const FilterButton({
+class CustomDropdownButton extends StatelessWidget {
+  const CustomDropdownButton({
     Key? key,
-    required this.homePageControllerConsumer,
+    required this.hint,
+    required this.value,
+    required this.items,
+    required this.onChanged,
   }) : super(key: key);
 
-  final HomePageController homePageControllerConsumer;
+  final String hint;
+  final String value;
+  final List<String> items;
+  final ValueChanged<String?> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      hint: Text('Selecciona una categoría'),
-      value: homePageControllerConsumer.selectedCategory.isEmpty
-          ? 'Todos los cursos'
-          : homePageControllerConsumer.selectedCategory,
-      items: <String>[
-        'Todos los cursos',
-        'Matemática',
-        'programacion',
-        'Física',
-        'Química'
-      ].map((String value) {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[200],
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      hint: Text(hint, style: const TextStyle(fontSize: 12)),
+      value: value.isEmpty ? null : value,
+      items: items.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(value, style: const TextStyle(fontSize: 12)),
         );
       }).toList(),
-      onChanged: (newValue) {
-        homePageControllerConsumer.updateCategoryFilter(newValue!);
-      },
+      onChanged: onChanged,
     );
   }
 }
