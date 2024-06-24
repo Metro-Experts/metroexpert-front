@@ -6,7 +6,6 @@ import 'package:metro_experts/controllers/create_class_page_controller.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/controllers/sign_in_page_controller.dart';
 import 'package:metro_experts/controllers/sign_up_page_controller.dart';
-import 'package:metro_experts/controllers/tutor_profile_view_controller.dart';
 import 'package:metro_experts/controllers/tutor_edit_profile_page_controller.dart';
 import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
