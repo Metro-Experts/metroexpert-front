@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_experts/components/custom_drop_down_button.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/components/tutor_card_render.dart';
@@ -64,42 +65,47 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomDropdownButton(
-                        hint: 'Categoría',
-                        value: homePageControllerConsumer.selectedCategory,
-                        items: const [
-                          'Todos los cursos',
-                          'Matemática',
-                          'Programación',
-                          'Física',
-                          'Química'
-                        ],
-                        onChanged: (value) {
-                          homePageControllerConsumer
-                              .updateCategoryFilter(value!);
-                        },
+                SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomDropdownButton(
+                          hint: 'Categoría',
+                          value: homePageControllerConsumer.selectedCategory,
+                          items: const [
+                            'Todos los cursos',
+                            'Matemática',
+                            'Programación',
+                            'Física',
+                            'Química'
+                          ],
+                          onChanged: (value) {
+                            homePageControllerConsumer
+                                .updateCategoryFilter(value!);
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: CustomDropdownButton(
-                        hint: 'Modalidad',
-                        value: homePageControllerConsumer.selectedModality,
-                        items: const [
-                          'Todas las modalidades',
-                          'Presencial',
-                          'Virtual'
-                        ],
-                        onChanged: (value) {
-                          homePageControllerConsumer
-                              .updateModalityFilter(value!);
-                        },
+                      const SizedBox(
+                        width: 8,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: CustomDropdownButton(
+                          hint: 'Modalidad',
+                          value: homePageControllerConsumer.selectedModality,
+                          items: const [
+                            'Todas las modalidades',
+                            'Presencial',
+                            'Virtual'
+                          ],
+                          onChanged: (value) {
+                            homePageControllerConsumer
+                                .updateModalityFilter(value!);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Expanded(
@@ -143,46 +149,6 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
-    );
-  }
-}
-
-class CustomDropdownButton extends StatelessWidget {
-  const CustomDropdownButton({
-    Key? key,
-    required this.hint,
-    required this.value,
-    required this.items,
-    required this.onChanged,
-  }) : super(key: key);
-
-  final String hint;
-  final String value;
-  final List<String> items;
-  final ValueChanged<String?> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.grey[200],
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide.none,
-        ),
-      ),
-      hint: Text(hint, style: const TextStyle(fontSize: 12)),
-      value: value.isEmpty ? null : value,
-      items: items.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value, style: const TextStyle(fontSize: 12)),
-        );
-      }).toList(),
-      onChanged: onChanged,
     );
   }
 }
