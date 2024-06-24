@@ -48,7 +48,7 @@ class UserEditProfilePageController extends ChangeNotifier {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'Data Uploaded successfully',
+              'Data Guardada Con Éxito!',
               style: TextStyle(color: Colors.green),
             ),
           ),

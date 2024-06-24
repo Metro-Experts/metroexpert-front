@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, await_only_futures
 
 import 'package:flutter/material.dart';
 import 'package:metro_experts/components/custom_floating_action_button.dart';

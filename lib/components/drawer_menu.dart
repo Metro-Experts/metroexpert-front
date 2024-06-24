@@ -42,7 +42,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       // Handle any other exceptions
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error picking image: ${e.message}'),
+          content: Text('Error Escogiendo la imagen: ${e.message}'),
         ),
       );
     }

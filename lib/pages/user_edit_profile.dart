@@ -120,18 +120,21 @@ class _UserEditProfileState extends State<UserEditProfile> {
                           userEditProfilePageController.saveUserInformation(
                               UserModel(
                                 name: userEditProfilePageController
-                                    .nameController.text,
+                                            .nameController.text ==
+                                        ''
+                                    ? accountPageModel.userData.name
+                                    : userEditProfilePageController
+                                        .nameController.text,
                                 lastName: userEditProfilePageController
-                                    .lastNameController.text,
+                                            .lastNameController.text ==
+                                        ''
+                                    ? accountPageModel.userData.lastName
+                                    : userEditProfilePageController
+                                        .lastNameController.text,
                                 email: accountPageModel.userData.email,
                               ),
                               context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
+
                           userEditProfilePageController.nameController.clear();
                           userEditProfilePageController.lastNameController
                               .clear();

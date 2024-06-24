@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:metro_experts/controllers/course_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
@@ -201,14 +200,22 @@ class _CoursePageState extends State<CoursePage> {
                               borderRadius: BorderRadius.circular(24),
                               color: const Color(0xFFFEC89F),
                             ),
-                            child: Center(
-                              child: Text(
-                                '${widget.tutorName}'.toUpperCase(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 16),
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  '${widget.tutorName}'.toUpperCase(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 16),
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward,
+                                  size: 24,
+                                ),
+                              ],
                             ),
                           ),
                         ],
