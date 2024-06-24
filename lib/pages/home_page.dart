@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:metro_experts/components/custom_drop_down_button.dart';
+import 'package:provider/provider.dart';
 import 'package:metro_experts/components/drawer_menu.dart';
 import 'package:metro_experts/components/tutor_card_render.dart';
-import 'package:metro_experts/controllers/calendar_page_controller.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,10 +32,11 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    'Hola, ${userOnSessionConsumer.userData.name} 👋🏻'
-                        .toUpperCase(),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
+                  'Hola, ${userOnSessionConsumer.userData.name} 👋🏻'
+                      .toUpperCase(),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
@@ -64,6 +65,49 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomDropdownButton(
+                          hint: 'Categoría',
+                          value: homePageControllerConsumer.selectedCategory,
+                          items: const [
+                            'Todos los cursos',
+                            'Matemática',
+                            'Programación',
+                            'Física',
+                            'Química'
+                          ],
+                          onChanged: (value) {
+                            homePageControllerConsumer
+                                .updateCategoryFilter(value!);
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: CustomDropdownButton(
+                          hint: 'Modalidad',
+                          value: homePageControllerConsumer.selectedModality,
+                          items: const [
+                            'Todas las modalidades',
+                            'Presencial',
+                            'Virtual'
+                          ],
+                          onChanged: (value) {
+                            homePageControllerConsumer
+                                .updateModalityFilter(value!);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
                 Expanded(
                   child: homePageControllerConsumer.filteredTutors.isNotEmpty
                       ? ListView.builder(
@@ -78,12 +122,15 @@ class _HomePageState extends State<HomePage> {
                             return TutorCardRender(
                               subject: tutoring.subject,
                               tutorName: tutoring.tutorName,
+                              tutorLastName: tutoring.tutorLastName,
                               tutoringFee: tutoring.tutoringFee,
                               tutoringId: tutoring.tutoringId,
                               tutoringStudents: tutoring.tutoringStudents,
                               dates: tutoring.dates,
                               modality: tutoring.modality,
                               color: cardColor,
+                              category: tutoring.category,
+                              bankAccount: tutoring.bankAccount,
                             );
                           },
                         )
