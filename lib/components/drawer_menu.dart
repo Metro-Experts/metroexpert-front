@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:metro_experts/controllers/calendar_page_controller.dart';
+import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/controllers/sign_in_page_controller.dart';
 import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
@@ -47,10 +48,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
     }
   }
 
+  late String userType;
+
   @override
   void initState() {
     Provider.of<CalendarPageController>(context, listen: false)
         .fetchCalenderDates(context);
+    userType = Provider.of<HomePageController>(context, listen: false).userType;
     super.initState();
   }
 
@@ -121,29 +125,31 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: ListTile(
-                leading: const Icon(
-                  Icons.assignment_add,
-                  size: 32,
-                  color: Color.fromRGBO(238, 138, 111, 1),
-                ),
-                title: const Padding(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: Text('Create Class',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal)),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CreateClass()),
-                  );
-                },
-              ),
-            ),
+            userType == 'tutor'
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.assignment_add,
+                        size: 32,
+                        color: Color.fromRGBO(238, 138, 111, 1),
+                      ),
+                      title: const Padding(
+                        padding: EdgeInsets.only(left: 16.0),
+                        child: Text('Create Class',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.normal)),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CreateClass()),
+                        );
+                      },
+                    ),
+                  )
+                : Container(),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: ListTile(

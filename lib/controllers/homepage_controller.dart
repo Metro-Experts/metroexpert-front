@@ -11,6 +11,7 @@ class HomePageController extends ChangeNotifier {
   List<TutorCardRender> _tutorCard = [];
   List<TutorCardRender> filteredTutors = [];
   String searchQuery = '';
+  String userType = '';
   List ids = [];
 
   Future<void> fetchTutorings(BuildContext context) async {
@@ -22,6 +23,7 @@ class HomePageController extends ChangeNotifier {
       List<dynamic> responseData = json.decode(response.body);
       _tutorCard =
           responseData.map((data) => TutorCardRender.fromJson(data)).toList();
+
       filteredTutors = _tutorCard;
     } else {
       print('error fetching tutorings...');
@@ -36,6 +38,7 @@ class HomePageController extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);
+      userType = responseData['userType'];
       ids = responseData['courses_student'];
 
       Provider.of<UserOnSession>(context, listen: false)

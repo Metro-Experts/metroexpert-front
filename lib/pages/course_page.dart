@@ -1,8 +1,11 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:metro_experts/controllers/course_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/pages/tutor_profile_view.dart';
 import 'package:provider/provider.dart';
 
 class CoursePage extends StatefulWidget {
@@ -156,36 +159,48 @@ class _CoursePageState extends State<CoursePage> {
                 Positioned(
                   top: 370,
                   left: 16,
-                  child: SizedBox(
-                    width: 400,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Dictado por'.toUpperCase(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                              color: Colors.black),
-                        ),
-                        Container(
-                          height: 36,
-                          width: 128,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            color: const Color(0xFFFEC89F),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TutorProfileView(
+                            tutorName: widget.tutorName,
                           ),
-                          child: Center(
-                            child: Text(
-                              '${widget.tutorName}'.toUpperCase(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 16),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 400,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Dictado por'.toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16,
+                                color: Colors.black),
+                          ),
+                          Container(
+                            height: 36,
+                            width: 128,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: const Color(0xFFFEC89F),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${widget.tutorName}'.toUpperCase(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
