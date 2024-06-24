@@ -1,5 +1,8 @@
+// ignore_for_file: unnecessary_string_interpolations, prefer_adjacent_string_concatenation
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:metro_experts/pages/course_page.dart';
 
 class TutorProfileView extends StatelessWidget {
   const TutorProfileView({
@@ -33,7 +36,7 @@ class TutorProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$tutorName $tutorLastName'),
+        backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -41,52 +44,83 @@ class TutorProfileView extends StatelessWidget {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      extendBodyBehindAppBar: true,
+      body: SizedBox(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            const SizedBox(height: 30),
-            Container(
-              width: 190,
-              height: 190,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(color: Colors.black, width: 5),
-                color: const Color.fromRGBO(238, 138, 111, 1),
-              ),
-              child: ClipOval(
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  child: SvgPicture.asset(
-                    'assets/icons/profile.svg',
-                    width: 170,
-                    height: 170,
-                  ),
+            Positioned(
+              top: 70,
+              child: Container(
+                width: 180,
+                height: 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: const Color.fromRGBO(238, 138, 111, 1),
                 ),
+                child: Image.asset('assets/images/man_teaching.png'),
               ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              '$tutorName $tutorLastName',
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              tutorEmail,
-              style:
-                  const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              width: 315,
-              height: 1,
-              color: Colors.black,
-            ),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            Positioned(
+              top: 280,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(
+                    '$tutorName',
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  // Text(
+                  //   ('$tutorName@correo.unimet.edu.ve').toLowerCase(),
+                  //   style: const TextStyle(
+                  //       fontSize: 14, fontWeight: FontWeight.normal),
+                  // )
+                ],
+              ),
+            ),
+            Positioned(
+              top: 345,
+              child: Container(
+                width: 315,
+                height: 1,
+                color: Colors.black,
+              ),
+            ),
+            Positioned(
+              top: 360,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/profile.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(
+                          width: 21,
+                        ),
+                        Text(
+                          '$tutorName',
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -135,6 +169,26 @@ class TutorProfileView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 2.0),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/email_icon.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(
+                          width: 17,
+                        ),
+                        Text(
+                          '$tutorName@correo.unimet.edu.ve'.toLowerCase(),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -166,14 +220,32 @@ class TutorProfileView extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.only(left: 60.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Tutorías',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            const Positioned(
+              top: 490,
+              child: SizedBox(
+                width: 308,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      textAlign: TextAlign.left,
+                      'Sobre el tutor',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      textAlign: TextAlign.justify,
+                      "Como estudiante he conocido lo mucho que uno puede llegar a necesitar ayuda en momentos de estres y por esa razón me encuentro aquí.",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -186,21 +258,48 @@ class TutorProfileView extends StatelessWidget {
                     width: 110,
                     height: 94,
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(254, 200, 159, 1),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/man_teaching.png',
-                        width: 70,
-                        height: 70,
-                      ),
+                      color: const Color.fromRGBO(254, 200, 159, 1),
+                      borderRadius: BorderRadius.circular(25),
                     ),
+                    child: Image.asset('assets/images/woman_teaching.png'),
                   ),
-                  const SizedBox(width: 20),
-                  Text(
-                    subject,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 14),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Matematica 5",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Tutor: ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: '$tutorName',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -214,21 +313,48 @@ class TutorProfileView extends StatelessWidget {
                     width: 110,
                     height: 94,
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(254, 200, 159, 1),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/man_teaching.png',
-                        width: 70,
-                        height: 70,
-                      ),
+                      color: const Color.fromRGBO(254, 200, 159, 1),
+                      borderRadius: BorderRadius.circular(25),
                     ),
+                    child: Image.asset('assets/images/woman_teaching.png'),
                   ),
-                  const SizedBox(width: 20),
-                  Text(
-                    "Física 3",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 14),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Matematica 5",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Tutor: ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: '$tutorName',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

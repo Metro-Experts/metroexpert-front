@@ -17,17 +17,12 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   DateTime? _selectedDay;
-
   DateTime _focusedDay = DateTime.now();
-
   Map<DateTime, List<Event>> events = {};
-
   final TextEditingController _eventController = TextEditingController();
-
   late final ValueNotifier<List<Event>> _selectedEvents;
 
   List<Event> _getEventsForToday(DateTime day) {
-    print(events[day]);
     return events[day] ?? [];
   }
 
@@ -41,40 +36,39 @@ class _CalendarPageState extends State<CalendarPage> {
 
       for (var j = 0; j < dates.length; j++) {
         List date = dates[j].split('-');
-
         DateTime formattedDate =
             DateTime.parse('${date[0]}-${date[1]}-${date[2]} '
                 '${0}${0}:${0}${0}:${0}${0}.'
                 '${0}${0}${0}Z');
-        events.addAll(
-          {
-            formattedDate: [
-              Event('${clasesAndDates[i]['name']}'),
-            ],
-          },
-        );
+
+        if (events.containsKey(formattedDate)) {
+          events[formattedDate]!.add(Event('${clasesAndDates[i]['name']}'));
+        } else {
+          events[formattedDate] = [Event('${clasesAndDates[i]['name']}')];
+        }
       }
     }
+    setState(() {});
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
-      setState(
-        () {
-          _selectedDay = selectedDay;
-          _focusedDay = focusedDay;
-          _selectedEvents.value = _getEventsForToday(selectedDay);
-        },
-      );
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+        _selectedEvents.value = _getEventsForToday(selectedDay);
+      });
     }
   }
 
   @override
   void initState() {
-    getEventsFromBack(context);
+    super.initState();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForToday(_selectedDay!));
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getEventsFromBack(context);
+    });
   }
 
   @override
@@ -104,10 +98,9 @@ class _CalendarPageState extends State<CalendarPage> {
                   return isSameDay(_selectedDay, day);
                 },
                 onDaySelected: _onDaySelected,
+                eventLoader: _getEventsForToday,
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              const SizedBox(height: 8),
               Expanded(
                 child: ValueListenableBuilder<List<Event>>(
                   valueListenable: _selectedEvents,
@@ -126,7 +119,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                 : const Color(0xFF9FA9FF),
                           ),
                           child: ListTile(
-                            minTileHeight: 64,
+                            minLeadingWidth: 64,
                             trailing: const Icon(
                               Icons.book,
                               color: Colors.black,
@@ -142,7 +135,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -143,6 +143,16 @@ class _CreateClassState extends State<CreateClass> {
                     ElevatedButton(
                       onPressed: () {
                         createClassPageControllerConsumer.createClass(context);
+                        createClassPageControllerConsumer.dia1Controller
+                            .clear();
+                        createClassPageControllerConsumer.dia2Controller
+                            .clear();
+                        createClassPageControllerConsumer.hora1Controller
+                            .clear();
+                        createClassPageControllerConsumer.hora2Controller
+                            .clear();
+                        createClassPageControllerConsumer.priceController
+                            .clear();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xfff060B26),

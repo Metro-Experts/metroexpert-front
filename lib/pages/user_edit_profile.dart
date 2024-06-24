@@ -132,6 +132,9 @@ class _UserEditProfileState extends State<UserEditProfile> {
                               builder: (context) => const HomePage(),
                             ),
                           );
+                          userEditProfilePageController.nameController.clear();
+                          userEditProfilePageController.lastNameController
+                              .clear();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff060b26),
