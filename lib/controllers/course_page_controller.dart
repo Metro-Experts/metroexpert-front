@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print
+// ignore_for_file: use_build_context_synchronously, avoid_print, await_only_futures
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;

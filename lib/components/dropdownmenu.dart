@@ -18,8 +18,12 @@ class DropDownMenu extends StatefulWidget {
   State<DropDownMenu> createState() => _DropDownMenuState();
 }
 
-class _DropDownMenuState extends State<DropDownMenu> {
+class _DropDownMenuState extends State<DropDownMenu>
+    with AutomaticKeepAliveClientMixin<DropDownMenu> {
   String? selectedVal;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -29,6 +33,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DropdownButtonFormField(
       value: selectedVal,
       items: widget.menuList.map(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/model/event_model.dart';
-import 'package:metro_experts/pages/calendar_page.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class CustomFloatingActionButton extends StatefulWidget {
   final TextEditingController eventController;
@@ -11,13 +9,13 @@ class CustomFloatingActionButton extends StatefulWidget {
   final Function(DateTime)? getEventsForDay;
 
   const CustomFloatingActionButton({
-    Key? key,
+    super.key,
     required this.eventController,
     required this.selectedDay,
     required this.events,
     required this.selectedEvents,
     required this.getEventsForDay,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomFloatingActionButton> createState() =>

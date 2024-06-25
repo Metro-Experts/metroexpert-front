@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
@@ -19,10 +21,7 @@ class SignUpPageController extends ChangeNotifier {
   Future<void> createUserWithEmailAndPassword(
     BuildContext context,
   ) async {
-    // Validate inputs
-    if (!validateInputs(context)) {
-      return;
-    }
+    validateInputs(context);
 
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/');

@@ -1,14 +1,14 @@
+// ignore_for_file: avoid_print
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:http/http.dart' as http;
-import 'package:metro_experts/model/event_model.dart';
 import 'package:provider/provider.dart';
 
 class CalendarPageController extends ChangeNotifier {
-  late final ValueNotifier<List<Event>> selectedEvents;
   late List dates = [];
   List<Map<String, dynamic>> clasesAndDates = [];
+
   Future<void> fetchCalenderDates(BuildContext context) async {
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/get-by-ids');
