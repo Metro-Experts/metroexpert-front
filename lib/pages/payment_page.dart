@@ -47,7 +47,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 color: Color(0xFFEE8A6F),
               ),
             ),
-            const SizedBox(height: 25),
+
             Center(
               child: Column(
               children: [

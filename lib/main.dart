@@ -10,6 +10,8 @@ import 'package:metro_experts/controllers/tutor_edit_profile_page_controller.dar
 import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
 import 'package:metro_experts/pages/calendar_page.dart';
+import 'package:metro_experts/pages/rate_tutor_page.dart';
+import 'package:metro_experts/pages/tutor_profile_view.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
 
@@ -62,7 +64,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // The property [home] defines the default route of the app
-        home: const IntroPage(),
+        home: const TutorProfileView(tutorName: "Bea", tutorLastName: "Cardozo", tutorEmail: "bea@gmail.com", tutorSubjects: ["mate 5"], bankAccount: {
+    "hola": "hello",
+    "adios": "goodbye",
+    "casa": "house",
+  }),
         debugShowCheckedModeBanner: false,
       ),
     );
