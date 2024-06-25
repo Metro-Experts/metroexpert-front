@@ -181,9 +181,20 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: const Text('Estudiante'),
                           ),
                         ),
-                        Visibility(
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Visibility(
                             visible: signUpPageController.showTutorSection,
-                            child: const TutorSection()),
+                            child: const MultiTextfield(
+                              labelText: 'Cuentanos de ti',
+                              placeholder:
+                                  'Soy un estudiante en pro de ayudar a mis compañeros que como yo tuvieron dificultades',
+                              bottomPadding: 0,
+                              leftPadding: 0,
+                              rightPadding: 0,
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(12),
@@ -261,20 +272,20 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-class TutorSection extends StatelessWidget {
-  const TutorSection({super.key});
+// class TutorSection extends StatelessWidget {
+//   const TutorSection({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(0, 50, 0, 1),
-      child: MultiTextfield(
-        bottomPadding: 0,
-        leftPadding: 0,
-        rightPadding: 0,
-        labelText: 'Cuéntanos de ti:',
-        placeholder: '...',
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Padding(
+//       padding: EdgeInsets.fromLTRB(0, 50, 0, 1),
+//       child: MultiTextfield(
+//         bottomPadding: 0,
+//         leftPadding: 0,
+//         rightPadding: 0,
+//         labelText: 'Cuéntanos de ti:',
+//         placeholder: '...',
+//       ),
+//     );
+//   }
+// }

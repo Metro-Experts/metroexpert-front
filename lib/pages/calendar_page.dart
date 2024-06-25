@@ -30,7 +30,6 @@ class _CalendarPageState extends State<CalendarPage> {
     List clasesAndDates =
         await Provider.of<CalendarPageController>(context, listen: false)
             .clasesAndDates;
-
     for (var i = 0; i < clasesAndDates.length; i++) {
       List dates = clasesAndDates[i]['calendario'];
 
@@ -40,7 +39,6 @@ class _CalendarPageState extends State<CalendarPage> {
             DateTime.parse('${date[0]}-${date[1]}-${date[2]} '
                 '${0}${0}:${0}${0}:${0}${0}.'
                 '${0}${0}${0}Z');
-
         if (events.containsKey(formattedDate)) {
           events[formattedDate]!.add(Event('${clasesAndDates[i]['name']}'));
         } else {
@@ -48,7 +46,6 @@ class _CalendarPageState extends State<CalendarPage> {
         }
       }
     }
-    setState(() {});
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {

@@ -66,8 +66,6 @@ class CreateClassPageController extends ChangeNotifier {
     "Diciembre"
   ];
 
-  String? selectedVal = "";
-
   String categorySelection = '';
 
   String? subject;
@@ -117,8 +115,12 @@ class CreateClassPageController extends ChangeNotifier {
   ];
 
   Future<void> createClass(BuildContext context) async {
-    if (!daysOfTheWeek.contains(dia1Controller.text.toLowerCase()) ||
-        !daysOfTheWeek.contains(dia2Controller.text.toLowerCase()) ||
+    if (categorySelection == '' ||
+        subject == '' ||
+        priceController.text == '' ||
+        modality == '' ||
+        hora1Controller.text == '' ||
+        hora2Controller.text == '' ||
         dia1Controller.text == '' ||
         dia2Controller.text == '') {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -130,7 +132,24 @@ class CreateClassPageController extends ChangeNotifier {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'Ingrese un dia correcto',
+              'Llene todos los campos',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    } else if (!daysOfTheWeek.contains(dia1Controller.text.toLowerCase()) ||
+        !daysOfTheWeek.contains(dia2Controller.text.toLowerCase())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: SizedBox(
+            height: 25,
+            child: Text(
+              textAlign: TextAlign.justify,
+              'Error al ingresar día',
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -147,7 +166,7 @@ class CreateClassPageController extends ChangeNotifier {
             height: 25,
             child: Text(
               textAlign: TextAlign.justify,
-              'Formato incorrecto: Error seleccionando el dia de la clase',
+              'Error al ingresar horario',
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -214,24 +233,23 @@ class CreateClassPageController extends ChangeNotifier {
         hora1Controller.clear();
         hora2Controller.clear();
         priceController.clear();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: SizedBox(
+              height: 25,
+              child: Text(
+                textAlign: TextAlign.justify,
+                'Error creando la clase',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ),
+        );
       }
-      // else {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(
-      //       duration: Duration(seconds: 3),
-      //       backgroundColor: Colors.black,
-      //       behavior: SnackBarBehavior.floating,
-      //       content: SizedBox(
-      //         height: 25,
-      //         child: Text(
-      //           textAlign: TextAlign.justify,
-      //           'Error creando la clase',
-      //           style: TextStyle(color: Colors.red),
-      //         ),
-      //       ),
-      //     ),
-      //   );
-      // }
     }
   }
 }
