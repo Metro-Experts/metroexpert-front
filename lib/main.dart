@@ -9,6 +9,7 @@ import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/controllers/tutor_edit_profile_page_controller.dart';
 import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
+import 'package:metro_experts/pages/payments_history_page.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
 
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // The property [home] defines the default route of the app
-        home: const IntroPage(),
+        home: const PaymentsHistoryPage(),
         debugShowCheckedModeBanner: false,
       ),
     );
