@@ -63,6 +63,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
     return Consumer<UserOnSession>(
         builder: (context, userOnSessionConsumer, _) {
       return Drawer(
+        width: 355,
         child: ListView(
           children: [
             InkWell(

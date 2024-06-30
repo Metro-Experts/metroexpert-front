@@ -13,8 +13,10 @@ class SignUpPageController extends ChangeNotifier {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController cellPhoneController = TextEditingController();
+  final TextEditingController careerController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   String genderValue = '';
-  String selectedOption = "";
+  String selectedOption = '';
   bool showTutorSection = false;
   bool? isChecked = false;
 
@@ -52,9 +54,11 @@ class SignUpPageController extends ChangeNotifier {
           "_id": uid,
           "name": firstNameController.text,
           "lastName": lastNameController.text,
+          "carrer": careerController.text,
           "email": emailController.text,
           "userType": selectedOption,
           "cellphone": cellPhoneController.text,
+          "description": descriptionController.text,
           "gender": genderValue.contains('Masculino') ? 'M' : 'F'
         }),
       );
@@ -80,6 +84,8 @@ class SignUpPageController extends ChangeNotifier {
           ),
         );
       } else {
+        print(response.statusCode);
+        print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Error al registrar el usuario.'),

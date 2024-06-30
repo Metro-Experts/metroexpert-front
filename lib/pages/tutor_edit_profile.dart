@@ -131,7 +131,8 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
               controller: tutorEditProfilePageController.passwordController,
               isEnabled: false,
             ),
-            const MultiTextfield(
+            MultiTextfield(
+              controller: tutorEditProfilePageController.descriptionController,
               bottomPadding: 10,
               leftPadding: 50,
               rightPadding: 50,
