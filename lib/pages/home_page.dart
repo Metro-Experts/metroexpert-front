@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                               category: tutoring.category,
                               bankAccount: tutoring.bankAccount,
                               tutorEmail: tutoring.tutorEmail,
-                              tutorDescription:  tutoring.tutorDescription,
+                              tutorDescription: tutoring.tutorDescription,
                             );
                           },
                         )
