@@ -131,6 +131,8 @@ class _HomePageState extends State<HomePage> {
                               color: cardColor,
                               category: tutoring.category,
                               bankAccount: tutoring.bankAccount,
+                              tutorEmail: tutoring.tutorEmail,
+                              tutorDescription:  tutoring.tutorDescription,
                             );
                           },
                         )

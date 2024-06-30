@@ -8,16 +8,18 @@ class TutorProfileView extends StatelessWidget {
     super.key,
     required this.tutorName,
     required this.tutorLastName,
-    required this.tutorEmail,
     required this.tutorSubjects,
     required this.bankAccount,
+    required this.tutorEmail,
+    required this.tutorDescription,
   });
 
   final String tutorName;
   final String tutorLastName;
-  final String tutorEmail;
   final List<String> tutorSubjects;
   final Map<String, String> bankAccount;
+  final String tutorEmail;
+  final String tutorDescription;
 
   @override
   Widget build(BuildContext context) {
