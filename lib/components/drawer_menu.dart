@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:metro_experts/controllers/calendar_page_controller.dart';
+import 'package:metro_experts/controllers/chatbot_page_controller.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
 import 'package:metro_experts/controllers/sign_in_page_controller.dart';
 import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/model/user_model.dart';
 import 'package:metro_experts/pages/calendar_page.dart';
+import 'package:metro_experts/pages/chatbot_page.dart';
 import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/home_page.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
@@ -55,6 +57,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
     Provider.of<CalendarPageController>(context, listen: false)
         .fetchCalenderDates(context);
     userType = Provider.of<HomePageController>(context, listen: false).userType;
+    super.initState();
     super.initState();
   }
 
@@ -169,6 +172,29 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const CalendarPage()),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.calendar_month,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Chatbot',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChatbotPage()),
                   );
                 },
               ),
