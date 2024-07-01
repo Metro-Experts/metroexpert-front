@@ -1,31 +1,46 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:reviews_slider/reviews_slider.dart';   
+import 'package:reviews_slider/reviews_slider.dart';
+import 'package:metro_experts/firebase_auth/auth.dart';   
 import 'package:http/http.dart' as http;
 
 
 class RatingPage extends StatefulWidget { 
     const RatingPage({ 
         super.key, 
+        required this.tutorID,
     }); 
+    final String tutorID;
     @override 
     State < RatingPage > createState() => _RatingPageState(); 
 } 
   
 class _RatingPageState extends State <RatingPage> { 
-  void sendRating(int rating) async {
-    String apiUrl = 'https://ejemplo.com/api/datos'; 
-    Map<int, dynamic> data = {
-      rating : rating,
-    };
 
-    var response = await http.post(
-      Uri.parse(apiUrl),
-      body: data,
-    );
-
-    if (response.statusCode == 200) {
-    } else {
+  Future<void> postRating(int rating) async {
+    try {
+      const String gateway = 'https://uniexpert-gateway-6569fdd60e75.herokuapp.com'; 
+      final String tutorId = widget.tutorID;
+      final response = await http.post(
+        Uri.parse('$gateway/users/$tutorId/rate'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'raterId': Auth().currentUser!.uid,
+          'score': rating,
+        }),
+      ).timeout(Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        // imprimir por consola
+        print('Todo bien');
+      } else {
+        throw Exception('Failed to post rating');
+      }
+    } catch (e) {
+  // imprimir por consola
+      print('Error: ${e.toString()}');
     }
   }
 
@@ -131,7 +146,7 @@ class _RatingPageState extends State <RatingPage> {
                   ),
                 );
                 var ratetoSend = list.indexOf(selected_value)+1;
-                sendRating(ratetoSend);
+                postRating(ratetoSend);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:const Color(0xffEE8A6F),
@@ -155,7 +170,3 @@ class _RatingPageState extends State <RatingPage> {
         ); 
     } 
 }
-
-
-
-

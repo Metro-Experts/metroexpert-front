@@ -22,6 +22,7 @@ class CoursePage extends StatefulWidget {
   final String tutorDescription;
   final String tutorCareer;
   final String tutorRating;
+  final String tutorID;
 
   const CoursePage({
     super.key,
@@ -38,6 +39,7 @@ class CoursePage extends StatefulWidget {
     required this.tutorDescription,
     required this.tutorCareer,
     required this.tutorRating,
+    required this.tutorID,
   });
 
   @override
@@ -188,6 +190,7 @@ class _CoursePageState extends State<CoursePage> {
                             tutorDescription: widget.tutorDescription,
                             tutorCareer: widget.tutorCareer,
                             tutorRating: widget.tutorRating,
+                            tutorID: widget.tutorID,
                           ),
                         ),
                       );

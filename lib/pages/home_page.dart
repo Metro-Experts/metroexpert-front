@@ -135,6 +135,7 @@ class _HomePageState extends State<HomePage> {
                               tutorDescription: tutoring.tutorDescription,
                               tutorCareer: tutoring.tutorCareer,
                               tutorRating: tutoring.tutorRating,
+                              tutorID: tutoring.tutorID,
                             );
                           },
                         )

@@ -17,6 +17,7 @@ class TutorCardRender extends StatelessWidget {
   final String tutorDescription;
   final String tutorCareer;
   final int tutorRating;
+  final String tutorID;
 
   const TutorCardRender({
     super.key,
@@ -35,6 +36,7 @@ class TutorCardRender extends StatelessWidget {
     required this.tutorDescription,
     required this.tutorCareer,
     required this.tutorRating,
+    required this.tutorID,
   });
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
@@ -69,7 +71,10 @@ class TutorCardRender extends StatelessWidget {
           : 'Sin carrera',
       tutorRating: json['tutor'] != null
           ? json['tutor']['rating'] ?? 0
-        : 0
+        : 0,
+      tutorID: json['tutor'] != null
+          ? json['tutor']['id'] ?? 'Sin tutor'
+        : 'Sin tutor',
     );
   }
 
@@ -94,6 +99,7 @@ class TutorCardRender extends StatelessWidget {
               tutorDescription: tutorDescription,
               tutorCareer: tutorCareer,
               tutorRating: "$tutorRating",
+              tutorID: tutorID,
             ),
           ),
         );
