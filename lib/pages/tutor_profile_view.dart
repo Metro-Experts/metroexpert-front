@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:metro_experts/pages/rate_tutor_page.dart';
+import 'package:flutter/services.dart';
 
 class TutorProfileView extends StatelessWidget {
   const TutorProfileView({
@@ -24,6 +25,10 @@ class TutorProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -136,6 +141,7 @@ class TutorProfileView extends StatelessWidget {
                           'assets/icons/star.svg',
                           width: 24,
                           height: 24,
+                          // ignore: deprecated_member_use
                           color: const Color(0xffEE8A6F),
                         ),
                         const SizedBox(
@@ -225,7 +231,7 @@ class TutorProfileView extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
-            Positioned(
+           Positioned(
               left: 60,
               top: 710,
               child: Row(
