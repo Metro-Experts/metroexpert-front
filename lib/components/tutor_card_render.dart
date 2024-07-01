@@ -67,11 +67,10 @@ class TutorCardRender extends StatelessWidget {
           ? json['tutor']['description'] ?? 'Sin tutor'
           : 'Sin tutor',
       tutorCareer: json['tutor'] != null
-          ? json['tutor']['career'] ?? 'Sin carrera'
+          ? json['tutor']['carrer'] ?? 'Sin carrera'
           : 'Sin carrera',
       tutorRating: json['tutor'] != null
-          ? json['tutor']['rating'] ?? 0
-        : 0,
+          ? json['tutor']['rating'] ?? 0: 0,
       tutorID: json['tutor'] != null
           ? json['tutor']['id'] ?? 'Sin tutor'
         : 'Sin tutor',

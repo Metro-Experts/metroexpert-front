@@ -1,7 +1,8 @@
 // ignore_for_file: unnecessary_string_interpolations
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:metro_experts/controllers/course_page_controller.dart';
 import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/home_page.dart';
@@ -9,6 +10,8 @@ import 'package:metro_experts/pages/tutor_profile_view.dart';
 import 'package:provider/provider.dart';
 
 class CoursePage extends StatefulWidget {
+
+  
   final String subject;
   final String tutorName;
   final String tutorLastName;
@@ -49,8 +52,12 @@ class CoursePage extends StatefulWidget {
 // bool isJoined = false;
 
 class _CoursePageState extends State<CoursePage> {
+
+  List<String> nombresTutorias = [];
+
   @override
   void initState() {
+        _fetchData();
     Provider.of<CoursePageController>(context, listen: false).tutoringId =
         widget.tutoringId;
     Provider.of<CoursePageController>(context, listen: false)
@@ -58,10 +65,41 @@ class _CoursePageState extends State<CoursePage> {
     super.initState();
   }
 
+
+  Future<void> _fetchData() async {
+    nombresTutorias = await obtenerNombresTutorias(widget.tutorID);
+    setState(() {}); 
+  }
+
+  Future<List<String>> obtenerNombresTutorias(String tutorId) async {
+  List<String> nombresTutorias = [];
+
+  final response = await http.get(
+    Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/courses/tutor/$tutorId'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    List<dynamic> tutorias = json.decode(response.body);
+    for (var tutoria in tutorias) {
+      String nombreTutoria = tutoria['name'];
+      nombresTutorias.add(nombreTutoria);
+    }
+  } else {
+    print('Error al obtener las tutorías para el ID: $tutorId');
+  }
+
+  return nombresTutorias;
+}
+
   @override
   Widget build(BuildContext context) {
+
     return Consumer<CoursePageController>(
       builder: (context, coursePageControllerConsumer, _) {
+        
         return Scaffold(
           floatingActionButton: SizedBox(
             width: 400,
@@ -181,10 +219,7 @@ class _CoursePageState extends State<CoursePage> {
                           builder: (context) => TutorProfileView(
                             tutorName: widget.tutorName,
                             tutorLastName: widget.tutorLastName,
-                            tutorSubjects: const [
-                              'Math',
-                              'Physics'
-                            ], // Cambia esto por las materias del tutor
+                            tutorSubjects: nombresTutorias, 
                             bankAccount: widget.bankAccount,
                             tutorEmail: widget.tutorEmail, 
                             tutorDescription: widget.tutorDescription,

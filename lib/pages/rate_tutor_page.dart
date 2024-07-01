@@ -44,6 +44,7 @@ class _RatingPageState extends State <RatingPage> {
     }
   }
 
+
   List < String > list = ['Horrible', 'Mal', 'Regular', 'Bueno', 'Genial']; 
   String selected_value = ""; 
   
@@ -136,7 +137,8 @@ class _RatingPageState extends State <RatingPage> {
                     actions: [
                     TextButton(
                       onPressed: (){
-                         Navigator.pop(context);
+                        
+                        Navigator.pop(context);
                       }, 
                       child: const Text("De nada!",  style: TextStyle( 
                           color: Color(0xffEE8A6F), 

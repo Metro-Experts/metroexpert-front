@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:metro_experts/components/tutor_tutoria_card.dart';
 import 'package:metro_experts/pages/rate_tutor_page.dart';
 import 'package:flutter/services.dart';
 
@@ -153,7 +154,7 @@ class TutorProfileView extends StatelessWidget {
                               width: 17,
                             ),
                             Text(
-                              'Calificación: ' + '${tutorRating}' + '/ 5',
+                             'Calificación: $tutorRating / 5',
                               style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -241,114 +242,26 @@ class TutorProfileView extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Positioned(
-                  left: 60,
-                  top: 710,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 110,
-                        height: 94,
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(254, 200, 159, 1),
-                          borderRadius: BorderRadius.circular(25),
+                Container(
+                  margin: const EdgeInsets.only(top: 710, left: 60),
+                  child: tutorSubjects.isEmpty
+                  ? const Center(
+                    child: Text('No hay tutorías registradas'),
+                  )
+                  : Column(
+                    children: tutorSubjects.map((subject) {
+                      Color cardColor = tutorSubjects.indexOf(subject) % 2 == 0
+                        ? const Color(0xFF9FA9FF)
+                        : const Color(0xFFFEC89F);
+                     return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TutorTutoriaCard(
+                          tutorName: tutorName,
+                          tutoriaName: subject,
+                          color: cardColor,
                         ),
-                        child: Image.asset('assets/images/woman_teaching.png'),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            "Matematica 5",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w900, fontSize: 14),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Tutor: ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      color: Colors.black),
-                                ),
-                                TextSpan(
-                                  text: '$tutorName',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 60,
-                  top: 820,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 110,
-                        height: 94,
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(254, 200, 159, 1),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Image.asset('assets/images/woman_teaching.png'),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            "Matematica 5",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w900, fontSize: 14),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Tutor: ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      color: Colors.black),
-                                ),
-                                TextSpan(
-                                  text: '$tutorName',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      );
+                    }).toList(),
                   ),
                 ),
               ],
