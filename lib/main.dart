@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_experts/controllers/calendar_page_controller.dart';
+import 'package:metro_experts/controllers/chatbot_page_controller.dart';
 import 'package:metro_experts/controllers/course_page_controller.dart';
 import 'package:metro_experts/controllers/create_class_page_controller.dart';
 import 'package:metro_experts/controllers/homepage_controller.dart';
@@ -9,6 +10,8 @@ import 'package:metro_experts/controllers/sign_up_page_controller.dart';
 import 'package:metro_experts/controllers/tutor_edit_profile_page_controller.dart';
 import 'package:metro_experts/controllers/user_edit_profile_page_controller.dart';
 import 'package:metro_experts/model/user_model.dart';
+import 'package:metro_experts/pages/chatbot_page.dart';
+import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
 
@@ -49,6 +52,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => CalendarPageController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ChatbotPageController(),
         ),
       ],
       child: MaterialApp(
