@@ -7,16 +7,20 @@ class TutorProfileView extends StatelessWidget {
     super.key,
     required this.tutorName,
     required this.tutorLastName,
-    required this.tutorEmail,
     required this.tutorSubjects,
     required this.bankAccount,
+    required this.tutorEmail,
+    required this.tutorDescription,
+    //required this.tutorCareer
   });
 
   final String tutorName;
   final String tutorLastName;
-  final String tutorEmail;
   final List<String> tutorSubjects;
   final Map<String, String> bankAccount;
+  final String tutorEmail;
+  final String tutorDescription;
+  //final String tutorCareer;
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +94,8 @@ class TutorProfileView extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      const Text(
-                        'Ingeniería de sistema',
+                      const Text( //quitar el const al poner la carrera 
+                        'Ingeniería de sistema', //tutorCareer (para que salga la carrera del tutor, ya esta agg en todas partes)
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.normal),
                       ),
@@ -114,7 +118,7 @@ class TutorProfileView extends StatelessWidget {
                             width: 17,
                           ),
                           Text(
-                            '${tutorEmail}'.toLowerCase(),
+                            tutorEmail.toLowerCase(),
                             style: const TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.normal),
                           ),
@@ -184,7 +188,7 @@ class TutorProfileView extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 550,
               child: SizedBox(
                 width: 308,
@@ -192,19 +196,19 @@ class TutorProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       textAlign: TextAlign.left,
                       'Sobre el tutor',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
+                      tutorDescription,
                       textAlign: TextAlign.justify,
-                      "Como estudiante he conocido lo mucho que uno puede llegar a necesitar ayuda en momentos de estres y por esa razón me encuentro aquí.",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.normal,
                       ),

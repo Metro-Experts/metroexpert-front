@@ -18,8 +18,12 @@ class CoursePage extends StatefulWidget {
   final List tutoringStudents;
   final List dates;
   final Map<String, String> bankAccount;
+  final String tutorEmail;
+  final String tutorDescription;
+  //final String tutorCareer
 
   const CoursePage({
+    super.key,
     required this.subject,
     required this.tutorName,
     required this.tutorLastName,
@@ -29,7 +33,9 @@ class CoursePage extends StatefulWidget {
     required this.dates,
     required this.modality,
     required this.bankAccount,
-    super.key,
+    required this.tutorEmail,
+    required this.tutorDescription,
+    //required this.tutorCareer
   });
 
   @override
@@ -171,13 +177,14 @@ class _CoursePageState extends State<CoursePage> {
                           builder: (context) => TutorProfileView(
                             tutorName: widget.tutorName,
                             tutorLastName: widget.tutorLastName,
-                            tutorEmail:
-                                'tutoremail@example.com', // Cambia esto por el email del tutor
                             tutorSubjects: const [
                               'Math',
                               'Physics'
                             ], // Cambia esto por las materias del tutor
                             bankAccount: widget.bankAccount,
+                            tutorEmail: widget.tutorEmail, 
+                            tutorDescription: widget.tutorDescription,
+                            //tutorCareer: widget.tutorCareer,
                           ),
                         ),
                       );
