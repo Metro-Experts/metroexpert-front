@@ -4,6 +4,7 @@ import 'package:metro_experts/pages/course_page.dart';
 class TutorCardRender extends StatelessWidget {
   final String subject;
   final String tutorName;
+  final String tutorID;
   final String tutorLastName;
   final int tutoringFee;
   final String tutoringId;
@@ -18,6 +19,7 @@ class TutorCardRender extends StatelessWidget {
     super.key,
     required this.subject,
     required this.tutorName,
+    required this.tutorID,
     required this.tutorLastName,
     required this.tutoringFee,
     required this.tutoringId,
@@ -35,6 +37,7 @@ class TutorCardRender extends StatelessWidget {
       tutorName: json['tutor'] != null
           ? json['tutor']['name'] ?? 'Sin tutor'
           : 'Sin tutor',
+      tutorID: json['tutor'] != null ? json['tutor']['id'] ?? '' : '',
       tutorLastName: json['tutor'] != null
           ? json['tutor']['lastName'] ?? 'Sin tutor'
           : 'Sin tutor',
@@ -63,6 +66,7 @@ class TutorCardRender extends StatelessWidget {
             builder: (context) => CoursePage(
               subject: subject,
               tutorName: tutorName,
+              tutorID: tutorID,
               tutorLastName: tutorLastName,
               tutoringFee: "$tutoringFee",
               tutoringId: tutoringId,

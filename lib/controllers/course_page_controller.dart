@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, await_only_futures
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -8,6 +6,11 @@ import 'package:metro_experts/firebase_auth/auth.dart';
 class CoursePageController extends ChangeNotifier {
   bool isJoined = false;
   late String tutoringId;
+  late GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey;
+
+  void setScaffoldMessengerKey(GlobalKey<ScaffoldMessengerState> key) {
+    _scaffoldMessengerKey = key;
+  }
 
   Future isAStudent(List tutoringStudents, String uid) async {
     if (await tutoringStudents.contains(uid)) {
@@ -28,7 +31,7 @@ class CoursePageController extends ChangeNotifier {
         body: json.encode({"studentId": Auth().currentUser!.uid}));
     try {
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        _scaffoldMessengerKey.currentState!.showSnackBar(
           const SnackBar(
             duration: Duration(seconds: 3),
             backgroundColor: Colors.black,
@@ -48,7 +51,7 @@ class CoursePageController extends ChangeNotifier {
         print(" ERROR ---- ${response.body}");
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      _scaffoldMessengerKey.currentState!.showSnackBar(
         const SnackBar(
           duration: Duration(seconds: 3),
           backgroundColor: Colors.black,
@@ -76,7 +79,7 @@ class CoursePageController extends ChangeNotifier {
         body: json.encode({"studentId": Auth().currentUser!.uid}));
     try {
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        _scaffoldMessengerKey.currentState!.showSnackBar(
           const SnackBar(
             duration: Duration(seconds: 3),
             backgroundColor: Colors.black,
@@ -93,7 +96,7 @@ class CoursePageController extends ChangeNotifier {
         );
       } else {}
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      _scaffoldMessengerKey.currentState!.showSnackBar(
         const SnackBar(
           duration: Duration(seconds: 3),
           backgroundColor: Colors.black,
@@ -111,7 +114,7 @@ class CoursePageController extends ChangeNotifier {
     }
   }
 
-  Future<void> showConfirmationDialog(BuildContext context) async {
+  Future<bool?> showConfirmationDialog(BuildContext context) async {
     final action = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -149,5 +152,7 @@ class CoursePageController extends ChangeNotifier {
       isJoined = !isJoined;
       notifyListeners();
     }
+
+    return action;
   }
 }

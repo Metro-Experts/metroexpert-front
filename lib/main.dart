@@ -14,6 +14,8 @@ import 'package:metro_experts/pages/chatbot_page.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
+import 'package:metro_experts/controllers/data_payment_page_controller.dart';
+import 'package:metro_experts/controllers/payment_page_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
