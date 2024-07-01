@@ -20,7 +20,8 @@ class CoursePage extends StatefulWidget {
   final Map<String, String> bankAccount;
   final String tutorEmail;
   final String tutorDescription;
-  //final String tutorCareer
+  final String tutorCareer;
+  final String tutorRating;
 
   const CoursePage({
     super.key,
@@ -35,7 +36,8 @@ class CoursePage extends StatefulWidget {
     required this.bankAccount,
     required this.tutorEmail,
     required this.tutorDescription,
-    //required this.tutorCareer
+    required this.tutorCareer,
+    required this.tutorRating,
   });
 
   @override
@@ -184,7 +186,8 @@ class _CoursePageState extends State<CoursePage> {
                             bankAccount: widget.bankAccount,
                             tutorEmail: widget.tutorEmail, 
                             tutorDescription: widget.tutorDescription,
-                            //tutorCareer: widget.tutorCareer,
+                            tutorCareer: widget.tutorCareer,
+                            tutorRating: widget.tutorRating,
                           ),
                         ),
                       );

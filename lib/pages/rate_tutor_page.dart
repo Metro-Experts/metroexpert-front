@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reviews_slider/reviews_slider.dart';   
+import 'package:http/http.dart' as http;
+
 
 class RatingPage extends StatefulWidget { 
     const RatingPage({ 
@@ -10,7 +12,23 @@ class RatingPage extends StatefulWidget {
     State < RatingPage > createState() => _RatingPageState(); 
 } 
   
-class _RatingPageState extends State < RatingPage > { 
+class _RatingPageState extends State <RatingPage> { 
+  void sendRating(int rating) async {
+    String apiUrl = 'https://ejemplo.com/api/datos'; 
+    Map<int, dynamic> data = {
+      rating : rating,
+    };
+
+    var response = await http.post(
+      Uri.parse(apiUrl),
+      body: data,
+    );
+
+    if (response.statusCode == 200) {
+    } else {
+    }
+  }
+
   List < String > list = ['Horrible', 'Mal', 'Regular', 'Bueno', 'Genial']; 
   String selected_value = ""; 
   
@@ -79,7 +97,7 @@ class _RatingPageState extends State < RatingPage > {
                 const SizedBox(height: 15),
                 Center(
                   child: 
-                    Text('Calificación: '+((list.indexOf(selected_value))+1).toString()+ '/5', style: const TextStyle( 
+                    Text('Calificación: ${(list.indexOf(selected_value))+1}/5', style: const TextStyle( 
                           color: Colors.black, 
                           fontSize: 16,
                       ), 
@@ -112,6 +130,8 @@ class _RatingPageState extends State < RatingPage > {
                     ],
                   ),
                 );
+                var ratetoSend = list.indexOf(selected_value)+1;
+                sendRating(ratetoSend);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:const Color(0xffEE8A6F),
@@ -126,11 +146,16 @@ class _RatingPageState extends State < RatingPage > {
                   color:  Colors.white,
                 ),
               ),
+              
               ),
             ), 
-                ], 
+            ], 
             ), 
             ),
         ); 
     } 
 }
+
+
+
+

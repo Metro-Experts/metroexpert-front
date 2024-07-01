@@ -12,7 +12,8 @@ class TutorProfileView extends StatelessWidget {
     required this.bankAccount,
     required this.tutorEmail,
     required this.tutorDescription,
-    //required this.tutorCareer
+    required this.tutorCareer,
+    required this.tutorRating,
   });
 
   final String tutorName;
@@ -21,7 +22,8 @@ class TutorProfileView extends StatelessWidget {
   final Map<String, String> bankAccount;
   final String tutorEmail;
   final String tutorDescription;
-  //final String tutorCareer;
+  final String tutorCareer;
+  final String tutorRating;
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +101,9 @@ class TutorProfileView extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      const Text( //quitar el const al poner la carrera 
-                        'Ingeniería de sistema', //tutorCareer (para que salga la carrera del tutor, ya esta agg en todas partes)
-                        style: TextStyle(
+                      Text( 
+                        tutorCareer, 
+                        style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.normal),
                       ),
                     ], 
@@ -147,9 +149,9 @@ class TutorProfileView extends StatelessWidget {
                         const SizedBox(
                           width: 17,
                         ),
-                        const Text(
-                          'Calificación: 3 / 5',
-                          style: TextStyle(
+                        Text(
+                          'Calificación: ' + '${tutorRating}' + '/ 5',
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold, color:  Color(0xffEE8A6F)),
                         ),
                       ],
