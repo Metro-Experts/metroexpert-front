@@ -139,13 +139,8 @@ class SignUpPageController extends ChangeNotifier {
       return false;
     }
 
-    // Validate cellphone number
-    // if (!RegExp(r'^\d+$').hasMatch(cellPhoneController.text)) {
-    //   showSnackBarMessage(context, 'El teléfono solo puede contener dígitos.');
-    //   return false;
-    // }
-
-    if (!RegExp(r'^58\d+$').hasMatch(cellPhoneController.text)) {
+    if (!RegExp(r'^58\d+$').hasMatch(cellPhoneController.text) ||
+        RegExp(r'^580\d+$').hasMatch(cellPhoneController.text)) {
       showSnackBarMessage(context, 'Formato telefónico incorrecto');
       return false;
     }

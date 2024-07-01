@@ -104,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.phone),
-                        hintText: '04241499654',
+                        hintText: '584241499654',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       controller: signUpPageController.cellPhoneController,
