@@ -16,7 +16,7 @@ class TutorCardRender extends StatelessWidget {
   final String tutorEmail;
   final String tutorDescription;
   final String tutorCareer;
-  final int tutorRating;
+  final double tutorRating;
   final String tutorID;
 
   const TutorCardRender({
@@ -39,43 +39,45 @@ class TutorCardRender extends StatelessWidget {
     required this.tutorID,
   });
 
-  factory TutorCardRender.fromJson(Map<String, dynamic> json) {
-    return TutorCardRender(
-      subject: json['name'] ?? 'Sin asignatura',
-      tutorName: json['tutor'] != null
-          ? json['tutor']['name'] ?? 'Sin tutor'
-          : 'Sin tutor',
-      tutorLastName: json['tutor'] != null
-          ? json['tutor']['lastName'] ?? 'Sin tutor'
-          : 'Sin tutor',
-      tutoringFee: json['price'] ?? 0,
-      tutoringId: json['_id'] ?? '',
-      tutoringStudents: json['students'] ?? [],
-      dates: json['date'] ?? [],
-      modality: json['modality'] ?? 'Sin modalidad',
-      color: const Color(0xFF9FA9FF),
-      category: json['category'] ?? 'Sin categoría',
-      bankAccount: {
-        'bank': json['tutor']?['bankaccount']?['bank'] ?? 'Sin banco',
-        'cedula': json['tutor']?['bankaccount']?['cedula'] ?? 'Sin cédula',
-        'numcell': json['tutor']?['bankaccount']?['numcell'] ?? 'Sin cuenta',
-      },
-      tutorEmail: json['tutor'] != null
-          ? json['tutor']['email'] ?? 'Sin tutor'
-          : 'Sin tutor',
-      tutorDescription: json['tutor'] != null
-          ? json['tutor']['description'] ?? 'Sin tutor'
-          : 'Sin tutor',
-      tutorCareer: json['tutor'] != null
-          ? json['tutor']['carrer'] ?? 'Sin carrera'
-          : 'Sin carrera',
-      tutorRating: json['tutor'] != null
-          ? json['tutor']['rating'] ?? 0: 0,
-      tutorID: json['tutor'] != null
-          ? json['tutor']['id'] ?? 'Sin tutor'
+ factory TutorCardRender.fromJson(Map<String, dynamic> json) {
+  return TutorCardRender(
+    subject: json['name'] ?? 'Sin asignatura',
+    tutorName: json['tutor'] != null
+        ? json['tutor']['name'] ?? 'Sin tutor'
         : 'Sin tutor',
-    );
-  }
+    tutorLastName: json['tutor'] != null
+        ? json['tutor']['lastName'] ?? 'Sin tutor'
+        : 'Sin tutor',
+    tutoringFee: json['price'] ?? 0,
+    tutoringId: json['_id'] ?? '',
+    tutoringStudents: json['students'] ?? [],
+    dates: json['date'] ?? [],
+    modality: json['modality'] ?? 'Sin modalidad',
+    color: const Color(0xFF9FA9FF),
+    category: json['category'] ?? 'Sin categoría',
+    bankAccount: {
+      'bank': json['tutor']?['bankaccount']?['bank'] ?? 'Sin banco',
+      'cedula': json['tutor']?['bankaccount']?['cedula'] ?? 'Sin cédula',
+      'numcell': json['tutor']?['bankaccount']?['numcell'] ?? 'Sin cuenta',
+    },
+    tutorEmail: json['tutor'] != null
+        ? json['tutor']['email'] ?? 'Sin tutor'
+        : 'Sin tutor',
+    tutorDescription: json['tutor'] != null
+        ? json['tutor']['description'] ?? 'Sin tutor'
+        : 'Sin tutor',
+    tutorCareer: json['tutor'] != null
+        ? json['tutor']['carrer'] ?? 'Sin carrera'
+        : 'Sin carrera',
+    tutorRating: json['tutor'] != null
+        ? (json['tutor']['rating'] is int ? (json['tutor']['rating'] as int).toDouble() : json['tutor']['rating'] ?? 0.0)
+        : 0.0,
+    tutorID: json['tutor'] != null
+        ? json['tutor']['id'] ?? 'Sin tutor'
+        : 'Sin tutor',
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
