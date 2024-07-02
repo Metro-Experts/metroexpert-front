@@ -177,6 +177,7 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
                             lastName: tutorEditProfilePageController
                                 .lastNameController.text[1],
                             email: accountPageModel.userData.email,
+                            id: accountPageModel.userData.id,
                           ),
                           context);
                     },
