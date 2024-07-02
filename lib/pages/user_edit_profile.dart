@@ -132,6 +132,7 @@ class _UserEditProfileState extends State<UserEditProfile> {
                                     : userEditProfilePageController
                                         .lastNameController.text,
                                 email: accountPageModel.userData.email,
+                                id: accountPageModel.userData.id,
                               ),
                               context);
 

@@ -8,16 +8,18 @@ class TutorProfileView extends StatelessWidget {
     super.key,
     required this.tutorName,
     required this.tutorLastName,
-    required this.tutorEmail,
     required this.tutorSubjects,
     required this.bankAccount,
+    required this.tutorEmail,
+    required this.tutorDescription,
   });
 
   final String tutorName;
   final String tutorLastName;
-  final String tutorEmail;
   final List<String> tutorSubjects;
   final Map<String, String> bankAccount;
+  final String tutorEmail;
+  final String tutorDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class TutorProfileView extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    '$tutorName$tutorLastName',
+                    '$tutorName $tutorLastName',
                     style: const TextStyle(
                         fontSize: 30, fontWeight: FontWeight.bold),
                   ),
@@ -153,7 +155,7 @@ class TutorProfileView extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 490,
               child: SizedBox(
                 width: 308,
@@ -161,19 +163,19 @@ class TutorProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       textAlign: TextAlign.left,
                       'Sobre el tutor',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       textAlign: TextAlign.justify,
-                      "Como estudiante he conocido lo mucho que uno puede llegar a necesitar ayuda en momentos de estres y por esa razón me encuentro aquí.",
-                      style: TextStyle(
+                      '$tutorDescription',
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.normal,
                       ),

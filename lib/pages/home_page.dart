@@ -123,6 +123,7 @@ class _HomePageState extends State<HomePage> {
                               subject: tutoring.subject,
                               tutorName: tutoring.tutorName,
                               tutorLastName: tutoring.tutorLastName,
+                              tutorID: tutoring.tutorID,
                               tutoringFee: tutoring.tutoringFee,
                               tutoringId: tutoring.tutoringId,
                               tutoringStudents: tutoring.tutoringStudents,
@@ -131,6 +132,8 @@ class _HomePageState extends State<HomePage> {
                               color: cardColor,
                               category: tutoring.category,
                               bankAccount: tutoring.bankAccount,
+                              tutorEmail: tutoring.tutorEmail,
+                              tutorDescription: tutoring.tutorDescription,
                             );
                           },
                         )

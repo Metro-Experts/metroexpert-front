@@ -131,7 +131,8 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
               controller: tutorEditProfilePageController.passwordController,
               isEnabled: false,
             ),
-            const MultiTextfield(
+            MultiTextfield(
+              controller: tutorEditProfilePageController.descriptionController,
               bottomPadding: 10,
               leftPadding: 50,
               rightPadding: 50,
@@ -176,6 +177,7 @@ class _TutorEditProfileState extends State<TutorEditProfile> {
                             lastName: tutorEditProfilePageController
                                 .lastNameController.text[1],
                             email: accountPageModel.userData.email,
+                            id: accountPageModel.userData.id,
                           ),
                           context);
                     },

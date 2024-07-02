@@ -19,6 +19,7 @@ class TutorEditProfilePageController extends ChangeNotifier {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   Future<void> fetchUser(BuildContext context) async {
     var url = Uri.parse(

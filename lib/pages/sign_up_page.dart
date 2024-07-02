@@ -75,6 +75,21 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontFamily: 'Poppins',
                       ),
                       decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.assignment_ind_sharp),
+                        hintText: 'Carrera Universitaria',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      controller: signUpPageController.careerController,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
+                    child: TextField(
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                      ),
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.email),
                         hintText: 'Email',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -104,7 +119,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.phone),
-                        hintText: '04241499654',
+                        hintText: '584241499654',
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       controller: signUpPageController.cellPhoneController,
@@ -185,7 +200,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Visibility(
                             visible: signUpPageController.showTutorSection,
-                            child: const MultiTextfield(
+                            child: MultiTextfield(
+                              controller:
+                                  signUpPageController.descriptionController,
                               labelText: 'Cuentanos de ti',
                               placeholder:
                                   'Soy un estudiante en pro de ayudar a mis compañeros que como yo tuvieron dificultades',
@@ -271,21 +288,3 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
-
-// class TutorSection extends StatelessWidget {
-//   const TutorSection({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Padding(
-//       padding: EdgeInsets.fromLTRB(0, 50, 0, 1),
-//       child: MultiTextfield(
-//         bottomPadding: 0,
-//         leftPadding: 0,
-//         rightPadding: 0,
-//         labelText: 'Cuéntanos de ti:',
-//         placeholder: '...',
-//       ),
-//     );
-//   }
-// }
