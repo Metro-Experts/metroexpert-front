@@ -14,6 +14,8 @@ class TutorCardRender extends StatelessWidget {
   final Color color;
   final String category;
   final Map<String, String> bankAccount;
+  final String tutorEmail;
+  final String tutorDescription;
 
   const TutorCardRender({
     super.key,
@@ -29,6 +31,8 @@ class TutorCardRender extends StatelessWidget {
     required this.color,
     required this.category,
     required this.bankAccount,
+    required this.tutorEmail,
+    required this.tutorDescription,
   });
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
@@ -53,6 +57,12 @@ class TutorCardRender extends StatelessWidget {
         'cedula': json['tutor']?['bankaccount']?['cedula'] ?? 'Sin cédula',
         'numcell': json['tutor']?['bankaccount']?['numcell'] ?? 'Sin cuenta',
       },
+      tutorEmail: json['tutor'] != null
+          ? json['tutor']['email'] ?? 'Sin tutor'
+          : 'Sin tutor',
+      tutorDescription: json['tutor'] != null
+          ? json['tutor']['description'] ?? 'Sin tutor'
+          : 'Sin tutor',
     );
   }
 
@@ -74,6 +84,8 @@ class TutorCardRender extends StatelessWidget {
               dates: dates,
               modality: modality,
               bankAccount: bankAccount,
+              tutorEmail: tutorEmail,
+              tutorDescription: tutorDescription,
             ),
           ),
         );

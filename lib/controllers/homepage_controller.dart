@@ -25,6 +25,7 @@ class HomePageController extends ChangeNotifier {
     if (response.statusCode == 200 &&
         FirebaseAuth.instance.currentUser != null) {
       List<dynamic> responseData = json.decode(response.body);
+      print(responseData);
       _tutorCard =
           responseData.map((data) => TutorCardRender.fromJson(data)).toList();
 

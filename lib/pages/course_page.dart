@@ -17,8 +17,11 @@ class CoursePage extends StatefulWidget {
   final List tutoringStudents;
   final List dates;
   final Map<String, String> bankAccount;
+  final String tutorEmail;
+  final String tutorDescription;
 
   const CoursePage({
+    super.key,
     required this.subject,
     required this.tutorName,
     required this.tutorID,
@@ -29,7 +32,8 @@ class CoursePage extends StatefulWidget {
     required this.dates,
     required this.modality,
     required this.bankAccount,
-    super.key,
+    required this.tutorEmail,
+    required this.tutorDescription,
   });
 
   @override
@@ -171,25 +175,26 @@ class _CoursePageState extends State<CoursePage> {
                           fontSize: 24),
                     ),
                   ),
-                  Positioned(
-                    top: 370,
-                    left: 16,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TutorProfileView(
-                              tutorName: widget.tutorName,
-                              tutorLastName: widget.tutorLastName,
-                              tutorEmail:
-                                  'tutoremail@example.com', // Cambia esto por el email del tutor
-                              tutorSubjects: const [
-                                'Math',
-                                'Physics'
-                              ], // Cambia esto por las materias del tutor
-                              bankAccount: widget.bankAccount,
-                            ),
+                ),
+                Positioned(
+                  top: 370,
+                  left: 16,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TutorProfileView(
+                            tutorName: widget.tutorName,
+                            tutorLastName: widget.tutorLastName,// Cambia esto por el email del tutor
+                            tutorSubjects: const [
+                              'Math',
+                              'Physics'
+                            ], // Cambia esto por las materias del tutor
+                            bankAccount: widget.bankAccount,
+                            tutorEmail: widget.tutorEmail, 
+                            tutorDescription: widget.tutorDescription,
+
                           ),
                         );
                       },

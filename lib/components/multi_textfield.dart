@@ -4,17 +4,18 @@ class MultiTextfield extends StatefulWidget {
   final String labelText;
   final String placeholder;
   final double bottomPadding;
+  final TextEditingController controller;
   final double leftPadding;
   final double rightPadding;
 
-  const MultiTextfield({
-    super.key,
-    required this.labelText,
-    required this.placeholder,
-    required this.bottomPadding,
-    required this.leftPadding,
-    required this.rightPadding,
-  });
+  const MultiTextfield(
+      {super.key,
+      required this.labelText,
+      required this.placeholder,
+      required this.bottomPadding,
+      required this.leftPadding,
+      required this.rightPadding,
+      required this.controller});
 
   @override
   State<MultiTextfield> createState() => _MultiTextfieldState();
@@ -29,6 +30,7 @@ class _MultiTextfieldState extends State<MultiTextfield> {
           left: widget.leftPadding,
           right: widget.rightPadding),
       child: TextField(
+        controller: widget.controller,
         minLines: 2,
         maxLines: 7,
         keyboardType: TextInputType.multiline,
