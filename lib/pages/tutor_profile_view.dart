@@ -73,7 +73,7 @@ class TutorProfileView extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      '$tutorName$tutorLastName',
+                      '$tutorName $tutorLastName',
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold),
                     ),
@@ -263,6 +263,7 @@ class TutorProfileView extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: TutorTutoriaCard(
                                 tutorName: tutorName,
+                                tutorLastName: tutorLastName,
                                 tutoriaName: subject,
                                 color: cardColor,
                               ),
