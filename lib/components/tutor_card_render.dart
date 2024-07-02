@@ -16,6 +16,8 @@ class TutorCardRender extends StatelessWidget {
   final Map<String, String> bankAccount;
   final String tutorEmail;
   final String tutorDescription;
+  final String tutorCareer;
+  final double tutorRating;
 
   const TutorCardRender({
     super.key,
@@ -33,6 +35,8 @@ class TutorCardRender extends StatelessWidget {
     required this.bankAccount,
     required this.tutorEmail,
     required this.tutorDescription,
+    required this.tutorCareer,
+    required this.tutorRating,
   });
 
   factory TutorCardRender.fromJson(Map<String, dynamic> json) {
@@ -41,7 +45,6 @@ class TutorCardRender extends StatelessWidget {
       tutorName: json['tutor'] != null
           ? json['tutor']['name'] ?? 'Sin tutor'
           : 'Sin tutor',
-      tutorID: json['tutor'] != null ? json['tutor']['id'] ?? '' : '',
       tutorLastName: json['tutor'] != null
           ? json['tutor']['lastName'] ?? 'Sin tutor'
           : 'Sin tutor',
@@ -62,6 +65,17 @@ class TutorCardRender extends StatelessWidget {
           : 'Sin tutor',
       tutorDescription: json['tutor'] != null
           ? json['tutor']['description'] ?? 'Sin tutor'
+          : 'Sin tutor',
+      tutorCareer: json['tutor'] != null
+          ? json['tutor']['carrer'] ?? 'Sin carrera'
+          : 'Sin carrera',
+      tutorRating: json['tutor'] != null
+          ? (json['tutor']['rating'] is int
+              ? (json['tutor']['rating'] as int).toDouble()
+              : json['tutor']['rating'] ?? 0.0)
+          : 0.0,
+      tutorID: json['tutor'] != null
+          ? json['tutor']['id'] ?? 'Sin tutor'
           : 'Sin tutor',
     );
   }
@@ -86,6 +100,8 @@ class TutorCardRender extends StatelessWidget {
               bankAccount: bankAccount,
               tutorEmail: tutorEmail,
               tutorDescription: tutorDescription,
+              tutorCareer: tutorCareer,
+              tutorRating: "$tutorRating",
             ),
           ),
         );
@@ -124,7 +140,7 @@ class TutorCardRender extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: tutorName + ' ' + tutorLastName,
+                            text: '$tutorName $tutorLastName',
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,

@@ -1,14 +1,15 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:metro_experts/model/user_model.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:metro_experts/pages/home_page.dart';
 
-class DataPaymentPageController {
+class DataPaymentPageController extends ChangeNotifier {
   File? _image;
   String? _selectedBank;
 
