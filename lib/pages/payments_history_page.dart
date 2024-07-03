@@ -31,14 +31,10 @@ Future<void> fetchData() async {
     if (response.statusCode == 200) {
       List<dynamic> responseData = json.decode(response.body);
       
-      List<Map<String, dynamic>> mappedData = responseData
-          .map((item) => item as Map<String, dynamic>)
-          .toList();
-
-      ConfirmedPayments = mappedData
-          .where((data) =>
-          data['status'] == 'confirmado')
-          .toList();
+      ConfirmedPayments = responseData
+      .where((data) => data['status'] == 'confirmado')
+      .map((data) => Map<String, dynamic>.from(data))
+      .toList();
     } else {
       throw Exception('Error al obtener los datos del API. Código de estado: ${response.statusCode}');
     }
