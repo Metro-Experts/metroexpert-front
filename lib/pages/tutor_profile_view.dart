@@ -51,8 +51,6 @@ class TutorProfileView extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(
               minWidth: double.maxFinite, minHeight: 1000, maxHeight: 1300),
-          // height: double.,
-          // width: double.maxFinite,
           child: Stack(
             alignment: Alignment.topCenter,
             children: [

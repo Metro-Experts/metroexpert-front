@@ -5,9 +5,10 @@ class CustomHistoryCard extends StatefulWidget {
   final String studentName;
   final String amount;
   final String date;
+  final Color color;
 
   const CustomHistoryCard(
-      {super.key, required this.classTitle, required this.studentName, required this.amount, required this.date});
+      {super.key, required this.classTitle, required this.studentName, required this.amount, required this.date, required this.color});
 
   @override
   State<CustomHistoryCard> createState() => _CustomHistoryCardState();
@@ -18,7 +19,7 @@ class _CustomHistoryCardState extends State<CustomHistoryCard> {
   Widget build(BuildContext context) {
     return Center(
           child: Card(
-            color: const Color(0xFF9FA9FF),
+            color: widget.color,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
