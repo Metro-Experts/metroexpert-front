@@ -15,8 +15,6 @@ class PaymentsHistoryPage extends StatefulWidget {
 }
 
 class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
-  
-  List<Map<String, dynamic>> ConfirmedPayments = [];
 
   List<dynamic> confirmedTutoriasList = [];
 
@@ -28,7 +26,7 @@ class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
   }
 
   Future<void> _loadConfirmedTutorias() async {
-    String data = await DefaultAssetBundle.of(context).loadString('assets/tutorias.json');
+    String data = await DefaultAssetBundle.of(context).loadString('assets/confirmedPayments.json');
     final List<dynamic> tutorias = json.decode(data)['tutorias'];
 
     setState(() {
@@ -36,6 +34,27 @@ class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
     });
   }
 
+
+// Future<void> fetchData() async {
+//   try {
+//     var userId = Auth().currentUser!.uid;
+//     final response = await http.get(Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/images/tutor/$userId'),
+//     headers: <String, String>{
+//         'Content-Type': 'application/json; charset=UTF-8',
+//     },);
+//     if (response.statusCode == 200) {
+//       List<dynamic> responseData = json.decode(response.body);
+      
+//          setState(() {
+//       confirmedTutoriasList = responseData.where((tutoria) => tutoria['status'] == 'confirmado').toList();
+//     });
+//     } else {
+//       throw Exception('Error al obtener los datos del API. Código de estado: ${response.statusCode}');
+//     }
+//   } catch (e) {
+//     throw Exception('Error al obtener datos del API');
+//   }
+// }
 
 // Future<void> fetchData() async {
 //   try {
@@ -102,8 +121,17 @@ class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
                     const SizedBox(height: 15),
                     Container(
                       child: confirmedTutoriasList.isEmpty
-                        ? const Center(
-                        child: Text('No has recibido ningún pago!'),
+                        ? Center(
+                          
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(16.0, 60, 16.0, 0),
+                          child: const Text(
+                            'Todavía no has recibido ningún pago!', 
+                            style: TextStyle(
+                              color: Color(0xFF7F7F7F), 
+                              fontWeight: FontWeight.bold),
+                            ),
+                          ),
                       )
                         : Column(
                         children: confirmedTutoriasList.map(
@@ -115,7 +143,7 @@ class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
                             return CustomHistoryCard(
                               classTitle: subject['nombreTutoria'], 
                               studentName: subject['estudiante']['name'], 
-                              amount: "250", 
+                              amount:'${subject['monto']}', 
                               date: subject['fechaComprobante'],
                               color: cardColor,
                             );
