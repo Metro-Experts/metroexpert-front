@@ -189,7 +189,7 @@ class TutorProfileView extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          'Calificame aquí!',
+                          '¡Califícame aquí!',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

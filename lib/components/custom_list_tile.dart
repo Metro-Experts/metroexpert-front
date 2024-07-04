@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:metro_experts/pages/tutor_confirm_payment.dart';
 
-class Customlisttile extends StatefulWidget {
+class CustomListTile extends StatefulWidget {
   final String classTitle;
   final String studentName;
 
-  const Customlisttile(
+  const CustomListTile(
       {super.key, required this.classTitle, required this.studentName});
 
   @override
-  State<Customlisttile> createState() => _Customlisttiletate();
+  State<CustomListTile> createState() => _CustomListTileState();
 }
 
-class _Customlisttiletate extends State<Customlisttile> {
+class _CustomListTileState extends State<CustomListTile> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -53,5 +53,3 @@ class _Customlisttiletate extends State<Customlisttile> {
     );
   }
 }
-
-//  Icon(Icons.more_horiz);

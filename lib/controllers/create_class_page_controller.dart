@@ -16,35 +16,35 @@ class CreateClassPageController extends ChangeNotifier {
   ];
 
   List<String> mathList = [
-    "Matematica basica",
-    "Matematica 1",
-    "Matematica 2",
-    "Matematica 3",
-    "Matematica 4",
-    "Matematica 5",
-    "Algebra Lineal",
-    "Matematica discreta",
-    "Calculo numerico",
-    "Estadistica",
-    "Modelos estocasticos"
+    "Matemática basica",
+    "Matemática 1",
+    "Matemática 2",
+    "Matemática 3",
+    "Matemática 4",
+    "Matemática 5",
+    "Álgebra Lineal",
+    "Matemática Discreta",
+    "Cálculo Numérico",
+    "Estadística para Ingenieros I",
+    "Modelos Estocásticos"
   ];
   List<String> programmingList = [
-    "Algoritmos y programacion",
+    "Algoritmos y Programación",
     "Estructura de datos",
     "Base de datos 1",
     "Base de datos 2",
-    "Arquitectura del computador",
-    "Organizacion del computador",
-    "Sistema de redes",
-    "Computacion emergentes",
+    "Arquitectura del Computador",
+    "Organización del Computador",
+    "Sistema de Redes",
+    "Computación Emergente",
     "Sistemas Operativos"
   ];
-  List<String> physicsList = ["Fisica 1", "Fisica 2", "Fisica 3"];
+  List<String> physicsList = ["Física 1", "Física 2", "Física 3"];
 
   List<String> chemistryList = [
-    "Quimica 1",
-    "Termodinamica",
-    "Principios de procesos industriales"
+    "Química 1",
+    "Termodinámica",
+    "Principios de Procesos Industriales"
   ];
 
   List<String> modalidadList = ["Presencial", "Virtual"];
@@ -220,7 +220,7 @@ class CreateClassPageController extends ChangeNotifier {
               height: 25,
               child: Text(
                 textAlign: TextAlign.justify,
-                'Clase creada con éxito!',
+                '¡Clase creada con éxito!',
                 style: TextStyle(color: Colors.green),
               ),
             ),
