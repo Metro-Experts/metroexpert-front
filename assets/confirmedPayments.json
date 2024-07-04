@@ -1,0 +1,99 @@
+{
+    "tutorias": [
+      {
+        "_id": "6684b6619e5a954ee774bb6d",
+        "idcurso": "6683467328e8f31b807ae2c0",
+        "idtutor": "HgRi7Ss27MW4lxc58vmkmKqNWva2",
+        "nombreTutoria": "Sistemas operativos",
+        "estudiante": {
+          "name": "Roman Chacin",
+          "email": "roman@gmail.com",
+          "idestudiante": "Pw9ui8tpYWgSo77icogCtOBuG393"
+        },
+        "status": "confirmado",
+        "img": {},
+        "monto": 250,
+        "referencia": "726376273672",
+        "bancoEmisor": "Bancaribe",
+        "telefono": "04241501278",
+        "fechaComprobante": "2024-02-08",
+        "__v": 0
+      },
+      {
+        "_id": "8764b6619e5a954ee774bb6f",
+        "idcurso": "9083467328e8f31b807ae2c1",
+        "idtutor": "UmGt7Ss27MW4lxc58vmpmKqNWva3",
+        "nombreTutoria": "Algoritmos y Estructuras de Datos",
+        "estudiante": {
+          "name": "Ana Perez",
+          "email": "ana@gmail.com",
+          "idestudiante": "Ln9ui8tpYWgSo77icogCtOBuG394"
+        },
+        "status": "espera",
+        "img": {},
+        "monto": 350,
+        "referencia": "726376273672",
+        "bancoEmisor": "Bancaribe",
+        "telefono": "04241501278",
+        "fechaComprobante": "2024-07-03",
+        "__v": 0
+      },
+      {
+        "_id": "6684b6619e5a954ee774bb6d",
+        "idcurso": "6683467328e8f31b807ae2c0",
+        "idtutor": "HgRi7Ss27MW4lxc58vmkmKqNWva2",
+        "nombreTutoria": "Estructura de Datos",
+        "estudiante": {
+          "name": "Hugo Duque",
+          "email": "hugo@gmail.com",
+          "idestudiante": "Pw9ui8tpYWgSo77icogCtOBuG393"
+        },
+        "status": "confirmado",
+        "img": {},
+        "monto": 250,
+        "referencia": "726376273672",
+        "bancoEmisor": "Bancaribe",
+        "telefono": "04241501278",
+        "fechaComprobante": "2024-01-09",
+        "__v": 0
+      },
+      {
+        "_id": "6684b6619e5a954ee774bb6d",
+        "idcurso": "6683467328e8f31b807ae2c0",
+        "idtutor": "HgRi7Ss27MW4lxc58vmkmKqNWva2",
+        "nombreTutoria": "Matemática IV",
+        "estudiante": {
+          "name": "Felipe Escalona",
+          "email": "felipe@gmail.com",
+          "idestudiante": "Pw9ui8tpYWgSo77icogCtOBuG393"
+        },
+        "status": "confirmado",
+        "img": {},
+        "monto": 250,
+        "referencia": "726376273672",
+        "bancoEmisor": "Bancaribe",
+        "telefono": "04241501278",
+        "fechaComprobante": "2024-08-03",
+        "__v": 0
+      },
+      {
+        "_id": "6684b6619e5a954ee774bb6d",
+        "idcurso": "6683467328e8f31b807ae2c0",
+        "idtutor": "HgRi7Ss27MW4lxc58vmkmKqNWva2",
+        "nombreTutoria": "Física 2",
+        "estudiante": {
+          "name": "Daniel Fiallo",
+          "email": "daniel@gmail.com",
+          "idestudiante": "Pw9ui8tpYWgSo77icogCtOBuG393"
+        },
+        "status": "confirmado",
+        "img": {},
+        "monto": 1000,
+        "referencia": "726376273672",
+        "bancoEmisor": "Bancaribe",
+        "telefono": "04241501278",
+        "fechaComprobante": "2024-09-05",
+        "__v": 0
+      }
+    ]
+  }
