@@ -20,63 +20,25 @@ class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
 
   @override
   void initState() {
-    //fetchData();
     super.initState();
-    _loadConfirmedTutorias();
+    fetchData();
   }
 
-  Future<void> _loadConfirmedTutorias() async {
-    String data = await DefaultAssetBundle.of(context).loadString('assets/confirmedPayments.json');
-    final List<dynamic> tutorias = json.decode(data)['tutorias'];
 
+Future<void> fetchData() async {
+  var userId = Auth().currentUser!.uid;
+
+  final response = await http.get(Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/images/tutor/confirmaciones/${userId}'));
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseData = json.decode(response.body);
     setState(() {
-      confirmedTutoriasList = tutorias.where((tutoria) => tutoria['status'] == 'confirmado').toList();
+      confirmedTutoriasList = List<dynamic>.from(responseData['confirmadas']);
     });
+  } else {
+    throw Exception('Error al obtener los datos del API. Código de estado: ${response.statusCode}');
   }
-
-
-// Future<void> fetchData() async {
-//   try {
-//     var userId = Auth().currentUser!.uid;
-//     final response = await http.get(Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/images/tutor/$userId'),
-//     headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//     },);
-//     if (response.statusCode == 200) {
-//       List<dynamic> responseData = json.decode(response.body);
-      
-//          setState(() {
-//       confirmedTutoriasList = responseData.where((tutoria) => tutoria['status'] == 'confirmado').toList();
-//     });
-//     } else {
-//       throw Exception('Error al obtener los datos del API. Código de estado: ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     throw Exception('Error al obtener datos del API');
-//   }
-// }
-
-// Future<void> fetchData() async {
-//   try {
-//     var userId = Auth().currentUser!.uid;
-//     final response = await http.get(Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/images/tutor/$userId'),
-//     headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//     },);
-//     if (response.statusCode == 200) {
-//       List<dynamic> responseData = json.decode(response.body);
-      
-//       ConfirmedPayments = responseData
-//       .where((data) => data['status'] == 'confirmado')
-//       .map((data) => Map<String, dynamic>.from(data))
-//       .toList();
-//     } else {
-//       throw Exception('Error al obtener los datos del API. Código de estado: ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     throw Exception('Error al obtener datos del API');
-//   }
-// }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -140,11 +102,20 @@ class _PaymentsHistoryPageState extends State<PaymentsHistoryPage> {
                                 confirmedTutoriasList.indexOf(subject) % 2 == 0
                                     ? const Color(0xFF9FA9FF)
                                     : const Color(0xFFFEC89F);
+
+                            //Formatear fecha 
+                            String obtenerFecha(String fechaConHora) {
+                              DateTime fecha = DateTime.parse(fechaConHora);
+                              String fechaFormateada = '${fecha.day}/${fecha.month}/${fecha.year}';
+                              return fechaFormateada;
+                            }
+                            String fechaFormateada = obtenerFecha(subject['fechaComprobante']);
+
                             return CustomHistoryCard(
                               classTitle: subject['nombreTutoria'], 
                               studentName: subject['estudiante']['name'], 
-                              amount:'${subject['monto']}', 
-                              date: subject['fechaComprobante'],
+                              amount: '${subject['monto']}', 
+                              date: fechaFormateada,
                               color: cardColor,
                             );
                           },
