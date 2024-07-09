@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,8 +12,9 @@ import 'package:metro_experts/pages/calendar_page.dart';
 import 'package:metro_experts/pages/chatbot_page.dart';
 import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/home_page.dart';
+import 'package:metro_experts/pages/payments_history_page.dart';
+import 'package:metro_experts/pages/tutor_payment_gestor.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
-import 'package:metro_experts/pages/tutor_payment_gestor.dart'; // Import the tutor payment gestor page
 import 'package:metro_experts/pages/user_edit_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,67 +59,89 @@ class _DrawerMenuState extends State<DrawerMenu> {
         .fetchCalenderDates(context);
     userType = Provider.of<HomePageController>(context, listen: false).userType;
     super.initState();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserOnSession>(
-      builder: (context, userOnSessionConsumer, _) {
-        return Drawer(
-          width: 355,
-          child: ListView(
-            children: [
-              InkWell(
-                onTap: () {
-                  _pickImage();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: buildHeader(
-                    context,
+        builder: (context, userOnSessionConsumer, _) {
+      return Drawer(
+        width: 355,
+        child: ListView(
+          children: [
+            InkWell(
+              onTap: () {
+                _pickImage();
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: buildHeader(context,
                     image: image,
                     name: userOnSessionConsumer.userData.name,
-                    email: userOnSessionConsumer.userData.email,
+                    email: userOnSessionConsumer.userData.email),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  size: 32,
+                  Icons.home,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    'Home',
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
                   ),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: ListTile(
-                  leading: const Icon(
-                    size: 32,
-                    Icons.home,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      'Home',
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.settings,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Cuenta',
                       style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  onTap: () {
-                    // Navigate to home page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
+                          fontSize: 24, fontWeight: FontWeight.normal)),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UserEditProfile()),
+                  );
+                },
               ),
+            ),
+            if (userType == 'tutor') ...[
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: ListTile(
                   leading: const Icon(
-                    Icons.settings,
+                    Icons.assignment_add,
                     size: 32,
                     color: Color.fromRGBO(238, 138, 111, 1),
                   ),
                   title: const Padding(
                     padding: EdgeInsets.only(left: 16.0),
                     child: Text(
-                      'Cuenta',
+                      'Crear una clase',
                       style: TextStyle(
                           fontSize: 24, fontWeight: FontWeight.normal),
                     ),
@@ -126,177 +150,167 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const UserEditProfile(),
+                          builder: (context) => const CreateClass()),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.payment,
+                    size: 32,
+                    color: Color.fromRGBO(238, 138, 111, 1),
+                  ),
+                  title: const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Historial de pagos',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentsHistoryPage()),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.payment,
+                    size: 32,
+                    color: Color.fromRGBO(238, 138, 111, 1),
+                  ),
+                  title: const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Confirmación de pagos',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TutorPaymentGestor(),
                       ),
-                    );
-                  },
-                ),
-              ),
-              if (userType == 'tutor') ...[
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.assignment_add,
-                      size: 32,
-                      color: Color.fromRGBO(238, 138, 111, 1),
-                    ),
-                    title: const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        'Crear una clase',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CreateClass()),
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.payment,
-                      size: 32,
-                      color: Color.fromRGBO(238, 138, 111, 1),
-                    ),
-                    title: const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        'Pagos',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TutorPaymentGestor(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.calendar_month,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      'Calendario',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CalendarPage()),
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.smart_toy,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      'Chatbot',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ChatbotPage()),
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.logout,
-                    size: 32,
-                    color: Color.fromRGBO(238, 138, 111, 1),
-                  ),
-                  title: const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  onTap: () {
-                    Provider.of<SignInPageController>(context, listen: false)
-                        .emailController
-                        .clear();
-                    Provider.of<SignInPageController>(context, listen: false)
-                        .passwordController
-                        .clear();
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .emailController
-                        .clear();
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .passwordController
-                        .clear();
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .cellPhoneController
-                        .clear();
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .firstNameController
-                        .clear();
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .lastNameController
-                        .clear();
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .selectedOption = '';
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .isChecked = false;
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .genderValue = '';
-                    Provider.of<SignUpPageController>(context, listen: false)
-                        .showTutorSection = false;
-
-                    Auth().signOut();
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LogInPage()),
                     );
                   },
                 ),
               ),
             ],
-          ),
-        );
-      },
-    );
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.calendar_month,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Calendario',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CalendarPage()),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.smart_toy,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Chatbot',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChatbotPage()),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.logout,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Logout',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Provider.of<SignInPageController>(context, listen: false)
+                      .emailController
+                      .clear();
+                  Provider.of<SignInPageController>(context, listen: false)
+                      .passwordController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .emailController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .passwordController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .cellPhoneController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .firstNameController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .lastNameController
+                      .clear();
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .selectedOption = '';
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .isChecked = false;
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .genderValue = '';
+                  Provider.of<SignUpPageController>(context, listen: false)
+                      .showTutorSection = false;
+
+                  Auth().signOut();
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LogInPage()),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -313,9 +327,8 @@ Widget buildHeader(
         child: Row(
           children: [
             CircleAvatar(
-              radius: 30,
-              backgroundImage: image != null ? FileImage(image) : null,
-            ),
+                radius: 30,
+                backgroundImage: image != null ? FileImage(image) : null),
             const SizedBox(width: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

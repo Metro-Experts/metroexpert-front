@@ -67,6 +67,73 @@ class _TutorPaymentGestorState extends State<TutorPaymentGestor> {
                             CustomListTile(
                               classTitle: payment['nombreTutoria'],
                               studentName: payment['estudiante']['name'],
+                              studentEmail: payment['estudiante']['email'],
+                              fechaComprobante: payment['fechaComprobante'],
+                              monto: (payment['monto'] as num).toDouble(),
+                              bancoEmisor: payment['bancoEmisor'],
+                              referencia: payment['referencia'],
+                              telefono: payment['telefono'],
+                              imgData: payment['img']['data']['data'],
+                              contentType: payment['img']['contentType'],
+                              onConfirm: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Confirmar Pago'),
+                                      content: RichText(
+                                        text: TextSpan(
+                                          text:
+                                              '¿Estás seguro de que quieres confirmar este pago en efectivo de ',
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: payment['estudiante']
+                                                  ['name'],
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const TextSpan(text: ' por '),
+                                            TextSpan(
+                                              text: '\$${payment['monto']}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const TextSpan(
+                                                text:
+                                                    ' a razón de la tutoría '),
+                                            TextSpan(
+                                              text: payment['nombreTutoria'],
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const TextSpan(text: '?'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Cancelar'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('Confirmar'),
+                                          onPressed: () {
+                                            Provider.of<TutorPaymentGestorController>(
+                                                    context,
+                                                    listen: false)
+                                                .confirmPayment(context, index);
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
                             ),
                             const SizedBox(height: 20),
                           ],

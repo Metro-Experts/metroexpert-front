@@ -356,6 +356,7 @@ class _DataPaymentPageState extends State<DataPaymentPage> {
                   widget.tutorID,
                   widget.tutoringId,
                   widget.course,
+                  widget.feeInBolivares.toInt(),
                   userOnSession,
                 );
               },

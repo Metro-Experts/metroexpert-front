@@ -10,28 +10,30 @@ class TutorPaymentGestorController extends ChangeNotifier {
   List<dynamic> payments = [];
 
   Future<void> fetchPayments(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return;
+    }
+
     var url = Uri.parse(
-        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/images/upload');
+        'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/images/tutor/confirmaciones/${user.uid}');
     isLoading = true;
     notifyListeners();
 
     try {
       final response = await http.get(url);
 
-      if (response.statusCode == 200 &&
-          FirebaseAuth.instance.currentUser != null) {
-        List<dynamic> responseData = json.decode(response.body);
-
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
         final userOnSession =
             Provider.of<UserOnSession>(context, listen: false);
         final userId = userOnSession.userData;
-        print("Hola::userId");
 
-        payments = responseData
+        payments = responseData['enEspera']
             .where((payment) => payment['idtutor'] == userId.id)
             .toList();
       } else {
-        print('error fetching payments...');
+        print('Error fetching payments: ${response.statusCode}');
       }
     } catch (e) {
       print('Error fetching payments: $e');
@@ -39,5 +41,13 @@ class TutorPaymentGestorController extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void confirmPayment(BuildContext context, int index) {
+    payments.removeAt(index);
+    notifyListeners();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Confirmación de pago exitoso')),
+    );
   }
 }

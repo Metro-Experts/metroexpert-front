@@ -165,7 +165,8 @@ class SignUpPageController extends ChangeNotifier {
 
     if (!RegExp(r'^58(424|412|416|426|414)\d{7}$')
         .hasMatch(cellPhoneController.text)) {
-      showSnackBarMessage(context, 'Formato telefónico incorrecto');
+      showSnackBarMessage(
+          context, 'Formato telefónico incorrecto: Ej. 584245555555');
       return false;
     }
 

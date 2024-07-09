@@ -85,6 +85,7 @@ class DataPaymentPageController extends ChangeNotifier {
       String tutorID,
       String tutoringId,
       String course,
+      int feeInBolivares,
       UserOnSession userOnSession) async {
     final user = userOnSession.userData;
 
@@ -94,6 +95,13 @@ class DataPaymentPageController extends ChangeNotifier {
         _image == null) {
       _showSnackBar(
           context, 'Por favor, complete todos los campos y suba una imagen.');
+      return;
+    } else if (!RegExp(r'^0(424|412|416|426|414)\d{7}$')
+        .hasMatch(phoneController.text)) {
+      _showSnackBar(context, 'Formato telefónico incorrecto: Ej. 04245555555');
+      return;
+    } else if (!RegExp(r'^\d+$').hasMatch(referenceController.text)) {
+      _showSnackBar(context, 'La referencia debe ser numérica.');
       return;
     }
 
@@ -124,6 +132,7 @@ class DataPaymentPageController extends ChangeNotifier {
     request.fields['bancoEmisor'] =
         _banks.firstWhere((bank) => bank['code'] == _selectedBank)['name']!;
     request.fields['telefono'] = phoneController.text;
+    request.fields['monto'] = '${feeInBolivares}';
 
     try {
       showDialog(
