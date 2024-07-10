@@ -12,6 +12,9 @@ class TutorPaymentGestor extends StatefulWidget {
 }
 
 class _TutorPaymentGestorState extends State<TutorPaymentGestor> {
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +32,7 @@ class _TutorPaymentGestorState extends State<TutorPaymentGestor> {
     ]);
 
     return Scaffold(
+      key: _scaffoldMessengerKey,
       appBar: AppBar(
         title: const Text(
           "Confirmación de Pagos",
@@ -75,6 +79,8 @@ class _TutorPaymentGestorState extends State<TutorPaymentGestor> {
                               telefono: payment['telefono'],
                               imgData: payment['img']['data']['data'],
                               contentType: payment['img']['contentType'],
+                              paymentId: payment['_id'],
+                              index: index,
                               onConfirm: () {
                                 showDialog(
                                   context: context,
@@ -125,7 +131,11 @@ class _TutorPaymentGestorState extends State<TutorPaymentGestor> {
                                             Provider.of<TutorPaymentGestorController>(
                                                     context,
                                                     listen: false)
-                                                .confirmPayment(context, index);
+                                                .confirmPayment(
+                                                    context,
+                                                    payment['_id'],
+                                                    index,
+                                                    _scaffoldMessengerKey);
                                             Navigator.of(context).pop();
                                           },
                                         ),

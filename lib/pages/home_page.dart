@@ -17,9 +17,20 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<HomePageController>(context, listen: false).fetchUser(context);
-    Provider.of<HomePageController>(context, listen: false)
-        .fetchTutorings(context);
+    final homePageController =
+        Provider.of<HomePageController>(context, listen: false);
+    homePageController.fetchUser(context);
+    homePageController.fetchTutorings(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final homePageController =
+          Provider.of<HomePageController>(context, listen: false);
+      homePageController.resetFilters();
+    });
   }
 
   @override
@@ -104,6 +115,42 @@ class _HomePageState extends State<HomePage> {
                           },
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    homePageControllerConsumer.toggleEnrolledCoursesFilter();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        homePageControllerConsumer.showEnrolledCourses
+                            ? Colors.blue[800]
+                            : Colors.blue,
+                    minimumSize: const Size(double.infinity, 48),
+                    shadowColor: Colors.black,
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Cursos inscritos',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (homePageControllerConsumer.showEnrolledCourses) ...[
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                      ],
                     ],
                   ),
                 ),

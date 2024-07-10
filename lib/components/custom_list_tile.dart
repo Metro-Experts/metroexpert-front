@@ -13,6 +13,8 @@ class CustomListTile extends StatelessWidget {
   final List<dynamic> imgData;
   final String contentType;
   final VoidCallback onConfirm;
+  final String paymentId;
+  final int index;
 
   const CustomListTile({
     super.key,
@@ -27,18 +29,29 @@ class CustomListTile extends StatelessWidget {
     required this.imgData,
     required this.contentType,
     required this.onConfirm,
+    required this.paymentId,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     bool isBolivares = bancoEmisor != "No aplica";
-    Color cardColor =
-        isBolivares ? const Color(0xFFEE8A6F) : const Color(0xFF4CAF50);
+    Color cardColor = isBolivares
+        ? Color.fromARGB(255, 111, 145, 238)
+        : const Color(0xFF4CAF50);
     IconData leadingIcon =
         isBolivares ? Icons.menu_book_outlined : Icons.attach_money;
     String montoText = isBolivares
         ? '${monto.toStringAsFixed(2)} Bs.'
         : '\$${monto.toStringAsFixed(2)}';
+
+    String obtenerFecha(String fechaConHora) {
+      DateTime fecha = DateTime.parse(fechaConHora);
+      String fechaFormateada = '${fecha.day}/${fecha.month}/${fecha.year}';
+      return fechaFormateada;
+    }
+
+    String fechaFormateada = obtenerFecha(fechaComprobante);
 
     return SizedBox(
       child: ListTile(
@@ -57,7 +70,7 @@ class CustomListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(studentName, style: const TextStyle(color: Colors.white)),
-            Text('Fecha: $fechaComprobante',
+            Text('Fecha: $fechaFormateada',
                 style: const TextStyle(color: Colors.white)),
             Text('Monto: $montoText',
                 style: const TextStyle(
@@ -98,12 +111,9 @@ class CustomListTile extends StatelessWidget {
         trailing: SizedBox(
           height: 50,
           width: 50,
-          child: isBolivares
-              ? IconButton(
-                  color: Colors.white,
-                  iconSize: 25,
-                  icon: const Icon(Icons.more_horiz),
-                  onPressed: () {
+          child: ElevatedButton(
+            onPressed: isBolivares
+                ? () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -117,26 +127,28 @@ class CustomListTile extends StatelessWidget {
                           telefono: telefono,
                           imgData: imgData,
                           contentType: contentType,
+                          paymentId: paymentId,
+                          index: index,
                         ),
                       ),
                     );
-                  },
-                )
-              : ElevatedButton(
-                  onPressed: onConfirm,
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(10),
-                    backgroundColor: Colors.white,
-                    shadowColor: Colors.black,
-                    elevation: 5,
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 25,
-                  ),
-                ),
+                  }
+                : onConfirm,
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(10),
+              backgroundColor: Colors.white,
+              shadowColor: Colors.black,
+              elevation: 5,
+            ),
+            child: Icon(
+              isBolivares ? Icons.visibility : Icons.check,
+              color: isBolivares
+                  ? Color.fromARGB(255, 111, 145, 238)
+                  : Colors.green,
+              size: 25,
+            ),
+          ),
         ),
       ),
     );

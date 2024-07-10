@@ -14,6 +14,7 @@ import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/home_page.dart';
 import 'package:metro_experts/pages/payments_history_page.dart';
 import 'package:metro_experts/pages/tutor_payment_gestor.dart';
+import 'package:metro_experts/pages/my_courses.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:metro_experts/pages/user_edit_profile.dart';
 import 'package:provider/provider.dart';
@@ -129,6 +130,28 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 },
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.school,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Mis cursos',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyCourses()),
+                  );
+                },
+              ),
+            ),
             if (userType == 'tutor') ...[
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -159,7 +182,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: ListTile(
                   leading: const Icon(
-                    Icons.payment,
+                    Icons.savings,
                     size: 32,
                     color: Color.fromRGBO(238, 138, 111, 1),
                   ),
@@ -184,7 +207,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: ListTile(
                   leading: const Icon(
-                    Icons.payment,
+                    Icons.monetization_on,
                     size: 32,
                     color: Color.fromRGBO(238, 138, 111, 1),
                   ),
