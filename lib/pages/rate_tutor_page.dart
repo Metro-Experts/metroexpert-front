@@ -36,13 +36,10 @@ class _RatingPageState extends State<RatingPage> {
           )
           .timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
-        // imprimir por consola
-        print('Todo bien');
       } else {
         throw Exception('Failed to post rating');
       }
     } catch (e) {
-      // imprimir por consola
       print('Error: ${e.toString()}');
     }
   }
