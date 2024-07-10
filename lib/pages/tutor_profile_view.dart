@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:metro_experts/components/tutor_tutoria_card.dart';
+import 'package:metro_experts/firebase_auth/auth.dart';
 import 'package:metro_experts/pages/rate_tutor_page.dart';
 import 'package:flutter/services.dart';
 
@@ -18,6 +19,7 @@ class TutorProfileView extends StatelessWidget {
     required this.tutorCareer,
     required this.tutorRating,
     required this.tutorID,
+    required this.tutoringStudents,
   });
 
   final String tutorName;
@@ -29,6 +31,7 @@ class TutorProfileView extends StatelessWidget {
   final String tutorCareer;
   final String tutorRating;
   final String tutorID;
+  final List tutoringStudents;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,11 @@ class TutorProfileView extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    bool isStudentOnTutoringList(String studentId, List<dynamic> tutoringList) {
+      return tutoringList.contains(studentId);
+    }
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -169,7 +177,8 @@ class TutorProfileView extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
+                          if(isStudentOnTutoringList(Auth().currentUser!.uid, tutoringStudents)){
+                            Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => RatingPage(
@@ -177,6 +186,35 @@ class TutorProfileView extends StatelessWidget {
                               ),
                             ),
                           );
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                              title: const Text(
+                                "No puedes calificar a este tutor!",
+                              style: TextStyle(
+                                color: Color(0xffEE8A6F),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            content:const Text(
+                              "Si deseas dejar tu opinión, debes estar inscrito en esta tutoría"),
+                            actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "Ok!",
+                                style: TextStyle(
+                                color: Color(0xffEE8A6F),
+                              ),
+                            )
+                          ),
+                        ],
+                          ),);
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xffEE8A6F),
