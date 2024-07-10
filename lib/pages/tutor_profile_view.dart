@@ -198,8 +198,8 @@ class TutorProfileView extends StatelessWidget {
                                 fontSize: 18,
                               ),
                             ),
-                            content: Text(
-                              "Si deseas dejar tu opinión, debes tener alguna tutoría activa con $tutorName $tutorLastName"),
+                            content:const Text(
+                              "Si deseas dejar tu opinión, debes estar inscrito en esta tutoría"),
                             actions: [
                             TextButton(
                               onPressed: () {

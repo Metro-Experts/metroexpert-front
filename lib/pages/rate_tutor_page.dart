@@ -15,9 +15,21 @@ class RatingPage extends StatefulWidget {
   final String tutorID;
   @override
   State<RatingPage> createState() => _RatingPageState();
+
 }
 
 class _RatingPageState extends State<RatingPage> {
+  
+  List<dynamic> oldRatings = [];
+  late bool _userHasScored = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadRatings();
+  }
+
+  //Enviar Rating
   Future<void> postRating(int rating) async {
     try {
       const String gateway =
@@ -42,6 +54,40 @@ class _RatingPageState extends State<RatingPage> {
     } catch (e) {
       print('Error: ${e.toString()}');
     }
+  }
+
+  //Verificar si existen rating anteriores
+  Future<void> loadRatings() async {
+    try {
+     final String tutorId = widget.tutorID;
+      final response = await http.get(Uri.parse('https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/$tutorId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> apiData = json.decode(response.body);
+      oldRatings = apiData['ratings'];
+
+      setState(() {
+        _userHasScored = findUserScore(Auth().currentUser!.uid, oldRatings);
+    });
+    } else {
+      throw Exception('Error al obtener los datos del API. Código de estado: ${response.statusCode}');
+    }
+    } catch (e) {
+    throw Exception('Error al obtener datos del API');
+    }
+  }
+
+  bool findUserScore(String userId, List<dynamic> ratings) {
+    for (var rating in ratings) {
+        Map<String, dynamic> currentRating = rating as Map<String, dynamic>;
+        if (currentRating["userId"] == userId) {
+            return true;
+        }
+    }
+    return false;
   }
 
   List<String> list = ['Horrible', 'Mal', 'Regular', 'Bueno', 'Genial'];
@@ -169,9 +215,42 @@ class _RatingPageState extends State<RatingPage> {
                 ),
               ),
             ),
-          ],
+            const SizedBox(height: 70),
+           Visibility(
+            visible: _userHasScored,
+            child: Column(
+              children: <Widget>[
+                const Center(
+                  child: Text(
+                    'Has calificado previamente con',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    children: oldRatings
+                        .where((rating) => rating["userId"] == Auth().currentUser!.uid)
+                        .map((rating) => Text(
+                              'Puntaje dado: ${rating["score"]}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Color(0xffEE8A6F),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ],
+           ),
+          ),
+         ],
         ),
       ),
-    );
+    );  
   }
 }
+
