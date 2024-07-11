@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison, avoid_print
+// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,17 +13,25 @@ class SignUpPageController extends ChangeNotifier {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController cellPhoneController = TextEditingController();
-  final TextEditingController careerController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController tutorDescriptionController =
+      TextEditingController();
   String genderValue = '';
-  String selectedOption = '';
+  String careerValue = '';
+  String selectedOption = "";
   bool showTutorSection = false;
   bool? isChecked = false;
 
-  Future<void> createUserWithEmailAndPassword(
-    BuildContext context,
-  ) async {
-    validateInputs(context);
+  Future<void> createUserWithEmailAndPassword(BuildContext context) async {
+    if (!validateInputs(context)) {
+      return;
+    }
+
+    String description = '';
+    if (selectedOption == 'student') {
+      description = 'Descripción predeterminada para estudiantes';
+    } else if (selectedOption == 'tutor') {
+      description = tutorDescriptionController.text;
+    }
 
     var url = Uri.parse(
         'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/');
@@ -39,13 +47,16 @@ class SignUpPageController extends ChangeNotifier {
           );
         },
       );
+
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+
       Navigator.of(context)
           .pop(); // Close the loading dialog immediately after account creation
+
       String uid = userCredential.user!.uid;
       var response = await http.post(
         url,
@@ -54,16 +65,16 @@ class SignUpPageController extends ChangeNotifier {
           "_id": uid,
           "name": firstNameController.text,
           "lastName": lastNameController.text,
-          "carrer": careerController.text,
           "email": emailController.text,
           "userType": selectedOption,
+          "gender": genderValue.contains('Masculino') ? 'M' : 'F',
           "cellphone": cellPhoneController.text,
-          "description": descriptionController.text,
-          "gender": genderValue.contains('Masculino') ? 'M' : 'F'
+          "carrer": careerValue,
+          "description": description,
         }),
       );
 
-      if (response.statusCode == 201 && Auth().authStateChanges != null) {
+      if (response.statusCode == 201) {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -84,11 +95,10 @@ class SignUpPageController extends ChangeNotifier {
           ),
         );
       } else {
-        print(response.statusCode);
-        print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error al registrar el usuario.'),
+          SnackBar(
+            content: Text(
+                'Error al registrar el usuario en el servidor: ${response.body}'),
           ),
         );
       }
@@ -106,6 +116,14 @@ class SignUpPageController extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
+        ),
+      );
+    } catch (e) {
+      Navigator.of(context)
+          .pop(); // Close the loading dialog in case of an error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error inesperado: $e'),
         ),
       );
     }
@@ -145,10 +163,10 @@ class SignUpPageController extends ChangeNotifier {
       return false;
     }
 
-    if (!RegExp(r'^58\424|412|416|426|414\d+$')
-            .hasMatch(cellPhoneController.text) ||
-        RegExp(r'^580\d+$').hasMatch(cellPhoneController.text)) {
-      showSnackBarMessage(context, 'Formato telefónico incorrecto');
+    if (!RegExp(r'^58(424|412|416|426|414)\d{7}$')
+        .hasMatch(cellPhoneController.text)) {
+      showSnackBarMessage(
+          context, 'Formato telefónico incorrecto: Ej. 584245555555');
       return false;
     }
 
@@ -157,8 +175,19 @@ class SignUpPageController extends ChangeNotifier {
       return false;
     }
 
+    if (careerValue.isEmpty) {
+      showSnackBarMessage(context, 'Por favor, seleccione la carrera.');
+      return false;
+    }
+
     if (selectedOption.isEmpty) {
       showSnackBarMessage(context, 'Por favor, seleccione el tipo de usuario.');
+      return false;
+    }
+
+    if (selectedOption == 'tutor' && tutorDescriptionController.text.isEmpty) {
+      showSnackBarMessage(
+          context, 'Por favor, complete la descripción del tutor.');
       return false;
     }
 

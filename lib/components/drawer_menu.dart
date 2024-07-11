@@ -13,6 +13,8 @@ import 'package:metro_experts/pages/chatbot_page.dart';
 import 'package:metro_experts/pages/create_class.dart';
 import 'package:metro_experts/pages/home_page.dart';
 import 'package:metro_experts/pages/payments_history_page.dart';
+import 'package:metro_experts/pages/tutor_payment_gestor.dart';
+import 'package:metro_experts/pages/my_courses.dart';
 import 'package:metro_experts/pages/sign_in_page.dart';
 import 'package:metro_experts/pages/user_edit_profile.dart';
 import 'package:provider/provider.dart';
@@ -115,7 +117,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ),
                 title: const Padding(
                   padding: EdgeInsets.only(left: 16.0),
-                  child: Text('Account',
+                  child: Text('Cuenta',
                       style: TextStyle(
                           fontSize: 24, fontWeight: FontWeight.normal)),
                 ),
@@ -128,12 +130,32 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 },
               ),
             ),
-            userType == 'tutor'
-            ? Padding(
+            Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Column(
-                children: [
-                  ListTile(
+              child: ListTile(
+                leading: const Icon(
+                  Icons.school,
+                  size: 32,
+                  color: Color.fromRGBO(238, 138, 111, 1),
+                ),
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text('Mis cursos',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyCourses()),
+                  );
+                },
+              ),
+            ),
+            if (userType == 'tutor') ...[
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: ListTile(
                   leading: const Icon(
                     Icons.assignment_add,
                     size: 32,
@@ -141,41 +163,73 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   ),
                   title: const Padding(
                     padding: EdgeInsets.only(left: 16.0),
-                    child: Text('Create Class', style: TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.normal)),
+                    child: Text(
+                      'Crear una clase',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal),
+                    ),
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CreateClass()),
+                          builder: (context) => const CreateClass()),
                     );
                   },
                 ),
-                ListTile(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: ListTile(
                   leading: const Icon(
-                    Icons.payment,
+                    Icons.savings,
                     size: 32,
                     color: Color.fromRGBO(238, 138, 111, 1),
                   ),
                   title: const Padding(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: Text('Payments History',
-                    style: TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.normal)),
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Historial de pagos',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal),
+                    ),
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const PaymentsHistoryPage()),
+                          builder: (context) => const PaymentsHistoryPage()),
                     );
                   },
                 ),
-              ],
-            ),
-          )
-          : Container(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.monetization_on,
+                    size: 32,
+                    color: Color.fromRGBO(238, 138, 111, 1),
+                  ),
+                  title: const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Confirmación de pagos',
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TutorPaymentGestor(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: ListTile(
@@ -186,7 +240,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ),
                 title: const Padding(
                   padding: EdgeInsets.only(left: 16.0),
-                  child: Text('Calendar',
+                  child: Text('Calendario',
                       style: TextStyle(
                           fontSize: 24, fontWeight: FontWeight.normal)),
                 ),
@@ -203,7 +257,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               padding: const EdgeInsets.only(left: 8.0),
               child: ListTile(
                 leading: const Icon(
-                  Icons.chat_outlined,
+                  Icons.smart_toy,
                   size: 32,
                   color: Color.fromRGBO(238, 138, 111, 1),
                 ),

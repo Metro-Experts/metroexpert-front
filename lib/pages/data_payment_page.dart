@@ -356,6 +356,7 @@ class _DataPaymentPageState extends State<DataPaymentPage> {
                   widget.tutorID,
                   widget.tutoringId,
                   widget.course,
+                  widget.feeInBolivares.toInt(),
                   userOnSession,
                 );
               },
@@ -364,7 +365,7 @@ class _DataPaymentPageState extends State<DataPaymentPage> {
               ),
               child: const Text(
                 'Enviar pago',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
             const SizedBox(height: 20),

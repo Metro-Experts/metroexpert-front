@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +14,7 @@ class HomePageController extends ChangeNotifier {
   String selectedModality = 'Todas las modalidades';
   String userType = '';
   List ids = [];
+  bool showEnrolledCourses = false;
 
   Future<void> fetchTutorings(BuildContext context) async {
     var url = Uri.parse(
@@ -25,7 +24,6 @@ class HomePageController extends ChangeNotifier {
     if (response.statusCode == 200 &&
         FirebaseAuth.instance.currentUser != null) {
       List<dynamic> responseData = json.decode(response.body);
-      print(responseData);
       _tutorCard =
           responseData.map((data) => TutorCardRender.fromJson(data)).toList();
 
@@ -78,6 +76,24 @@ class HomePageController extends ChangeNotifier {
           tutor.modality == selectedModality;
       return matchesQuery && matchesCategory && matchesModality;
     }).toList();
+    if (showEnrolledCourses) {
+      filteredTutors = filteredTutors.where((tutor) {
+        return ids.contains(tutor.tutoringId);
+      }).toList();
+    }
     notifyListeners();
+  }
+
+  void toggleEnrolledCoursesFilter() {
+    showEnrolledCourses = !showEnrolledCourses;
+    filterTutors();
+  }
+
+  void resetFilters() {
+    searchQuery = '';
+    selectedCategory = 'Todos los cursos';
+    selectedModality = 'Todas las modalidades';
+    showEnrolledCourses = false;
+    filteredTutors = _tutorCard;
   }
 }

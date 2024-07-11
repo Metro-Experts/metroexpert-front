@@ -112,21 +112,23 @@ class _CoursePageState extends State<CoursePage> {
                     .showConfirmationDialog(context)
                     .then((confirmed) {
                   if (confirmed != null && confirmed) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PaymentPage(
-                          tutoringName: widget.subject,
-                          tutorName: widget.tutorName,
-                          tutorLastName: widget.tutorLastName,
-                          tutorID: widget.tutorID,
-                          tutoringId: widget.tutoringId,
-                          dates: widget.dates,
-                          fee: widget.tutoringFee,
-                          tutorDetails: widget.bankAccount,
+                    if (coursePageControllerConsumer.isJoined) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentPage(
+                            tutoringName: widget.subject,
+                            tutorName: widget.tutorName,
+                            tutorLastName: widget.tutorLastName,
+                            tutorID: widget.tutorID,
+                            tutoringId: widget.tutoringId,
+                            dates: widget.dates,
+                            fee: widget.tutoringFee,
+                            tutorDetails: widget.bankAccount,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   }
                 });
               },

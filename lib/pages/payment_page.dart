@@ -330,6 +330,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   widget.tutorID,
                                   widget.tutoringId,
                                   widget.tutoringName,
+                                  int.parse(widget.fee),
                                   userOnSession,
                                 );
                               }

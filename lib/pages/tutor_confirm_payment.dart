@@ -1,29 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:metro_experts/controllers/tutor_confirm_payment_controller.dart';
+import 'package:provider/provider.dart';
 
-class TutorConfirmPayment extends StatefulWidget {
-  const TutorConfirmPayment({super.key});
+class TutorConfirmPayment extends StatelessWidget {
+  final String classTitle;
+  final String studentName;
+  final String fechaComprobante;
+  final double monto;
+  final String bancoEmisor;
+  final String referencia;
+  final String telefono;
+  final List<dynamic> imgData;
+  final String contentType;
+  final String paymentId;
+  final int index;
+
+  const TutorConfirmPayment({
+    super.key,
+    required this.classTitle,
+    required this.studentName,
+    required this.fechaComprobante,
+    required this.monto,
+    required this.bancoEmisor,
+    required this.referencia,
+    required this.telefono,
+    required this.imgData,
+    required this.contentType,
+    required this.paymentId,
+    required this.index,
+  });
 
   @override
-  State<TutorConfirmPayment> createState() => _TutorConfirmPaymentState();
-}
-
-class _TutorConfirmPaymentState extends State<TutorConfirmPayment> {
-  @override
-
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
     ]);
-    return Scaffold(
-       appBar: AppBar(
-          title: const Text("Confirmación de Pago",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                  fontSize: 20)),
+
+    return ChangeNotifierProvider(
+      create: (_) => TutorConfirmPaymentController(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Confirmación de Pago",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w500, color: Colors.black, fontSize: 20),
+          ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(2.0),
             child: Container(
@@ -47,7 +72,7 @@ class _TutorConfirmPaymentState extends State<TutorConfirmPayment> {
                   children: [
                     const SizedBox(height: 55),
                     const Text(
-                      "Verifica, cuidadosamente, que has recibido el siguiente pago:", 
+                      "Verifica, cuidadosamente, que has recibido el siguiente pago:",
                       style: TextStyle(
                         fontWeight: FontWeight.w300,
                         fontSize: 16,
@@ -55,14 +80,22 @@ class _TutorConfirmPaymentState extends State<TutorConfirmPayment> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    const ListTile(
-                      title: Text("Matemática 2", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-                      subtitle: Text("Beatriz Cardozo", style: TextStyle(fontSize: 16)),
-                      leading:Icon(Icons.menu_book_outlined, color: Colors.black, size: 55),
+                    ListTile(
+                      title: Text(
+                        classTitle,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        studentName,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      leading: const Icon(Icons.menu_book_outlined,
+                          color: Colors.black, size: 55),
                     ),
                     const SizedBox(height: 25),
                     const Text(
-                      "Comprobante:", 
+                      "Detalles del Pago:",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -70,36 +103,93 @@ class _TutorConfirmPaymentState extends State<TutorConfirmPayment> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      child: Image.asset('assets/images/pagoejemplo.png'),
-                    ),
-                    const SizedBox(height: 25),
-                  SizedBox(
-                    width: 200,
-                    child: ElevatedButton.icon(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:const Color(0xff008000),
-                      padding: const EdgeInsets.symmetric(
-                      horizontal: 60, vertical: 10),
-                    ),
-                    label: const Text(
-                      'Confirmar',
-                      style: TextStyle(
+                    Text(
+                      'Monto: ${monto.toStringAsFixed(2)} Bs.',
+                      style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color:  Colors.white,
+                        color: Colors.black,
                       ),
                     ),
-                    icon: const Icon(Icons.check, color: Colors.white, size: 25),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Referencia: $referencia',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(height: 25),
+                    const Text(
+                      "Comprobante:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    if (imgData.isNotEmpty)
+                      SizedBox(
+                        child: Image.memory(
+                          base64Decode(base64Encode(List<int>.from(imgData))),
+                        ),
+                      ),
+                    const SizedBox(height: 25),
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          bool? confirm = await showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Confirmación'),
+                              content: const Text(
+                                  '¿Estás seguro de que quieres confirmar este pago?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(false),
+                                  child: const Text('No'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(true),
+                                  child: const Text('Sí'),
+                                ),
+                              ],
+                            ),
+                          );
+
+                          if (confirm == true) {
+                            Provider.of<TutorConfirmPaymentController>(context,
+                                    listen: false)
+                                .confirmPayment(context, paymentId, index);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff008000),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 60, vertical: 10),
+                        ),
+                        label: const Text(
+                          'Confirmar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        icon: const Icon(Icons.check,
+                            color: Colors.white, size: 25),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                  ],
+                ),
               )
             ],
           ),
-
+        ),
       ),
     );
   }

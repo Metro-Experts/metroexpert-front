@@ -37,6 +37,7 @@ class PaymentPageController with ChangeNotifier {
     String tutorID,
     String tutoringId,
     String course,
+    int feeInDollars,
     UserOnSession userOnSession,
   ) async {
     final user = userOnSession.userData;
@@ -72,6 +73,7 @@ class PaymentPageController with ChangeNotifier {
     request.fields['referencia'] = "No aplica";
     request.fields['bancoEmisor'] = "No aplica";
     request.fields['telefono'] = "No aplica";
+    request.fields['monto'] = '${feeInDollars}';
 
     try {
       showDialog(

@@ -15,6 +15,23 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   List<String> genderList = ["Femenino", "Masculino"];
+  List<String> careerList = [
+    "Ingeniería Civil",
+    "Ingeniería Mecánica",
+    "Ingeniería Producción",
+    "Ingeniería Química",
+    "Ingeniería de Sistemas",
+    "Ingeniería Eléctrica",
+    "Ciencias Administrativas",
+    "Economía Empresarial",
+    "Contaduría Pública",
+    "Psicología",
+    "Matemáticas Industriales",
+    "Educación",
+    "Idiomas Modernos",
+    "Estudios Liberales",
+    "Derecho"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,21 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintStyle: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       controller: signUpPageController.lastNameController,
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
-                    child: TextField(
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                      ),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.assignment_ind_sharp),
-                        hintText: 'Carrera Universitaria',
-                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      controller: signUpPageController.careerController,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -151,6 +153,30 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   const SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 1, 50, 1),
+                    child: DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        hintText: 'Seleccione su carrera:',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      items: careerList
+                          .map((career) => DropdownMenuItem<String>(
+                                value: career,
+                                child: Text(career),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          signUpPageController.careerValue = value!;
+                        });
+                      },
+                      value: signUpPageController.careerValue.isNotEmpty
+                          ? signUpPageController.careerValue
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(50, 1, 50, 1),
                     child: Text(
@@ -174,7 +200,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               setState(() {
                                 signUpPageController.selectedOption =
                                     selectedValue!;
-
                                 signUpPageController.showTutorSection = true;
                               });
                             },
@@ -201,14 +226,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Visibility(
                             visible: signUpPageController.showTutorSection,
                             child: MultiTextfield(
-                              controller:
-                                  signUpPageController.descriptionController,
                               labelText: 'Cuentanos de ti',
                               placeholder:
-                                  'Soy un estudiante en pro de ayudar a mis compañeros que como yo tuvieron dificultades',
+                                  'Soy un estudiante que busca ayudar a mis compañeros',
                               bottomPadding: 0,
                               leftPadding: 0,
                               rightPadding: 0,
+                              controller: signUpPageController
+                                  .tutorDescriptionController,
                             ),
                           ),
                         ),

@@ -13,6 +13,9 @@ import 'package:metro_experts/model/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:metro_experts/pages/intro_page.dart';
 import 'package:metro_experts/controllers/data_payment_page_controller.dart';
+import 'package:metro_experts/controllers/tutor_payment_gestor_controller.dart';
+import 'package:metro_experts/controllers/tutor_confirm_payment_controller.dart';
+import 'package:metro_experts/controllers/my_courses_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +60,15 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DataPaymentPageController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TutorPaymentGestorController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TutorConfirmPaymentController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MyCoursesController(),
         ),
       ],
       child: MaterialApp(
