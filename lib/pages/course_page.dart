@@ -235,6 +235,7 @@ class _CoursePageState extends State<CoursePage> {
                             tutorCareer: widget.tutorCareer,
                             tutorRating: widget.tutorRating,
                             tutorID: widget.tutorID,
+                            tutoringStudents: widget.tutoringStudents,
                           ),
                         ),
                       );

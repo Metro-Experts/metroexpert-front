@@ -82,6 +82,9 @@ class TutorCardRender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('LE DA CLASE A: ');
+    print(tutoringStudents);
+    print('----------------------------------------------------------------');
     return InkWell(
       onTap: () {
         Navigator.push(
