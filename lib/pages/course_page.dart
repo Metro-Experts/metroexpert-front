@@ -212,7 +212,7 @@ class _CoursePageState extends State<CoursePage> {
                   child: Text(
                     '${widget.subject}',
                     style: const TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontSize: 24),
                   ),
@@ -220,6 +220,7 @@ class _CoursePageState extends State<CoursePage> {
                 Positioned(
                   top: 370,
                   left: 16,
+                  right: 16,
                   child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -243,7 +244,7 @@ class _CoursePageState extends State<CoursePage> {
                     child: SizedBox(
                       width: 400,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Text(
                             'Dictado por:',
@@ -252,24 +253,34 @@ class _CoursePageState extends State<CoursePage> {
                                 fontSize: 18,
                                 color: Colors.black),
                           ),
+                          const SizedBox(width: 8),
                           Container(
-                            height: 36,
-                            width: 128,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               color: const Color(0xFFFEC89F),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  '${widget.tutorName}'.toUpperCase(),
+                                  '${widget.tutorName} ${widget.tutorLastName}'
+                                      .toUpperCase(),
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
                                       color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),
+                                const SizedBox(width: 4),
                                 const Icon(
                                   Icons.arrow_forward,
                                   size: 24,
@@ -283,7 +294,7 @@ class _CoursePageState extends State<CoursePage> {
                   ),
                 ),
                 const Positioned(
-                  top: 420,
+                  top: 430,
                   child: Text(
                     'Horarios',
                     style:
@@ -293,76 +304,50 @@ class _CoursePageState extends State<CoursePage> {
                 Positioned(
                   top: 470,
                   child: Container(
-                    width: 400,
-                    height: 64,
+                    width: 350,
+                    height: 48,
                     decoration: BoxDecoration(
                       color: const Color(0xFFFEC89F),
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24.0),
-                          child: Text(
-                            '${widget.dates[0]['day']}'.toUpperCase(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 24.0),
-                          child: Text(
-                            '${widget.dates[0]['hour']}'.toUpperCase(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ),
-                      ],
+                    child: Center(
+                      child: Text(
+                        '${widget.dates[0]['day']} - ${widget.dates[0]['hour']}'
+                            .toUpperCase(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 550,
+                  top: 530,
                   child: Container(
-                    width: 400,
-                    height: 64,
+                    width: 350,
+                    height: 48,
                     decoration: BoxDecoration(
                       color: const Color(0xFFFEC89F),
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24.0),
-                          child: Text(
-                            '${widget.dates[1]['day']}'.toUpperCase(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 24.0),
-                          child: Text(
-                            '${widget.dates[1]['hour']}'.toUpperCase(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ),
-                      ],
+                    child: Center(
+                      child: Text(
+                        '${widget.dates[1]['day']} - ${widget.dates[1]['hour']}'
+                            .toUpperCase(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 630,
+                  top: 590,
                   child: SizedBox(
                     width: 400,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: EdgeInsets.only(left: 40.0),
                           child: Text(
                             'Modalidad',
                             style: TextStyle(
@@ -371,20 +356,23 @@ class _CoursePageState extends State<CoursePage> {
                                 color: Colors.black),
                           ),
                         ),
-                        Container(
-                          height: 64,
-                          width: 250,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            color: const Color(0xFFFEC89F),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${widget.modality}'.toUpperCase(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 16),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 30.0),
+                          child: Container(
+                            height: 48,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: const Color(0xFFFEC89F),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${widget.modality}'.toUpperCase(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16),
+                              ),
                             ),
                           ),
                         ),
@@ -393,14 +381,14 @@ class _CoursePageState extends State<CoursePage> {
                   ),
                 ),
                 Positioned(
-                  top: 710,
+                  top: 650,
                   child: SizedBox(
                     width: 400,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                          padding: EdgeInsets.only(left: 40.0),
                           child: Text(
                             'Costo',
                             style: TextStyle(
@@ -409,20 +397,23 @@ class _CoursePageState extends State<CoursePage> {
                                 color: Colors.black),
                           ),
                         ),
-                        Container(
-                          height: 64,
-                          width: 250,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            color: const Color(0xFFFEC89F),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '\$${widget.tutoringFee}'.toUpperCase(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 16),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 30.0),
+                          child: Container(
+                            height: 48,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: const Color(0xFFFEC89F),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '\$${widget.tutoringFee}'.toUpperCase(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16),
+                              ),
                             ),
                           ),
                         ),

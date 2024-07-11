@@ -5,10 +5,15 @@ import 'package:http/http.dart' as http;
 
 class MyCoursesController extends ChangeNotifier {
   List<Map<String, dynamic>> _enrolledCourses = [];
+  bool _isLoading = false;
 
   List<Map<String, dynamic>> get enrolledCourses => _enrolledCourses;
+  bool get isLoading => _isLoading;
 
   Future<void> fetchEnrolledCourses() async {
+    _isLoading = true;
+    notifyListeners();
+
     try {
       var url = Uri.parse(
           'https://uniexpert-gateway-6569fdd60e75.herokuapp.com/users/${FirebaseAuth.instance.currentUser!.uid}');
@@ -39,6 +44,8 @@ class MyCoursesController extends ChangeNotifier {
     } catch (e) {
       print('An error occurred: $e');
     }
+
+    _isLoading = false;
     notifyListeners();
   }
 }

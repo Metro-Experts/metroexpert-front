@@ -141,6 +141,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Cursos inscritos',
                         style: TextStyle(
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       ),

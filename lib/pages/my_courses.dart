@@ -14,9 +14,11 @@ class _MyCoursesState extends State<MyCourses>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final myCoursesController =
-        Provider.of<MyCoursesController>(context, listen: false);
-    myCoursesController.fetchEnrolledCourses();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final myCoursesController =
+          Provider.of<MyCoursesController>(context, listen: false);
+      myCoursesController.fetchEnrolledCourses();
+    });
   }
 
   @override
@@ -29,25 +31,31 @@ class _MyCoursesState extends State<MyCourses>
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: myCoursesController.enrolledCourses.isNotEmpty
-                ? ListView.builder(
-                    itemCount: myCoursesController.enrolledCourses.length,
-                    itemBuilder: (context, index) {
-                      var course = myCoursesController.enrolledCourses[index];
-                      return Column(
-                        children: [
-                          CourseCard(course: course),
-                          const SizedBox(height: 16), // Espacio entre tarjetas
-                        ],
-                      );
-                    },
+            child: myCoursesController.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
                   )
-                : const Center(
-                    child: Text(
-                      'No se encontraron cursos inscritos',
-                      style: TextStyle(fontSize: 18, color: Colors.grey),
-                    ),
-                  ),
+                : myCoursesController.enrolledCourses.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: myCoursesController.enrolledCourses.length,
+                        itemBuilder: (context, index) {
+                          var course =
+                              myCoursesController.enrolledCourses[index];
+                          return Column(
+                            children: [
+                              CourseCard(course: course),
+                              const SizedBox(
+                                  height: 16), // Espacio entre tarjetas
+                            ],
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text(
+                          'No se encontraron cursos inscritos',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ),
           ),
         );
       },
